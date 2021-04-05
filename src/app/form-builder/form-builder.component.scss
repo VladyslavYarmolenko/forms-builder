@@ -1,0 +1,7 @@
+.form-builder-wrapper {
+  display: grid;
+  grid-template-areas: styles constructor inputs ;
+  grid-template-columns: 1fr 2fr 1fr;
+
+  height: 1200px;
+}
