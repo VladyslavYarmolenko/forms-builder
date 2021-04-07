@@ -1,5 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-// import * as EventEmitter from 'node:events';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { changeStyleField } from '../../../store/store.actions'
+
 
 @Component({
   selector: 'app-constructor-section',
@@ -7,15 +10,21 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   styleUrls: ['./constructor-section.component.scss']
 })
 export class ConstructorSectionComponent implements OnInit {
-  @Output() onSelectField = new EventEmitter<boolean>();
-
-  constructor() { }
+  isFieldSelected$: Observable<boolean>;
+  currentStatus = true;
+  constructor(private store: Store<{ state: any }>) { }
 
   ngOnInit(): void {
   }
-
-  setSelectedField(status: boolean) {
-    this.onSelectField.emit(status);
+  
+  changeSelectedField() {
+    if(this.currentStatus === true){
+      this.store.dispatch(changeStyleField({ isFieldSelected: this.currentStatus }));
+      this.currentStatus = !this.currentStatus;
+    } else  {
+      this.store.dispatch(changeStyleField({ isFieldSelected: this.currentStatus }))
+      this.currentStatus = !this.currentStatus;
+    }
   }
-
 }
+

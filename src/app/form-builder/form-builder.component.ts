@@ -12,16 +12,5 @@ import { State } from '../store/store.reducer'
   styleUrls: ['./form-builder.component.scss']
 })
 export class FormBuilderComponent{
-  isFieldSelected$: Observable<boolean>;
-
-  constructor(private store: Store<{ state: any }>) {
-    // console.log('this.isFieldSelected$', this.isFieldSelected$)
-    // store.select(selectField).subscribe(isFieldSelected => {this.isFieldSelected$ = isFieldSelected});
-  }
   
-  onSelectField(status:boolean) {
-    // console.log('status', status)
-    // this.isFieldSelected = status;
-    this.store.dispatch(changeStyleField({ isFieldSelected: true }));
-  }
 }
