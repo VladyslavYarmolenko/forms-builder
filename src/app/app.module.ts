@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 import { FormBuilderModule } from './form-builder/form-builder.module';
 import { StoreModule } from '@ngrx/store';
 
-import * as fromReducer './store/example.reducer';
+import * as fromReducer from './store/store.reducer';
 
 
 @NgModule({
@@ -24,7 +24,7 @@ import * as fromReducer './store/example.reducer';
     FormsModule,
     DragDropModule,
     FormBuilderModule,
-    StoreModule.forRoot({example: fromReducer.reducer})
+    StoreModule.forRoot({store: fromReducer.reducer})
   ],
   providers: [],
   bootstrap: [AppComponent]
