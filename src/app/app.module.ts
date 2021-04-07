@@ -9,6 +9,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { FormBuilderModule } from './form-builder/form-builder.module';
+import { StoreModule } from '@ngrx/store';
+
+import * as fromReducer './store/example.reducer';
 
 
 @NgModule({
@@ -20,7 +23,8 @@ import { FormBuilderModule } from './form-builder/form-builder.module';
     AppRoutingModule,
     FormsModule,
     DragDropModule,
-    FormBuilderModule
+    FormBuilderModule,
+    StoreModule.forRoot({example: fromReducer.reducer})
   ],
   providers: [],
   bootstrap: [AppComponent]

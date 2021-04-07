@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+// import * as EventEmitter from 'node:events';
 
 @Component({
   selector: 'app-constructor-section',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./constructor-section.component.scss']
 })
 export class ConstructorSectionComponent implements OnInit {
+  @Output() onSelectField = new EventEmitter<boolean>();
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  setSelectedField(status: boolean) {
+    this.onSelectField.emit(status);
   }
 
 }

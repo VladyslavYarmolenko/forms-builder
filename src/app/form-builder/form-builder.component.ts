@@ -6,5 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./form-builder.component.scss']
 })
 export class FormBuilderComponent{
+  isFieldSelected: boolean = false;
 
+  onSelectField(status:boolean){
+    console.log('status', status)
+    this.isFieldSelected = status;
+  }
 }
