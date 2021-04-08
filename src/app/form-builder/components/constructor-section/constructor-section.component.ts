@@ -11,7 +11,7 @@ import { changeStyleField } from '../../../store/store.actions'
 })
 export class ConstructorSectionComponent implements OnInit {
   isFieldSelected$: Observable<boolean>;
-  currentStatus = true;
+  currentStatus: boolean = true;
   constructor(private store: Store<{ state: any }>) { }
 
   ngOnInit(): void {
