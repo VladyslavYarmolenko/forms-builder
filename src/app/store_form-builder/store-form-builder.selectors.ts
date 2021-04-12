@@ -15,7 +15,7 @@ export const selectField = createSelector(
   }
 );
 
-export const addField = createSelector(
+export const selectConstructorFields = createSelector(
   state, (state: any) => {
     return state.constructorFields
   }

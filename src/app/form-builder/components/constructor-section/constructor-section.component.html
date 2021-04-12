@@ -1,3 +1,21 @@
 <div class='constructor'>
+  <div class="inputs">
+    <div 
+      cdkDropList
+      [cdkDropListData]="constructorFieldsLocal"
+      [ngStyle]="{'width': '300px', 'height': '300px'}" 
+      (cdkDropListDropped)="drop($event)"
+      *ngFor="let field of constructorFieldsLocal"
+    >
+    {{ field }}
+  </div>
+    <!-- <div 
+      cdkDropList
+      #constructor="cdkDropList"
+      [cdkDropListData]="constructorFields"
+      (cdkDropListDropped)="drop($event)"
+      *ngFor="let items of constructor"
+    > -->
+  </div>
   <button (click)="changeSelectedField()">Set select field</button>
 </div>

@@ -1,8 +1,10 @@
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { changeStyleField } from '../../../store_form-builder/store_form-builder.actions'
-
+import { changeStyleField } from '../../../store_form-builder/store-form-builder.actions';
+import { selectConstructorFields } from './../../../store_form-builder/store-form-builder.selectors';
+import { ConstructorField } from './../../../store_form-builder/store-form-builder.reducer';
 
 @Component({
   selector: 'app-constructor-section',
@@ -12,11 +14,21 @@ import { changeStyleField } from '../../../store_form-builder/store_form-builder
 export class ConstructorSectionComponent implements OnInit {
   isFieldSelected$: Observable<boolean>;
   currentStatus: boolean = true;
-  constructor(private store: Store<{ state: any }>) { }
+  constructorFields: Observable<ConstructorField[]>
+  
+  constructorFieldsLocal = [
+    'test'
+  ];
+
+  constructor(private store: Store<{ state: any }>) {
+    this.constructorFields = store.select(selectConstructorFields)
+  }
 
   ngOnInit(): void {
   }
-  
+  // drop(event: CdkDragDrop<string[]>) {
+  //   console.log(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+
   changeSelectedField() {
     if(this.currentStatus === true){
       this.store.dispatch(changeStyleField({ isFieldSelected: this.currentStatus }));
@@ -26,5 +38,16 @@ export class ConstructorSectionComponent implements OnInit {
       this.currentStatus = !this.currentStatus;
     }
   }
-}
 
+  drop(event: CdkDragDrop<string[]>) {
+    console.log('DATA', event.container.data)
+    console.log('EVENT', event)
+    if(event.previousContainer !== event.container){
+      transferArrayItem(event.previousContainer.data, event.container.data,
+      event.previousIndex, event.currentIndex)
+  } else {
+      moveItemInArray(this.constructorFieldsLocal, event.previousIndex, event.currentIndex);
+    }
+  }
+
+}

@@ -1,14 +1,12 @@
-import { isFieldSelectedState, addField } from './store_form-builder.selectors';
-import { Action, createReducer, on} from '@ngrx/store';
-import { changeStyleField, setDraggableField } from './store_form-builder.actions';
+
+import { Action, createReducer, on } from '@ngrx/store';
+import { changeStyleField, setDraggableField, clearDraggableField } from './store-form-builder.actions';
 
 export interface State {
   isFieldSelected: boolean;
   constructorFields: ConstructorField[];
   draggableField: DraggableField
 }
-
-
 
 export type Styles = {
   [key:string]: string;
@@ -38,6 +36,13 @@ const formBuilderReducer = createReducer(
     return ({
       ...state,
       draggableField
+    })
+  }),
+  on(clearDraggableField, (state, { draggableField }) => {
+    console.log('DRAGGAVBLE', draggableField)
+    return ({
+      ...state,
+      draggableField: null,
     })
   })
   // on(addField, (state, { constructorField }) => ({
