@@ -1,7 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { changeStyleField } from '../../../store/store.actions'
+import { changeStyleField } from '../../../store_form-builder/store_form-builder.actions'
 
 
 @Component({

@@ -1,6 +1,32 @@
 <div class="inputs">
-  <p>input-types-section works!</p>
-  <div class="example-box" cdkDrag>
-    Drag me around
+  <div *ngFor="let field of fieldTypes">
+      <input *ngIf="field.type =='input'" cdkDrag (cdkDragStarted)="startDrag($event)" data-type="input"/>
+      <textarea *ngIf="field.type =='textarea'" cdkDrag></textarea>
+      <button *ngIf="field.type =='button'" cdkDrag></button>
+  </div>
+  <div cdkDropListGroup>
+    <div class="example-container">
+   <h2>Still Doing</h2>
+  
+   <div
+   cdkDropList
+   [cdkDropListData]="todo"
+   class="example-list"
+   (cdkDropListDropped)="drop($event)">
+   <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}</div>
+   </div>
+    </div>
+  
+    <div class="example-container">
+   <h2>Done</h2>
+  
+   <div
+   cdkDropList
+   [cdkDropListData]="done"
+   class="example-list"
+   (cdkDropListDropped)="drop($event)">
+   <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
+   </div>
+    </div>
   </div>
 </div>

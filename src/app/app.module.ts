@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 import { FormBuilderModule } from './form-builder/form-builder.module';
 import { StoreModule } from '@ngrx/store';
 
-import * as fromReducer from './store/store.reducer';
+import * as fromReducer from './store_form-builder/store_form-builder.reducer';
 import { GeneralStylingFormComponent } from './form-builder/components/styling-form-section/general-styling-form/general-styling-form.component';
 import { FieldStylingFormComponent } from './form-builder/components/styling-form-section/field-styling-form/field-styling-form.component';
 
@@ -21,6 +21,7 @@ import { FieldStylingFormComponent } from './form-builder/components/styling-for
     AppComponent,
     GeneralStylingFormComponent,
     FieldStylingFormComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -28,7 +29,7 @@ import { FieldStylingFormComponent } from './form-builder/components/styling-for
     FormsModule,
     DragDropModule,
     FormBuilderModule,
-    StoreModule.forRoot({store: fromReducer.reducer})
+    StoreModule.forRoot({storeFormBuilder: fromReducer.reducer})
   ],
   providers: [],
   bootstrap: [AppComponent]

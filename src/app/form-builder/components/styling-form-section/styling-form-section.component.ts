@@ -1,5 +1,5 @@
 import { Store } from '@ngrx/store';
-import { selectField } from './../../../store/store.selectors';
+import { selectField } from '../../../store_form-builder/store_form-builder.selectors';
 import { ComponentPortal, Portal } from '@angular/cdk/portal';
 import { Component, ViewContainerRef, OnInit} from '@angular/core';
 import { Observable } from 'rxjs';
