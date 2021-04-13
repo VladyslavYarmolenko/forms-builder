@@ -1,14 +1,18 @@
 <div class='constructor'>
-  <div class="inputs">
+  <div 
+    class="inputs"
+    [ngStyle]="{'width': '300px', 'height': '300px'}" 
+    cdkDropList
+    [cdkDropListData]="constructorFieldsTypesList"
+    (cdkDropListDropped)="drop($event)"
+  >
     <div 
-      cdkDropList
-      [cdkDropListData]="constructorFieldsLocal"
-      [ngStyle]="{'width': '300px', 'height': '300px'}" 
-      (cdkDropListDropped)="drop($event)"
-      *ngFor="let field of constructorFieldsLocal"
+      *ngFor="let field of constructorFieldsTypesList"
     >
-    {{ field }}
-  </div>
+      <input *ngIf="field =='input'" [ngStyle]="getFieldStyles(field)"/>
+      <textarea *ngIf="field =='textarea'"></textarea>
+      <button *ngIf="field =='button'"></button>
+    </div>
     <!-- <div 
       cdkDropList
       #constructor="cdkDropList"

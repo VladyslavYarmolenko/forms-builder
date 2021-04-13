@@ -1,4 +1,4 @@
-import { clearDraggableField, setDraggableField } from '../../../store_form-builder/store-form-builder.actions';
+import { setDraggableField } from '../../../store_form-builder/store-form-builder.actions';
 import { selectDraggableField } from '../../../store_form-builder/store-form-builder.selectors';
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
@@ -53,9 +53,4 @@ export class InputTypesSectionComponent {
 
     this.store.dispatch(setDraggableField({ draggableField: fieldType }));
   }
-
-  stopDrag(event: any) {
-    this.store.dispatch(clearDraggableField({ draggableField: null }));
-  }
-
 }

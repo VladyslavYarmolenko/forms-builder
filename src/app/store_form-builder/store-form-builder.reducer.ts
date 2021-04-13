@@ -1,11 +1,10 @@
 
 import { Action, createReducer, on } from '@ngrx/store';
-import { changeStyleField, setDraggableField, clearDraggableField } from './store-form-builder.actions';
+import { changeStyleField, addConstructorField } from './store-form-builder.actions';
 
 export interface State {
-  isFieldSelected: boolean;
   constructorFields: ConstructorField[];
-  draggableField: DraggableField
+  selectedFieldId: SelectedFieldId;
 }
 
 export type Styles = {
@@ -14,41 +13,55 @@ export type Styles = {
 
 export type ConstructorField = {
   type: string;
-  styles: Styles
+  styles: Styles;
+  order: number;
+  id: number;
 }
+
+export type SelectedFieldId = number | null;
 
 export type DraggableField = string | null;
 
+export type FieldTypes = 'input' | 'textarea' | 'button' | 'select' | 'checkbox'; 
+
 const initialState: State = {
-  isFieldSelected: false,
   constructorFields: [],
-  draggableField: null
+  selectedFieldId: null 
 }
 
 const formBuilderReducer = createReducer(
   initialState,
-  on(changeStyleField, (state, { isFieldSelected }) => ({
-    ...state,
-    isFieldSelected,
-  })),
-  on(setDraggableField, (state, { draggableField }) => {
-    console.log('DRAGGAVBLE', draggableField)
-    return ({
+  on(changeStyleField, (state, { getSelectedFieldId }) => {
+
+    return({
       ...state,
-      draggableField
+      selectedFieldId : getSelectedFieldId,
     })
   }),
-  on(clearDraggableField, (state, { draggableField }) => {
-    console.log('DRAGGAVBLE', draggableField)
+  on(addConstructorField, (state, { constructorFieldType }) => {
+    const constructorFields = state.constructorFields;
+    
+    let fieldId = 0;
+
+    if (constructorFields === []){
+      fieldId = constructorFields.length
+    } else {
+      fieldId = constructorFields[constructorFields.length - 1].id + 1
+    }
+
+    const newField = {
+      type: constructorFieldType, 
+      styles: {},
+      order: constructorFields.length,
+      id: fieldId,
+    }
+    // constructorFieldType.push(newField);   
     return ({
       ...state,
-      draggableField: null,
-    })
-  })
-  // on(addField, (state, { constructorField }) => ({
-  //   ...state,
-  //   constructorField: []
-  // })
+      constructorFields: [...constructorFields, newField ]
+      })
+    }
+  )
 )
 
 export function reducer(state: State | undefined, action: Action){

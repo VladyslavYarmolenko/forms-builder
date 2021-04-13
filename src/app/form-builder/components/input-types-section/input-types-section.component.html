@@ -9,10 +9,9 @@
       class="field-wrapper" 
       *ngFor="let field of fieldTypes"
     >
-      {{ field }}
-      <!-- <input *ngIf="field =='input'" (cdkDragStarted)="startDrag($event)" (cdkDragEnded) ="stopDrag($event)" data-type="input"/>
+      <input *ngIf="field =='input'" (cdkDragStarted)="startDrag($event)" data-type="input"/>
       <textarea *ngIf="field =='textarea'"></textarea>
-      <button *ngIf="field =='button'"></button> -->
+      <button *ngIf="field =='button'"></button>
     </div>
   </div>
 
