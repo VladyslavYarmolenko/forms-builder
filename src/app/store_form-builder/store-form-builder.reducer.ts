@@ -1,6 +1,6 @@
 
 import { Action, createReducer, on } from '@ngrx/store';
-import { changeStyleField, addConstructorField } from './store-form-builder.actions';
+import { setSlectedFieldId, addConstructorField } from './store-form-builder.actions';
 
 export interface State {
   constructorFields: ConstructorField[];
@@ -31,11 +31,11 @@ const initialState: State = {
 
 const formBuilderReducer = createReducer(
   initialState,
-  on(changeStyleField, (state, { getSelectedFieldId }) => {
+  on(setSlectedFieldId, (state, { selectedFieldId }) => {
 
     return({
       ...state,
-      selectedFieldId : getSelectedFieldId,
+      selectedFieldId : selectedFieldId,
     })
   }),
   on(addConstructorField, (state, { constructorFieldType }) => {
@@ -43,10 +43,10 @@ const formBuilderReducer = createReducer(
     
     let fieldId = 0;
 
-    if (constructorFields === []){
-      fieldId = constructorFields.length
+    if (constructorFields.length === 0){
+      fieldId = constructorFields.length;
     } else {
-      fieldId = constructorFields[constructorFields.length - 1].id + 1
+      fieldId = constructorFields[constructorFields.length - 1].id + 1;
     }
 
     const newField = {
@@ -54,8 +54,8 @@ const formBuilderReducer = createReducer(
       styles: {},
       order: constructorFields.length,
       id: fieldId,
-    }
-    // constructorFieldType.push(newField);   
+    };
+
     return ({
       ...state,
       constructorFields: [...constructorFields, newField ]

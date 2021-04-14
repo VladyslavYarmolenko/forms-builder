@@ -5,6 +5,7 @@ import { FormsModule }   from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { PortalModule } from '@angular/cdk/portal';
 import { MatIconModule } from '@angular/material/icon';
+import { ClickOutsideModule } from 'ng-click-outside';
 
 import { InputTypesSectionComponent } from './components/input-types-section/input-types-section.component';
 import { ConstructorSectionComponent } from './components/constructor-section/constructor-section.component';
@@ -21,7 +22,8 @@ import { FormBuilderComponent } from './form-builder.component';
     FormsModule,
     DragDropModule,
     PortalModule,
-    MatIconModule
+    MatIconModule,
+    ClickOutsideModule
   ],
   entryComponents: 
     [

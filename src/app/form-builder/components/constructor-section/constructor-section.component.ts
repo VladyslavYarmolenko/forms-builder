@@ -3,7 +3,7 @@ import { CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem } from '
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { changeStyleField } from '../../../store_form-builder/store-form-builder.actions';
+import { setSlectedFieldId } from '../../../store_form-builder/store-form-builder.actions';
 import { selectConstructorFields, selectSelectedFieldId } from './../../../store_form-builder/store-form-builder.selectors';
 import { ConstructorField, FieldTypes, SelectedFieldId } from './../../../store_form-builder/store-form-builder.reducer';
 import { map, find } from 'rxjs/operators';
@@ -33,14 +33,28 @@ export class ConstructorSectionComponent implements OnInit {
   // drop(event: CdkDragDrop<string[]>) {
   //   console.log(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
 
-  changeSelectedField(id: number) {
-    if(this.selectedFieldId){
-      this.store.dispatch(changeStyleField({ isFieldSelected: this.currentStatus }));
-      this.currentStatus = !this.currentStatus;
-    } else  {
-      this.store.dispatch(changeStyleField({ isFieldSelected: this.currentStatus }))
-      this.currentStatus = !this.currentStatus;
-    }
+  // changeSelectedField(id: number) {
+  //   if(this.selectedFieldId){
+  //     this.store.dispatch(changeStyleField({ isFieldSelected: this.currentStatus }));
+  //     this.currentStatus = !this.currentStatus;
+  //   } else  {
+  //     this.store.dispatch(changeStyleField({ isFieldSelected: this.currentStatus }))
+  //     this.currentStatus = !this.currentStatus;
+  //   }
+  // }
+
+  handleFieldClick(index: number) {
+    const fieldId = this.constructorFieldsLocal[index].id;
+    this.store.dispatch(setSlectedFieldId({ selectedFieldId: fieldId }));
+  }
+
+  handleFieldClickOutside(index: number) {
+    const fieldId = this.constructorFieldsLocal[index].id;
+    
+    if (fieldId !== this.selectedFieldId)
+      return;
+
+    this.store.dispatch(setSlectedFieldId({ selectedFieldId: null }));
   }
 
   getFieldStyles(fieldType: FieldTypes) {
@@ -51,19 +65,10 @@ export class ConstructorSectionComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    // console.log('DATA', event.container.data)
-    // console.log('EVENT', event)
-
-    // this.data[event.previousContainer.data.index]={...event.container.data.item}
-    // this.data[event.container.data.index]={...event.previousContainer.data.item}
-    // event.currentIndex=0;
-
-
     if(event.previousContainer !== event.container){
       copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
 
       const fieldType = <FieldTypes>event.previousContainer.data[event.previousIndex];
-
       this.store.dispatch(addConstructorField({ constructorFieldType: fieldType }))
   } else {
       moveItemInArray(this.constructorFieldsTypesList, event.previousIndex, event.currentIndex);

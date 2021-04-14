@@ -1,5 +1,5 @@
 import { Store } from '@ngrx/store';
-import { selectField } from '../../../store_form-builder/store-form-builder.selectors';
+import { selectSelectedFieldId } from '../../../store_form-builder/store-form-builder.selectors';
 import { ComponentPortal, Portal } from '@angular/cdk/portal';
 import { Component, ViewContainerRef, OnInit} from '@angular/core';
 import { Observable } from 'rxjs';
@@ -22,8 +22,9 @@ export class StylingFormSectionComponent implements OnInit {
   componentPortal2: ComponentPortal<GeneralStylingFormComponent>
 
   constructor(private _viewContainerRef: ViewContainerRef, private store: Store<{ state: any }>) { 
-    store.select(selectField).subscribe(isFieldSelected => {
-      if (isFieldSelected) {
+    store.select(selectSelectedFieldId).subscribe(selectedFieldId => {
+      console.log('selectedFieldId', selectedFieldId)
+      if (selectedFieldId === null) {
         this.selectedPortal = this.componentPortal
       } else {
         this.selectedPortal = this.componentPortal2

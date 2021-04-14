@@ -6,12 +6,12 @@
     [cdkDropListData]="constructorFieldsTypesList"
     (cdkDropListDropped)="drop($event)"
   >
-    <div 
-      *ngFor="let field of constructorFieldsTypesList"
+    <div
+      *ngFor="let field of constructorFieldsTypesList; let i = index"
     >
-      <input *ngIf="field =='input'" [ngStyle]="getFieldStyles(field)"/>
-      <textarea *ngIf="field =='textarea'"></textarea>
-      <button *ngIf="field =='button'"></button>
+      <input *ngIf="field =='input'" (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)" [ngStyle]="getFieldStyles(field)"/>
+      <textarea *ngIf="field =='textarea'" (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)"></textarea>
+      <button *ngIf="field =='button'" (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)"></button> 
     </div>
     <!-- <div 
       cdkDropList
@@ -21,5 +21,5 @@
       *ngFor="let items of constructor"
     > -->
   </div>
-  <button (click)="changeSelectedField()">Set select field</button>
+  <!-- <button (click)="changeSelectedField()">Set select field</button> -->
 </div>
