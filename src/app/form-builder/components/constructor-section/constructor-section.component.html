@@ -9,17 +9,59 @@
     <div
       *ngFor="let field of constructorFieldsTypesList; let i = index"
     >
-      <input *ngIf="field =='input'" (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)" [ngStyle]="getFieldStyles(field)"/>
+      <!-- <input *ngIf="field =='input'" [placeholder]="getFieldProp(i, 'placeholder')" (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)" [ngStyle]="getFieldStyles(i)"/>
       <textarea *ngIf="field =='textarea'" (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)"></textarea>
-      <button *ngIf="field =='button'" (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)"></button> 
+      <button *ngIf="field =='button'" (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)"></button>
+      <mat-checkbox *ngIf="field =='checkbox'" (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)">Check me!</mat-checkbox>
+      <mat-select *ngIf="field =='select'"> 
+        <mat-option (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)">
+          option
+        </mat-option>
+        <mat-option (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)">
+          option2
+        </mat-option>
+        <mat-option (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)">
+          option3
+        </mat-option>
+      </mat-select> -->
+
+      <mat-form-field *ngIf="field =='input'" class="text_field">
+        <input matInput  *ngIf="field =='input'" 
+                          [placeholder]="getFieldProp(i, 'placeholder')" 
+                          (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)" [ngStyle]="getFieldStyles(i)" >
+      </mat-form-field>
+
+      <mat-form-field *ngIf="field =='textarea'" class="textarea_field">
+        <textarea matInput
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="5"
+                  *ngIf="field =='textarea'" (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)"
+                  ></textarea>
+      </mat-form-field>
+
+      <button *ngIf="field =='button'" 
+               mat-raised-button color="primary" 
+               class="button"
+               (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)"
+               >Button</button>
+  
+      <mat-checkbox *ngIf="field =='checkbox'"
+                     class="checkbox"
+                     (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)"
+                     >Check me!</mat-checkbox>
+      
+      <mat-select *ngIf="field =='select'" 
+                  class="select"
+                  (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)"
+                  > 
+        <mat-option  class="select_option">
+          option
+        </mat-option>
+
+      </mat-select>
+
     </div>
-    <!-- <div 
-      cdkDropList
-      #constructor="cdkDropList"
-      [cdkDropListData]="constructorFields"
-      (cdkDropListDropped)="drop($event)"
-      *ngFor="let items of constructor"
-    > -->
   </div>
-  <!-- <button (click)="changeSelectedField()">Set select field</button> -->
 </div>

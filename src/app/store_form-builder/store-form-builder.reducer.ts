@@ -1,3 +1,4 @@
+// import { ConstructorField } from './store-form-builder.reducer';
 
 import { Action, createReducer, on } from '@ngrx/store';
 import { setSlectedFieldId, addConstructorField } from './store-form-builder.actions';
@@ -12,10 +13,13 @@ export type Styles = {
 } 
 
 export type ConstructorField = {
+  id: number;
   type: string;
   styles: Styles;
   order: number;
-  id: number;
+  label?: string;
+  options?: string[];
+  placeholder?: string;
 }
 
 export type SelectedFieldId = number | null;
@@ -49,13 +53,24 @@ const formBuilderReducer = createReducer(
       fieldId = constructorFields[constructorFields.length - 1].id + 1;
     }
 
-    const newField = {
+    const newField: ConstructorField = {
       type: constructorFieldType, 
       styles: {},
       order: constructorFields.length,
       id: fieldId,
     };
 
+    if (constructorFieldType === 'select') {
+      newField.options = ['example'];
+    }
+
+    if (constructorFieldType === 'checkbox') {
+      newField.label = 'label';
+    }
+
+    if (constructorFieldType === 'input') {
+      newField.placeholder = '';
+    }
     return ({
       ...state,
       constructorFields: [...constructorFields, newField ]

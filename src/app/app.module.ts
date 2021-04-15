@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormBuilder, FormsModule }   from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,7 +22,6 @@ import { FieldStylingFormComponent } from './form-builder/components/styling-for
     AppComponent,
     GeneralStylingFormComponent,
     FieldStylingFormComponent,
-    
   ],
   imports: [
     BrowserModule,
@@ -29,6 +29,7 @@ import { FieldStylingFormComponent } from './form-builder/components/styling-for
     FormsModule,
     DragDropModule,
     FormBuilderModule,
+    BrowserAnimationsModule,
     StoreModule.forRoot({storeFormBuilder: fromReducer.reducer})
   ],
   providers: [],

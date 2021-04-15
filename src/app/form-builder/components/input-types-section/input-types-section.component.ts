@@ -9,32 +9,13 @@ import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem} from '@angula
   templateUrl: './input-types-section.component.html',
   styleUrls: ['./input-types-section.component.scss']
 })
-export class InputTypesSectionComponent {
+export class InputTypesSectionComponent implements OnInit {
 
   constructor(private store: Store<{ state: any }>) {}
-  
-  // fieldTypes = [
-  //   {
-  //     type: 'input',
-  //     styles: {'some' : 'some'}
-  //   },
-  //   {
-  //     type: 'textarea',
-  //     styles: {'some' : 'some'}
-  //   },
-  //   {
-  //     type: 'button',
-  //     styles: {'some' : 'some'}
-  //   },
-  //   {
-  //     type: 'checkbox',
-  //     styles: {'some' : 'some'}
-  //   },
-  //   {
-  //     type: 'select',
-  //     styles: {'some' : 'some'}
-  //   }
-  // ]
+
+  ngOnInit() {
+    
+  }
 
   fieldTypes = [
     'input',
@@ -44,13 +25,4 @@ export class InputTypesSectionComponent {
     'select',
   ]
 
-  startDrag(event: any) {
-    // const field = event.source.element.nativeElement
-    // const fieldType =  field.getAttribute('data-type');
-
-    // if (!fieldType)
-    //   return;
-// 
-    // this.store.dispatch(setDraggableField({ draggableField: fieldType }));
-  }
 }

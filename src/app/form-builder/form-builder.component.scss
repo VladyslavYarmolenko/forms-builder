@@ -4,4 +4,9 @@
   grid-template-columns: 1fr 2fr 1fr;
 
   height: 1200px;
+  background-color: rgba(240, 224, 224, 0.925);
+}
+
+.cdk-drag-placeholder {
+  background-color: red;
 }

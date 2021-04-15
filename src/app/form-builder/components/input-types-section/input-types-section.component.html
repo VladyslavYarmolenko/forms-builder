@@ -1,6 +1,5 @@
 <div class="inputs">
-
-  <div 
+    <div 
     cdkDropList
     [cdkDropListData]="fieldTypes"
   >
@@ -9,21 +8,31 @@
       class="field-wrapper" 
       *ngFor="let field of fieldTypes"
     >
-      <input *ngIf="field =='input'" (cdkDragStarted)="startDrag($event)" data-type="input"/>
-      <textarea *ngIf="field =='textarea'"></textarea>
-      <button *ngIf="field =='button'"></button>
+      <mat-form-field *ngIf="field =='input'" class="text_field">
+        <input matInput >
+      </mat-form-field>
+
+      <mat-form-field *ngIf="field =='textarea'" class="textarea_field">
+        <textarea 
+          matInput
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+        >
+        </textarea>
+      </mat-form-field>
+
+      <button *ngIf="field =='button'" mat-raised-button color="primary" class="button">Button</button>
+  
+      <mat-checkbox *ngIf="field =='checkbox'"  class="checkbox">Check me!</mat-checkbox>
+      
+      <mat-select *ngIf="field =='select'" class="select"> 
+        <mat-option  class="select_option">
+          option
+        </mat-option>
+      </mat-select>
+      
     </div>
   </div>
-
-
-  <!-- <div 
-    cdkDropList
-    *ngFor="let field of fieldTypes"
-    [cdkDropListData]="fieldTypes"
-  >
-    <input *ngIf="field =='input'" cdkDrag (cdkDragStarted)="startDrag($event)" (cdkDragEnded) ="stopDrag($event)" data-type="input"/>
-    <textarea *ngIf="field =='textarea'" cdkDrag></textarea>
-    <button *ngIf="field =='button'" cdkDrag></button>
-  </div> -->
-
 </div>
