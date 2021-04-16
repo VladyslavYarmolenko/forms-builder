@@ -1,7 +1,7 @@
 <div class='constructor'>
+  <p class="constructor-field-title">form builder</p>
   <div 
-    class="inputs"
-    [ngStyle]="{'width': '300px', 'height': '300px'}" 
+    class="drop-container"
     cdkDropList
     [cdkDropListData]="constructorFieldsTypesList"
     (cdkDropListDropped)="drop($event)"
@@ -9,22 +9,6 @@
     <div
       *ngFor="let field of constructorFieldsTypesList; let i = index"
     >
-      <!-- <input *ngIf="field =='input'" [placeholder]="getFieldProp(i, 'placeholder')" (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)" [ngStyle]="getFieldStyles(i)"/>
-      <textarea *ngIf="field =='textarea'" (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)"></textarea>
-      <button *ngIf="field =='button'" (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)"></button>
-      <mat-checkbox *ngIf="field =='checkbox'" (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)">Check me!</mat-checkbox>
-      <mat-select *ngIf="field =='select'"> 
-        <mat-option (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)">
-          option
-        </mat-option>
-        <mat-option (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)">
-          option2
-        </mat-option>
-        <mat-option (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)">
-          option3
-        </mat-option>
-      </mat-select> -->
-
       <mat-form-field *ngIf="field =='input'" class="text_field">
         <input matInput  *ngIf="field =='input'" 
                           [placeholder]="getFieldProp(i, 'placeholder')" 
@@ -59,9 +43,7 @@
         <mat-option  class="select_option">
           option
         </mat-option>
-
       </mat-select>
-
     </div>
   </div>
 </div>

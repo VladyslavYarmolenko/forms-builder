@@ -1,20 +1,55 @@
 .inputs {
   grid-area: inputs ;
   height: 100%;
-
   padding: 20px;
 }
+
+.field-types-title {
+  font-weight: 700;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
+.input-types {
+  font-weight: 500;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.field-types {
+  font-weight: 500;
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.field-wrapper {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #262729;
+  color:#f1f3f5; 
+}
+
+.text_field  input,
+.textarea_field textarea,
+.select_option {
+  height: 30px;
+  border-radius: 3px;
+}
+
 
 .text_field,
 .textarea_field {
   width: 80%;
+
 }
 
 .text_field,
 .textarea_field,
 .button,
-.select,
+.checkbox,
+.field-types-title
  {
-  margin-bottom: 50px;
+  // margin-top: 20px;
 }
 
