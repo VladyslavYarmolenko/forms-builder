@@ -8,14 +8,15 @@
   >
     <div
       *ngFor="let field of constructorFieldsTypesList; let i = index"
+      class="form-container"
     >
-      <mat-form-field *ngIf="field =='input'" class="text_field">
+      <mat-form-field *ngIf="field =='input'" class="text_field field-wrapper">
         <input matInput  *ngIf="field =='input'" 
                           [placeholder]="getFieldProp(i, 'placeholder')" 
                           (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)" [ngStyle]="getFieldStyles(i)" >
       </mat-form-field>
 
-      <mat-form-field *ngIf="field =='textarea'" class="textarea_field">
+      <mat-form-field *ngIf="field =='textarea'" class="textarea_field field-wrapper">
         <textarea matInput
                   cdkTextareaAutosize
                   #autosize="cdkTextareaAutosize"

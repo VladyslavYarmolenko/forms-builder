@@ -77,23 +77,15 @@ const formBuilderReducer = createReducer(
       })
     }
   ),
-  // on(addConstructorField, (state, { constructorFieldId, propToChange, newPropState }) => {
-  //   const constructorFields = state.constructorFields;
+  on(addConstructorField, (state, { constructorFieldId, propToChange, newPropState }) => {
+    const constructorFields = state.constructorFields;
     
-
-  //   // const newField: ConstructorField = {
-  //   //   type: constructorFieldType, 
-  //   //   styles: {},
-  //   //   order: constructorFields.length,
-  //   //   id: fieldId,
-  //   // };
-
-  //   return ({
-  //     ...state,
-  //     constructorFields: [...constructorFields, newField ]
-  //     })
-  //   }
-  // )
+    return ({
+      ...state,
+      constructorFields: [...constructorFields, newField ]
+      })
+    }
+  )
 )
 
 export function reducer(state: State | undefined, action: Action){
