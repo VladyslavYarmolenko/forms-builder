@@ -1,9 +1,9 @@
-import { addConstructorField } from './../../../store_form-builder/store-form-builder.actions';
+import { addConstructorField, changeFieldProp } from './../../../store_form-builder/store-form-builder.actions';
 import { CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { setSlectedFieldId } from '../../../store_form-builder/store-form-builder.actions';
+import { setSelectedFieldId } from '../../../store_form-builder/store-form-builder.actions';
 import { selectConstructorFields, selectSelectedFieldId } from './../../../store_form-builder/store-form-builder.selectors';
 import { ConstructorField, FieldTypes, SelectedFieldId } from './../../../store_form-builder/store-form-builder.reducer';
 import { map, find } from 'rxjs/operators';
@@ -34,7 +34,7 @@ export class ConstructorSectionComponent implements OnInit {
 
   handleFieldClick(index: number) {
     const fieldId = this.constructorFieldsLocal[index].id;
-    this.store.dispatch(setSlectedFieldId({ selectedFieldId: fieldId }));
+    this.store.dispatch(setSelectedFieldId({ selectedFieldId: fieldId }));
   }
 
   handleFieldClickOutside(index: number) {
@@ -43,7 +43,7 @@ export class ConstructorSectionComponent implements OnInit {
     if (fieldId !== this.selectedFieldId)
       return;
 
-    this.store.dispatch(setSlectedFieldId({ selectedFieldId: null }));
+    this.store.dispatch(setSelectedFieldId({ selectedFieldId: null }));
   }
 
   getFieldStyles(index: number) {
@@ -60,6 +60,17 @@ export class ConstructorSectionComponent implements OnInit {
     return (field && field[prop]) ? field[prop] : null;   
   }
 
+  toChangeFieldProp (){
+    // const field: ConstructorField = this.constructorFieldsLocal[index];
+    // const fieldPlaceholder = field.placeholder;
+
+    //@ts-ignore
+    this.store.dispatch(changeFieldProp({ 
+      constructorFieldId: this.selectedFieldId, 
+      propToChange: 'placeholder', 
+      newPropState: 'Hello!'
+    }));
+  }
 
   drop(event: CdkDragDrop<any>) {
     if(event.previousContainer !== event.container){

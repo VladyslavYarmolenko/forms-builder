@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 
+
 import { InputTypesSectionComponent } from './components/input-types-section/input-types-section.component';
 import { ConstructorSectionComponent } from './components/constructor-section/constructor-section.component';
 import { 
@@ -19,6 +20,8 @@ import {
   // ,ComponentPortalExample 
 } from './components/styling-form-section/styling-form-section.component';
 import { FormBuilderComponent } from './form-builder.component';
+import { FieldStylingFormComponent } from './components/styling-form-section/field-styling-form/field-styling-form.component'
+import { GeneralStylingFormComponent } from './components/styling-form-section/general-styling-form/general-styling-form.component'; 
 
 
 @NgModule({
@@ -45,6 +48,8 @@ import { FormBuilderComponent } from './form-builder.component';
     InputTypesSectionComponent,
     ConstructorSectionComponent,
     StylingFormSectionComponent,
+    FieldStylingFormComponent,
+    GeneralStylingFormComponent,
     // ComponentPortalExample
   ],
   exports: [FormBuilderComponent],
@@ -52,4 +57,4 @@ import { FormBuilderComponent } from './form-builder.component';
   bootstrap: [FormBuilderComponent]
 })
 
-export class FormBuilderModule { }
+export class FormBuilderModule {}

@@ -1,7 +1,7 @@
 // import { ConstructorField } from './store-form-builder.reducer';
 
 import { Action, createReducer, on } from '@ngrx/store';
-import { setSlectedFieldId, addConstructorField } from './store-form-builder.actions';
+import { setSelectedFieldId, addConstructorField, changeFieldProp } from './store-form-builder.actions';
 
 export interface State {
   constructorFields: ConstructorField[];
@@ -28,6 +28,12 @@ export type DraggableField = string | null;
 
 export type FieldTypes = 'input' | 'textarea' | 'button' | 'select' | 'checkbox'; 
 
+export type ChangeFieldPropArguments = {
+  constructorFieldId: number;
+  propToChange: keyof ConstructorField
+  newPropState: number | string | string[] | String
+}
+
 const initialState: State = {
   constructorFields: [],
   selectedFieldId: null 
@@ -35,7 +41,7 @@ const initialState: State = {
 
 const formBuilderReducer = createReducer(
   initialState,
-  on(setSlectedFieldId, (state, { selectedFieldId }) => {
+  on(setSelectedFieldId, (state, { selectedFieldId }) => {
 
     return({
       ...state,
@@ -77,12 +83,25 @@ const formBuilderReducer = createReducer(
       })
     }
   ),
-  on(addConstructorField, (state, { constructorFieldId, propToChange, newPropState }) => {
-    const constructorFields = state.constructorFields;
+  on(changeFieldProp, (state, { constructorFieldId, propToChange, newPropState }: ChangeFieldPropArguments) => {
+    let constructorFields = state.constructorFields;
+    const field: ConstructorField | undefined = constructorFields.find((field: ConstructorField) => field.id == constructorFieldId)
+    let changedField: ConstructorField | null = null;
     
+    if (field) {
+      changedField = { ...field };
+      //@ts-ignore
+      changedField[propToChange] = newPropState;
+    }
+    
+    constructorFields = constructorFields.filter((field: ConstructorField) => field.id !== constructorFieldId);
+    
+    if (changedField)
+      constructorFields.push(changedField);
+
     return ({
       ...state,
-      constructorFields: [...constructorFields, newField ]
+      constructorFields: [...constructorFields]
       })
     }
   )
