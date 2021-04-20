@@ -21,7 +21,7 @@ export class ConstructorSectionComponent implements OnInit {
 
   constructor(private store: Store<{ state: any }>) {
     store.select(selectConstructorFields).subscribe((res: ConstructorField[]) => {
-      this.constructorFieldsLocal = res;
+      this.constructorFieldsLocal = res.sort((a, b) => a.order < b.order? 1 : -1);
       this.constructorFieldsTypesList = <FieldTypes[]>res.map((item: ConstructorField) => item.type);
     })
     store.select(selectSelectedFieldId).subscribe((selectedFieldId: SelectedFieldId) => {
@@ -38,8 +38,8 @@ export class ConstructorSectionComponent implements OnInit {
   }
 
   handleFieldClickOutside(index: number) {
+    console.log('ARR', this.constructorFieldsLocal, 'Index', index)
     const fieldId = this.constructorFieldsLocal[index].id;
-
     if (fieldId !== this.selectedFieldId)
       return;
 

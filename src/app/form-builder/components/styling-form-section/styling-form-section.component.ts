@@ -18,8 +18,8 @@ export class StylingFormSectionComponent implements OnInit {
    
   isFieldSelected$: Observable<boolean>;
   selectedPortal: Portal<any>;
-  componentPortal: ComponentPortal<FieldStylingFormComponent>
-  componentPortal2: ComponentPortal<GeneralStylingFormComponent>
+  componentPortal: ComponentPortal<GeneralStylingFormComponent>
+  componentPortal2: ComponentPortal<FieldStylingFormComponent>
 
   constructor(private _viewContainerRef: ViewContainerRef, private store: Store<{ state: any }>) { 
     store.select(selectSelectedFieldId).subscribe(selectedFieldId => {
@@ -33,7 +33,7 @@ export class StylingFormSectionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.componentPortal = new ComponentPortal(FieldStylingFormComponent);
+    this.componentPortal = new ComponentPortal(GeneralStylingFormComponent);
     this.componentPortal2 = new ComponentPortal(GeneralStylingFormComponent);
 
     this.selectedPortal = this.componentPortal;

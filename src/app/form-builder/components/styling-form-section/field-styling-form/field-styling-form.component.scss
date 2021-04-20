@@ -1,0 +1,33 @@
+.style-field-wrapper {
+  height: 100%;
+  padding: 15px;
+}
+
+.style-field-title {
+  font-weight: 700;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
+.stylize-field {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+  height: 600px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  background-color: #262729;
+}
+
+mat-form-field {
+  margin-top: 15px;
+}
+
+mat-form-field  mat-label {
+  color:#f1f3f5;
+  padding: 10px;
+  }
+
+.isRequired {
+  margin: 13px;
+}
