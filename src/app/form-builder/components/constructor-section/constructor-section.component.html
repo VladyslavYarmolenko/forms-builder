@@ -12,7 +12,7 @@
       *ngFor="let field of constructorFieldsTypesList; let i = index"
       class="form-container"
     >
-      <mat-form-field *ngIf="field =='input'" class="text_field field-wrapper">
+      <mat-form-field cdkDrag *ngIf="field =='input'" class="text_field field-wrapper">
         <input 
           matInput
           [placeholder]="getFieldProp(i, 'placeholder')"  
@@ -24,7 +24,7 @@
         >
       </mat-form-field>
 
-      <mat-form-field *ngIf="field =='textarea'" class="textarea_field field-wrapper">
+      <mat-form-field cdkDrag *ngIf="field =='textarea'" class="textarea_field field-wrapper">
         <textarea matInput
                   cdkTextareaAutosize
                   #autosize="cdkTextareaAutosize"
@@ -34,18 +34,18 @@
                   ></textarea>
       </mat-form-field>
 
-      <button *ngIf="field =='button'" 
+      <button cdkDrag *ngIf="field =='button'" 
                mat-raised-button color="primary" 
                class="button"
                (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)"
                >Button</button>
   
-      <mat-checkbox *ngIf="field =='checkbox'"
+      <mat-checkbox cdkDrag *ngIf="field =='checkbox'"
                      class="checkbox"
                      (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)"
                      >Check me!</mat-checkbox>
       
-      <mat-select *ngIf="field =='select'" 
+      <mat-select cdkDrag *ngIf="field =='select'" 
                   class="select"
                   (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)"
                   > 

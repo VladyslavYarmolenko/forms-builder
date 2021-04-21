@@ -1,11 +1,10 @@
-// import { ConstructorField } from './store-form-builder.reducer';
-
 import { Action, createReducer, on } from '@ngrx/store';
 import { setSelectedFieldId, addConstructorField, changeFieldProp } from './store-form-builder.actions';
 
 export interface State {
   constructorFields: ConstructorField[];
   selectedFieldId: SelectedFieldId;
+  // selectedFieldOrder : SelectedFieldOrder; 
 }
 
 export type Styles = {
@@ -21,6 +20,8 @@ export type ConstructorField = {
   options?: string[];
   placeholder?: string;
 }
+
+// export type SelectedFieldOrder = number;
 
 export type SelectedFieldId = number | null;
 
