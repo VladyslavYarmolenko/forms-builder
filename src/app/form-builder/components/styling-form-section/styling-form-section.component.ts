@@ -18,25 +18,24 @@ export class StylingFormSectionComponent implements OnInit {
    
   isFieldSelected$: Observable<boolean>;
   selectedPortal: Portal<any>;
-  componentPortal: ComponentPortal<GeneralStylingFormComponent>
-  componentPortal2: ComponentPortal<FieldStylingFormComponent>
+  componentGeneralStylingPortal: ComponentPortal<GeneralStylingFormComponent>
+  componentFieldStylingPortal: ComponentPortal<FieldStylingFormComponent>
 
   constructor(private _viewContainerRef: ViewContainerRef, private store: Store<{ state: any }>) { 
     store.select(selectSelectedFieldId).subscribe(selectedFieldId => {
-      console.log('selectedFieldId', selectedFieldId)
       if (selectedFieldId === null) {
-        this.selectedPortal = this.componentPortal
+        this.selectedPortal = this.componentGeneralStylingPortal;
       } else {
-        this.selectedPortal = this.componentPortal2
+        this.selectedPortal = this.componentFieldStylingPortal;
       }
     });
   }
 
   ngOnInit() {
-    this.componentPortal = new ComponentPortal(GeneralStylingFormComponent);
-    this.componentPortal2 = new ComponentPortal(GeneralStylingFormComponent);
+    this.componentGeneralStylingPortal = new ComponentPortal(GeneralStylingFormComponent);
+    this.componentFieldStylingPortal = new ComponentPortal(FieldStylingFormComponent);
 
-    this.selectedPortal = this.componentPortal;
+    this.selectedPortal = this.componentGeneralStylingPortal;
   }
 }
 

@@ -18,8 +18,8 @@
           [placeholder]="getFieldProp(i, 'placeholder')"  
           *ngIf="field =='input'" 
           (click)="handleFieldClick(i)" 
-          (click)="toChangeFieldProp()" 
           (clickOutside)="handleFieldClickOutside(i)" 
+          [exclude]="'.styles'"
           [ngStyle]="getFieldStyles(i)" 
         >
       </mat-form-field>

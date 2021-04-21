@@ -42,7 +42,6 @@ const initialState: State = {
 const formBuilderReducer = createReducer(
   initialState,
   on(setSelectedFieldId, (state, { selectedFieldId }) => {
-
     return({
       ...state,
       selectedFieldId : selectedFieldId,
@@ -50,8 +49,8 @@ const formBuilderReducer = createReducer(
   }),
   on(addConstructorField, (state, { constructorFieldType }) => {
     const constructorFields = state.constructorFields;
-    
-    let fieldId = 0;
+
+    let fieldId = constructorFields.length;
 
     if (constructorFields.length === 0){
       fieldId = constructorFields.length;
@@ -63,7 +62,7 @@ const formBuilderReducer = createReducer(
       type: constructorFieldType, 
       styles: {},
       order: constructorFields.length,
-      id: fieldId,
+      id: constructorFields.length,
     };
 
     if (constructorFieldType === 'select') {
@@ -77,9 +76,10 @@ const formBuilderReducer = createReducer(
     if (constructorFieldType === 'input') {
       newField.placeholder = '';
     }
+
     return ({
       ...state,
-      constructorFields: [...constructorFields, newField ]
+      constructorFields: state.constructorFields.concat(newField)
       })
     }
   ),

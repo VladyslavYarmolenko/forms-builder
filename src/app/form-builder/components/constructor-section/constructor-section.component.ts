@@ -21,7 +21,7 @@ export class ConstructorSectionComponent implements OnInit {
 
   constructor(private store: Store<{ state: any }>) {
     store.select(selectConstructorFields).subscribe((res: ConstructorField[]) => {
-      this.constructorFieldsLocal = res.sort((a, b) => a.order < b.order? 1 : -1);
+      this.constructorFieldsLocal = res;
       this.constructorFieldsTypesList = <FieldTypes[]>res.map((item: ConstructorField) => item.type);
     })
     store.select(selectSelectedFieldId).subscribe((selectedFieldId: SelectedFieldId) => {
@@ -34,11 +34,13 @@ export class ConstructorSectionComponent implements OnInit {
 
   handleFieldClick(index: number) {
     const fieldId = this.constructorFieldsLocal[index].id;
+    
+    console.log('CLICK', fieldId)
     this.store.dispatch(setSelectedFieldId({ selectedFieldId: fieldId }));
   }
 
   handleFieldClickOutside(index: number) {
-    console.log('ARR', this.constructorFieldsLocal, 'Index', index)
+    // console.log('ARR', this.constructorFieldsLocal, 'Index', index)
     const fieldId = this.constructorFieldsLocal[index].id;
     if (fieldId !== this.selectedFieldId)
       return;
@@ -73,11 +75,11 @@ export class ConstructorSectionComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<any>) {
+    console.log('EVENt', event)
     if(event.previousContainer !== event.container){
       copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
 
       const fieldType = <FieldTypes>event.previousContainer.data[event.previousIndex];
-      console.log(fieldType)
       this.store.dispatch(addConstructorField({ constructorFieldType: fieldType }))
   } else {
       moveItemInArray(this.constructorFieldsTypesList, event.previousIndex, event.currentIndex);
