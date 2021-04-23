@@ -1,5 +1,6 @@
+import { state } from '@angular/animations';
 import { Action, createReducer, on } from '@ngrx/store';
-import { setSelectedFieldId, addConstructorField, changeFieldProp } from './store-form-builder.actions';
+import { setSelectedFieldId, addConstructorField, changeFieldProp, setConstructorFields } from './store-form-builder.actions';
 
 export interface State {
   constructorFields: ConstructorField[];
@@ -103,6 +104,13 @@ const formBuilderReducer = createReducer(
     return ({
       ...state,
       constructorFields: [...constructorFields]
+      })
+    }
+  ),
+  on(setConstructorFields, (state, { newConstructorArr }) => {
+    return({
+      ...state,
+      constructorFields: [...newConstructorArr]
       })
     }
   )

@@ -1,7 +1,6 @@
-import { addConstructorField, changeFieldProp } from './../../../store_form-builder/store-form-builder.actions';
+import { addConstructorField, changeFieldProp, setConstructorFields } from './../../../store_form-builder/store-form-builder.actions';
 import { CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { setSelectedFieldId } from '../../../store_form-builder/store-form-builder.actions';
 import { selectConstructorFields, selectSelectedFieldId } from './../../../store_form-builder/store-form-builder.selectors';
@@ -22,9 +21,10 @@ export class ConstructorSectionComponent implements OnInit {
 
   constructor(private store: Store<{ state: any }>) {
     store.select(selectConstructorFields).subscribe((res: ConstructorField[]) => {
-      this.constructorFieldsLocal = res;
+      this.constructorFieldsLocal = res
+        .map(item => Object.assign({}, item))
+        
       this.constructorFieldsTypesList = <FieldTypes[]>res.map((item: ConstructorField) => item.type);
-      console.log(this.constructorFieldsTypesList)
     })
     store.select(selectSelectedFieldId).subscribe((selectedFieldId: SelectedFieldId) => {
       this.selectedFieldId = selectedFieldId
@@ -41,7 +41,6 @@ export class ConstructorSectionComponent implements OnInit {
   }
 
   handleFieldClickOutside(index: number) {
-    // console.log('ARR', this.constructorFieldsLocal, 'Index', index)
     const fieldId = this.constructorFieldsLocal[index].id;
     if (fieldId !== this.selectedFieldId)
       return;
@@ -77,14 +76,11 @@ export class ConstructorSectionComponent implements OnInit {
 
   setConstructorFieldsOrder(prevIndex: number, currentIndex: number) {
     let arr = [...this.constructorFieldsLocal]
-    arr = arr.map(item => Object.assign({}, item));
-    console.log('START', JSON.stringify(arr))
+
     const orderedField = arr[prevIndex];
 
     arr.splice(prevIndex, 1);
-    console.log('REMOVED', JSON.stringify(arr))
     arr.splice(currentIndex, 0, orderedField);
-    console.log('INSERTED', JSON.stringify(arr))
 
     arr.map((item: ConstructorField, index: number, array: ConstructorField[]) => {
       if (index === currentIndex) {
@@ -92,17 +88,17 @@ export class ConstructorSectionComponent implements OnInit {
       }
 
       if (currentIndex < prevIndex && index > currentIndex) {
-        console.log('IF')
         item.order++;
       } else if (currentIndex > prevIndex && index >= prevIndex && index < currentIndex) {
-        // console.log('ELSE')
-        // console.log('PREV CURRENT', prevIndex, currentIndex)
         item.order--;
       }
 
     })
 
-    console.log('ARRAY', arr)
+    // arr = arr.sort((a,b) => b.order > a.order ? 1 : -1);
+    arr = arr .sort((a: ConstructorField,b: ConstructorField) => a.order > b.order ? 1 : -1);
+    
+    return arr;
 
 
     // console.log('this.constructorFieldsLocal', this.constructorFieldsLocal)
@@ -130,11 +126,12 @@ export class ConstructorSectionComponent implements OnInit {
   } else {
     const prevIndex = event.previousIndex;
     const currentIndex = event.currentIndex;
-    // const field = this.constructorFieldsLocal[previousIndex];
 
-      moveItemInArray(this.constructorFieldsTypesList, event.previousIndex, event.currentIndex);
-      // moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      const reorderedArray = this.setConstructorFieldsOrder(prevIndex, currentIndex); 
+    moveItemInArray(this.constructorFieldsTypesList, event.previousIndex, event.currentIndex);
+    const reorderedArray = this.setConstructorFieldsOrder(prevIndex, currentIndex);
+
+    console.log('reorderedArray', reorderedArray)
+    this.store.dispatch(setConstructorFields({newConstructorArr: reorderedArray}))
     }
   }
 }

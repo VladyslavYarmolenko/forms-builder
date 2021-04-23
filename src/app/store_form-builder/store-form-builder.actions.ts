@@ -16,3 +16,8 @@ export const changeFieldProp = createAction(
   '[FORM BUILDER] CHANGE_FIELD_PROP',
   props<{constructorFieldId: any, propToChange: any, newPropState: any }>()
 )
+
+export const setConstructorFields = createAction(
+  '[FORM BUILDER] REORDERED_FIELDS_IN_CONSTRUCTOR',
+  props<{newConstructorArr : any}>()
+)

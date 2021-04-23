@@ -9,10 +9,12 @@
     (cdkDropListDropped)="drop($event)"
   >
     <div
-      *ngFor="let field of constructorFieldsTypesList; let i = index"
+      cdkDrag *ngFor="let field of constructorFieldsTypesList; let i = index"
       class="form-container"
     >
-      <mat-form-field cdkDrag *ngIf="field =='input'" class="text_field field-wrapper">
+      <div class="custom-placeholder" *cdkDragPlaceholder></div>
+
+      <mat-form-field *ngIf="field =='input'" class="text_field field-wrapper">
         <input 
           matInput
           [placeholder]="getFieldProp(i, 'placeholder')"  
@@ -24,7 +26,7 @@
         >
       </mat-form-field>
 
-      <mat-form-field cdkDrag *ngIf="field =='textarea'" class="textarea_field field-wrapper">
+      <mat-form-field *ngIf="field =='textarea'" class="textarea_field field-wrapper">
         <textarea matInput
                   cdkTextareaAutosize
                   #autosize="cdkTextareaAutosize"
@@ -33,19 +35,22 @@
                   *ngIf="field =='textarea'" (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)"
                   ></textarea>
       </mat-form-field>
-
-      <button cdkDrag *ngIf="field =='button'" 
-               mat-raised-button color="primary" 
-               class="button"
-               (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)"
-               >Button</button>
-  
-      <mat-checkbox cdkDrag *ngIf="field =='checkbox'"
+      
+      <button 
+            *ngIf="field =='button'"
+                mat-raised-button color="primary" 
+                class="button"
+                (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)"
+      >
+        Button
+      </button>
+      
+      <mat-checkbox  *ngIf="field =='checkbox'"
                      class="checkbox"
                      (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)"
                      >Check me!</mat-checkbox>
       
-      <mat-select cdkDrag *ngIf="field =='select'" 
+      <mat-select *ngIf="field =='select'" 
                   class="select"
                   (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside(i)"
                   > 
@@ -53,6 +58,10 @@
           option
         </mat-option>
       </mat-select>
+
+
+
+
     </div>
   </form>
   </div>
