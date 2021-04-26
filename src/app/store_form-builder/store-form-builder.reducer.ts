@@ -9,7 +9,7 @@ export interface State {
 }
 
 export type Styles = {
-  [key:string]: string;
+  [key:string]: string | number;
 } 
 
 export type ConstructorField = {
@@ -97,7 +97,7 @@ const formBuilderReducer = createReducer(
     }
     
     constructorFields = constructorFields.filter((field: ConstructorField) => field.id !== constructorFieldId);
-    
+    console.log('REDUCER changedField', changedField)
     if (changedField)
       constructorFields.push(changedField);
 

@@ -5,8 +5,6 @@ import { Store } from '@ngrx/store';
 import { setSelectedFieldId } from '../../../store_form-builder/store-form-builder.actions';
 import { selectConstructorFields, selectSelectedFieldId } from './../../../store_form-builder/store-form-builder.selectors';
 import { ConstructorField, FieldTypes, SelectedFieldId } from './../../../store_form-builder/store-form-builder.reducer';
-import { map, find } from 'rxjs/operators';
-import {ThemePalette} from '@angular/material/core';
 
 @Component({
   selector: 'app-constructor-section',
@@ -34,6 +32,9 @@ export class ConstructorSectionComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  selectGeneralField(name : string){
+  console.log(name)
+  }
   handleFieldClick(index: number) {
     const fieldId = this.constructorFieldsLocal[index].id;
   
@@ -63,9 +64,7 @@ export class ConstructorSectionComponent implements OnInit {
   }
 
   toChangeFieldProp (){
-    // const field: ConstructorField = this.constructorFieldsLocal[index];
-    // const fieldPlaceholder = field.placeholder;
-
+    
     //@ts-ignore
     this.store.dispatch(changeFieldProp({ 
       constructorFieldId: this.selectedFieldId, 
@@ -95,29 +94,13 @@ export class ConstructorSectionComponent implements OnInit {
 
     })
 
-    // arr = arr.sort((a,b) => b.order > a.order ? 1 : -1);
     arr = arr .sort((a: ConstructorField,b: ConstructorField) => a.order > b.order ? 1 : -1);
     
     return arr;
-
-
-    // console.log('this.constructorFieldsLocal', this.constructorFieldsLocal)
-    // let arr = [...this.constructorFieldsLocal]
-    // arr = arr.map(item => Object.assign({}, item));
-    
-    // let removedElems = arr.splice(currentIndex + 1);
-    // arr[arr.length - 1].order = currentIndex;
-
-    // for(let i = 0; i < removedElems.length; i++){
-    //   removedElems[i].order = removedElems[i].order + 1
-    // }
-
-    // const result = arr.concat(removedElems)
-    // console.log('RESULT', result)
+   
   }
 
   drop(event: CdkDragDrop<any>) {
-    // console.log('EVENt', event, event.previousContainer !== event.container)
 
   if(event.previousContainer !== event.container){
       copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);

@@ -4,40 +4,40 @@
   </p>
   <form class="stylize-field">
     <mat-form-field>
-      <mat-label>Placeholder text</mat-label>
-      <input matInput>
+      <mat-label>Placeholder</mat-label>
+      <input matInput name="placeholder" (ngModelChange)="styleChanged($event, 'placeholder')" [(ngModel)] = 'placeholder'>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Width</mat-label>
-      <input matInput>
+      <input matInput name="width" (ngModelChange)="styleChanged($event, 'width')" [(ngModel)] = 'width'>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Height</mat-label>
-      <input matInput>
+      <input matInput name="height" (ngModelChange)="styleChanged($event, 'height')" [(ngModel)] = 'height'>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Border Style</mat-label>
-      <input matInput>
+      <mat-label>Border</mat-label>
+      <input matInput name="border" (ngModelChange)="styleChanged($event, 'border')" [(ngModel)] = 'border'>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Font Size Input</mat-label>
-      <input matInput>
+      <mat-label>Font Size</mat-label>
+      <input matInput name="fontSize" (ngModelChange)="styleChanged($event, 'fontSize')" [(ngModel)] = 'fontSize'>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Font Weight Select</mat-label>
-      <input matInput>
+      <input matInput name="fontWeigthSelect" (ngModelChange)="styleChanged($event, 'fontWeightSelect')" [(ngModel)] = 'fontWeightSelect'>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Color Input RGB</mat-label>
-      <input matInput>
+      <mat-label>Color</mat-label>
+      <input matInput name="color" (ngModelChange)="styleChanged($event, 'color')"  [(ngModel)] = 'color'>
     </mat-form-field>
-    <mat-checkbox class="isRequired">Required</mat-checkbox>
+    <mat-checkbox class="isRequired" name="isRequired" (ngModelChange)="styleChanged($event, 'false')"  [(ngModel)] = 'isRequired'>Required</mat-checkbox>
   </form>
 </div>
 
