@@ -11,8 +11,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-
-
 import { InputTypesSectionComponent } from './components/input-types-section/input-types-section.component';
 import { ConstructorSectionComponent } from './components/constructor-section/constructor-section.component';
 import { 
@@ -36,8 +34,8 @@ import { GeneralStylingFormComponent } from './components/styling-form-section/g
     MatSelectModule,
     MatInputModule,
     MatFormFieldModule,
-    MatButtonModule
-  ],
+    MatButtonModule,
+    ],
   entryComponents: 
     [
       StylingFormSectionComponent,

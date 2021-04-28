@@ -1,11 +1,16 @@
 <div class="style-field-wrapper">
   <p class="style-field-title">
-    Choose what you would like to style on the selected field:)
+    SELECT FIELD STYLES
   </p>
   <form class="stylize-field">
-    <mat-form-field>
+    <mat-form-field *ngIf="placeholder != null">
       <mat-label>Placeholder</mat-label>
       <input matInput name="placeholder" (ngModelChange)="styleChanged($event, 'placeholder')" [(ngModel)] = 'placeholder'>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="text != null">
+      <mat-label>Text</mat-label>
+      <input matInput name="placeholder" (ngModelChange)="styleChanged($event, 'text')" [(ngModel)] = 'text'>
     </mat-form-field>
 
     <mat-form-field>
@@ -29,8 +34,8 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Font Weight Select</mat-label>
-      <input matInput name="fontWeigthSelect" (ngModelChange)="styleChanged($event, 'fontWeightSelect')" [(ngModel)] = 'fontWeightSelect'>
+      <mat-label>Font Weight</mat-label>
+      <input matInput name="fontWeigth" (ngModelChange)="styleChanged($event, 'fontWeight')" [(ngModel)] = 'fontWeight'>
     </mat-form-field>
 
     <mat-form-field>

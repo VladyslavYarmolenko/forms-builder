@@ -1,5 +1,5 @@
 import { addConstructorField, changeFieldProp, setConstructorFields } from './../../../store_form-builder/store-form-builder.actions';
-import { CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, copyArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { setSelectedFieldId } from '../../../store_form-builder/store-form-builder.actions';
@@ -11,6 +11,7 @@ import { ConstructorField, FieldTypes, SelectedFieldId } from './../../../store_
   templateUrl: './constructor-section.component.html',
   styleUrls: ['./constructor-section.component.scss']
 })
+
 export class ConstructorSectionComponent implements OnInit {
   constructorFieldsTypesList: FieldTypes[] = [];
   constructorFieldsLocal: ConstructorField[] = [];
@@ -21,7 +22,6 @@ export class ConstructorSectionComponent implements OnInit {
     store.select(selectConstructorFields).subscribe((res: ConstructorField[]) => {
       this.constructorFieldsLocal = res
         .map(item => Object.assign({}, item))
-        
       this.constructorFieldsTypesList = <FieldTypes[]>res.map((item: ConstructorField) => item.type);
     })
     store.select(selectSelectedFieldId).subscribe((selectedFieldId: SelectedFieldId) => {
@@ -32,9 +32,7 @@ export class ConstructorSectionComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  selectGeneralField(name : string){
-  console.log(name)
-  }
+
   handleFieldClick(index: number) {
     const fieldId = this.constructorFieldsLocal[index].id;
   
@@ -57,8 +55,7 @@ export class ConstructorSectionComponent implements OnInit {
   }
 
   getFieldProp(index: number, prop: string) {
-    const field: ConstructorField = this.constructorFieldsLocal[index]
-
+    const field: ConstructorField = this.constructorFieldsLocal[index];
     //@ts-ignore
     return (field && field[prop]) ? field[prop] : null;   
   }
@@ -94,7 +91,7 @@ export class ConstructorSectionComponent implements OnInit {
 
     })
 
-    arr = arr .sort((a: ConstructorField,b: ConstructorField) => a.order > b.order ? 1 : -1);
+    arr = arr.sort((a: ConstructorField, b: ConstructorField) => a.order > b.order ? 1 : -1);
     
     return arr;
    
@@ -113,7 +110,6 @@ export class ConstructorSectionComponent implements OnInit {
     moveItemInArray(this.constructorFieldsTypesList, event.previousIndex, event.currentIndex);
     const reorderedArray = this.setConstructorFieldsOrder(prevIndex, currentIndex);
 
-    console.log('reorderedArray', reorderedArray)
     this.store.dispatch(setConstructorFields({newConstructorArr: reorderedArray}))
     }
   }

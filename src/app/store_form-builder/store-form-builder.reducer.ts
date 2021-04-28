@@ -1,4 +1,3 @@
-import { state } from '@angular/animations';
 import { Action, createReducer, on } from '@ngrx/store';
 import { setSelectedFieldId, addConstructorField, changeFieldProp, setConstructorFields } from './store-form-builder.actions';
 
@@ -9,7 +8,7 @@ export interface State {
 }
 
 export type Styles = {
-  [key:string]: string | number;
+  [key:string]: any;
 } 
 
 export type ConstructorField = {
@@ -20,6 +19,7 @@ export type ConstructorField = {
   label?: string;
   options?: string[];
   placeholder?: string;
+  text?: string;
 }
 
 // export type SelectedFieldOrder = number;
@@ -51,6 +51,7 @@ const formBuilderReducer = createReducer(
   }),
   on(addConstructorField, (state, { constructorFieldType }) => {
     const constructorFields = state.constructorFields;
+    console.log(constructorFields)
 
     let fieldId = constructorFields.length;
 
@@ -68,17 +69,22 @@ const formBuilderReducer = createReducer(
     };
 
     if (constructorFieldType === 'select') {
+      newField.label = 'Default label';
       newField.options = ['example'];
     }
 
     if (constructorFieldType === 'checkbox') {
-      newField.label = 'label';
+      newField.label = 'Default label';
     }
 
-    if (constructorFieldType === 'input') {
-      newField.placeholder = '';
+    if (constructorFieldType === 'input' || constructorFieldType === 'textarea') {
+      newField.placeholder = 'Default placeholder';
     }
 
+    if (constructorFieldType === 'button') {
+      newField.text = 'Button'
+    }
+    
     return ({
       ...state,
       constructorFields: state.constructorFields.concat(newField)
@@ -97,7 +103,6 @@ const formBuilderReducer = createReducer(
     }
     
     constructorFields = constructorFields.filter((field: ConstructorField) => field.id !== constructorFieldId);
-    console.log('REDUCER changedField', changedField)
     if (changedField)
       constructorFields.push(changedField);
 
