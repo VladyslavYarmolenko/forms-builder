@@ -14,6 +14,7 @@ export class FieldStylingFormComponent implements OnInit {
 
   placeholder: null | string = null;
   text: null | string = null;
+  label: null | string = null;
   width: null | string = null;
   height: null | number = null;
   border: null | string = null
@@ -21,6 +22,8 @@ export class FieldStylingFormComponent implements OnInit {
   fontWeight: null | number = null;
   color: null | number = null;
   isRequired: boolean;
+  optionsList: string[] = [];
+  
   
   selectedFieldId : SelectedFieldId = null;
   constructorFieldsLocal: ConstructorField[] = []
@@ -32,18 +35,15 @@ export class FieldStylingFormComponent implements OnInit {
     store.select(selectConstructorFields).subscribe((res: ConstructorField[]) => {
       this.constructorFieldsLocal = res.map(item => Object.assign({}, item));
       let field = this.constructorFieldsLocal.find(item => item.id === this.selectedFieldId);
+      this.optionsList= <string[]>field?.options?.map(option => option);
 
       if (!field) 
         return;
 
-      // if(field.type === 'button' || field.type === 'checkbox' || field.type === 'select'){
-      //   this.fieldName = 'Text'
-      // } else {
-      //   this.fieldName = 'Placeholder'
-      // }
 
       this.placeholder = field.placeholder ?? this.placeholder;
       this.text = field.text ?? this.text;
+      this.label = field.label ?? this.label;
       
       if (!field.styles)
         return;
@@ -56,17 +56,17 @@ export class FieldStylingFormComponent implements OnInit {
       this.fontWeight = field.styles.color ?? this.color;
       this.isRequired = field.styles.isRequired ?? this.isRequired;
 
+      console.log(this.optionsList)
     })
   }
 
   styleChanged(value: any, propName: any) {
     let field = this.constructorFieldsLocal.find(item => item.id === this.selectedFieldId);
     
-    
     if (!field)
       return;
 
-    if (propName === 'placeholder' || propName === 'text') {
+    if (propName === 'placeholder' || propName === 'text' || propName === 'label') {
       this.store.dispatch(changeFieldProp({
         constructorFieldId: this.selectedFieldId,
         propToChange:  propName,
@@ -79,7 +79,6 @@ export class FieldStylingFormComponent implements OnInit {
     const fieldStyles: Styles = { ...field.styles };
 
     fieldStyles[propName] = value;
-    
 
     this.store.dispatch(changeFieldProp({
       constructorFieldId: this.selectedFieldId,
@@ -88,11 +87,31 @@ export class FieldStylingFormComponent implements OnInit {
     }))
   }
   
+  addNewOption() {
+    let field = this.constructorFieldsLocal.find(item => item.id === this.selectedFieldId);
 
+    if (!field)
+      return;
+
+    let fieldOptArr: string[] = [] 
+
+    if (field.options) {
+      fieldOptArr = field.options;
+    }
+
+    let arr: string[] = [...fieldOptArr];
+
+    arr.push('Default option');
+
+    this.store.dispatch(changeFieldProp({ constructorFieldId: this.selectedFieldId , propToChange: 'options', newPropState: arr }))
+  }
+
+  changeInputValue(event: any, index: number){
+    let value = event.target.value;
+    this.optionsList.splice(index, 1, value)
+    this.store.dispatch(changeFieldProp({ constructorFieldId: this.selectedFieldId , propToChange: 'options', newPropState: this.optionsList }))
+  }
   ngOnInit(): void {
-    // let field = this.constructorFieldsLocal.find(item => item.id === this.selectedFieldId);
-    // // console.log('PlaceholderText', this.placeholderText)
-    
   }
 
 }

@@ -77,7 +77,7 @@ const formBuilderReducer = createReducer(
       newField.label = 'Default label';
     }
 
-    if (constructorFieldType === 'input' || constructorFieldType === 'textarea') {
+    if (constructorFieldType === 'input' || constructorFieldType === 'textarea'){
       newField.placeholder = 'Default placeholder';
     }
 
@@ -105,7 +105,7 @@ const formBuilderReducer = createReducer(
     constructorFields = constructorFields.filter((field: ConstructorField) => field.id !== constructorFieldId);
     if (changedField)
       constructorFields.push(changedField);
-
+    
     return ({
       ...state,
       constructorFields: [...constructorFields]
@@ -118,7 +118,31 @@ const formBuilderReducer = createReducer(
       constructorFields: [...newConstructorArr]
       })
     }
-  )
+  ),
+  // on(addNewOption, (state, { optionValue }) => {
+
+  //   let constructorFields = state.constructorFields;
+  //   const field: ConstructorField | undefined = constructorFields.find((field: ConstructorField) => field.id == constructorFieldId)
+  //   let changedField: ConstructorField | null = null;
+    
+  //   if (field) {
+  //     changedField = { ...field };
+      
+  //     if (changedField.options?.length)
+  //       changedField.options = [...changedField.options, optionValue];
+  //   }
+      
+
+  //   if (changedField) {
+  //     constructorFields = constructorFields.filter((field: ConstructorField) => field.id !== constructorFieldId);
+  //     constructorFields.push(changedField);
+  //   }
+      
+  //   return({
+  //     ...state,
+  //     constructorFields: [...constructorFields]
+  //   })
+  // })
 )
 
 export function reducer(state: State | undefined, action: Action){

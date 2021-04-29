@@ -1,4 +1,4 @@
-import { addConstructorField, changeFieldProp, setConstructorFields } from './../../../store_form-builder/store-form-builder.actions';
+import { addConstructorField, setConstructorFields } from './../../../store_form-builder/store-form-builder.actions';
 import { CdkDragDrop, copyArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -32,6 +32,12 @@ export class ConstructorSectionComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  handleSelectOpenedChange(status: boolean, i: number) {
+    if (!status)
+      return;
+
+    this.handleFieldClick(i);
+  }
 
   handleFieldClick(index: number) {
     const fieldId = this.constructorFieldsLocal[index].id;
@@ -39,9 +45,13 @@ export class ConstructorSectionComponent implements OnInit {
     this.store.dispatch(setSelectedFieldId({ selectedFieldId: fieldId }));
   }
 
-  handleFieldClickOutside(index: number) {
+  handleFieldClickOutside(event: any, index: number) {
+    const target = event.target;
     const fieldId = this.constructorFieldsLocal[index].id;
-    if (fieldId !== this.selectedFieldId)
+
+    const isSelectOverlay = target.closest('.cdk-overlay-backdrop');
+    
+    if (fieldId !== this.selectedFieldId || isSelectOverlay)
       return;
 
     this.store.dispatch(setSelectedFieldId({ selectedFieldId: null }));
@@ -60,15 +70,6 @@ export class ConstructorSectionComponent implements OnInit {
     return (field && field[prop]) ? field[prop] : null;   
   }
 
-  toChangeFieldProp (){
-    
-    //@ts-ignore
-    this.store.dispatch(changeFieldProp({ 
-      constructorFieldId: this.selectedFieldId, 
-      propToChange: 'placeholder', 
-      newPropState: 'Hello!'
-    }));
-  }
 
   setConstructorFieldsOrder(prevIndex: number, currentIndex: number) {
     let arr = [...this.constructorFieldsLocal]

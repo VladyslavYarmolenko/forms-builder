@@ -10,8 +10,20 @@
 
     <mat-form-field *ngIf="text != null">
       <mat-label>Text</mat-label>
-      <input matInput name="placeholder" (ngModelChange)="styleChanged($event, 'text')" [(ngModel)] = 'text'>
+      <input matInput name="text" (ngModelChange)="styleChanged($event, 'text')" [(ngModel)] = 'text'>
     </mat-form-field>
+
+    <mat-form-field *ngIf="label != null">
+      <mat-label>Label</mat-label>
+      <input matInput name="label" (ngModelChange)="styleChanged($event, 'label')" [(ngModel)] = 'label'>
+    </mat-form-field>
+
+      <button (click)='addNewOption()'>+</button>
+      <!-- <input matInput name="label" (ngModelChange)="styleChanged($event, 'label')" [(ngModel)] = 'label'> -->
+      <div *ngFor='let option of optionsList; let i = index'>
+        <input (change)='changeInputValue($event, i)' value=" {{option}}">
+      </div>
+    <!-- <button mat-mini-fab color="accent" class='add-option-button'></button> -->
 
     <mat-form-field>
       <mat-label>Width</mat-label>
