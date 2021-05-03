@@ -73,7 +73,7 @@ const formBuilderReducer = createReducer(
       newField.options = ['example'];
     }
 
-    if (constructorFieldType === 'checkbox') {
+    if (constructorFieldType === 'checkbox' || constructorFieldType === 'select') {
       newField.label = 'Default label';
     }
 

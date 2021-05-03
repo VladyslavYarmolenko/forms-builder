@@ -1,6 +1,8 @@
 .style-field-wrapper {
   height: 100%;
   padding: 15px;
+  max-height: 100vh;
+  overflow: auto;
 }
 
 .style-field-title {
@@ -13,7 +15,6 @@
   display: flex;
   flex-direction: column;
   padding-bottom: 10px;
-  height: 600px;
   margin-bottom: 5px;
   border-radius: 10px;
   background-color: #262729;
@@ -35,3 +36,17 @@ mat-form-field  mat-label {
 .isRequired {
   margin: 13px;
 }
+
+.optionList {
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  margin-bottom: 10px;
+}
+
+.option-input {
+  border-bottom: 1px solid black;
+}
+

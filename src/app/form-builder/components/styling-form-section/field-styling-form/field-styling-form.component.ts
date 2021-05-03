@@ -23,7 +23,7 @@ export class FieldStylingFormComponent implements OnInit {
   color: null | number = null;
   isRequired: boolean;
   optionsList: string[] = [];
-  
+  fieldType: string | undefined;
   
   selectedFieldId : SelectedFieldId = null;
   constructorFieldsLocal: ConstructorField[] = []
@@ -36,6 +36,9 @@ export class FieldStylingFormComponent implements OnInit {
       this.constructorFieldsLocal = res.map(item => Object.assign({}, item));
       let field = this.constructorFieldsLocal.find(item => item.id === this.selectedFieldId);
       this.optionsList= <string[]>field?.options?.map(option => option);
+
+      this.fieldType = field?.type
+      
 
       if (!field) 
         return;
@@ -56,7 +59,6 @@ export class FieldStylingFormComponent implements OnInit {
       this.fontWeight = field.styles.color ?? this.color;
       this.isRequired = field.styles.isRequired ?? this.isRequired;
 
-      console.log(this.optionsList)
     })
   }
 
@@ -111,6 +113,12 @@ export class FieldStylingFormComponent implements OnInit {
     this.optionsList.splice(index, 1, value)
     this.store.dispatch(changeFieldProp({ constructorFieldId: this.selectedFieldId , propToChange: 'options', newPropState: this.optionsList }))
   }
+
+  deleteOption(index : number){
+    this.optionsList.splice(index, 1);
+    this.store.dispatch(changeFieldProp({ constructorFieldId: this.selectedFieldId , propToChange: 'options', newPropState: this.optionsList }))
+  }
+
   ngOnInit(): void {
   }
 

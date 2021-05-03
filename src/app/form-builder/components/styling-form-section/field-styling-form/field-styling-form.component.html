@@ -18,12 +18,11 @@
       <input matInput name="label" (ngModelChange)="styleChanged($event, 'label')" [(ngModel)] = 'label'>
     </mat-form-field>
 
-      <button (click)='addNewOption()'>+</button>
-      <!-- <input matInput name="label" (ngModelChange)="styleChanged($event, 'label')" [(ngModel)] = 'label'> -->
-      <div *ngFor='let option of optionsList; let i = index'>
-        <input (change)='changeInputValue($event, i)' value=" {{option}}">
+      <button mat-button  *ngIf="fieldType === 'select'" (click)='addNewOption()'>+</button>
+      <div *ngFor='let option of optionsList; let i = index' class="optionList">
+        <input matInput (change)='changeInputValue($event, i)' value=" {{option}}">
+        <button mat-button (click)='deleteOption(i)'>-</button>
       </div>
-    <!-- <button mat-mini-fab color="accent" class='add-option-button'></button> -->
 
     <mat-form-field>
       <mat-label>Width</mat-label>

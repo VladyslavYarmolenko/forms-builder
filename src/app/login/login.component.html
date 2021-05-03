@@ -1,0 +1,9 @@
+<div class='login-wrapper'>
+  <form #loginForm="ngForm" class="login-form">
+      <p>Username:</p>
+      <input type="text" matInput name="username" [(ngModel)]="username" >
+      <p>Password:</p>
+      <input matInput type="text" name="password" [(ngModel)]="password">
+      <button mat-button type='submit' (click)="onSubmit(loginForm)">Login</button>
+  </form>
+</div>

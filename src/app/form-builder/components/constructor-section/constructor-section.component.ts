@@ -50,8 +50,9 @@ export class ConstructorSectionComponent implements OnInit {
     const fieldId = this.constructorFieldsLocal[index].id;
 
     const isSelectOverlay = target.closest('.cdk-overlay-backdrop');
-    
-    if (fieldId !== this.selectedFieldId || isSelectOverlay)
+    const isStylesArea = target.closest('.styles');
+
+    if (isStylesArea || isSelectOverlay || fieldId !== this.selectedFieldId)
       return;
 
     this.store.dispatch(setSelectedFieldId({ selectedFieldId: null }));
