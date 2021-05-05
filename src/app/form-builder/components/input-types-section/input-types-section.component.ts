@@ -1,8 +1,6 @@
-// import { setDraggableField } from '../../../store_form-builder/store-form-builder.actions';
-// import { selectDraggableField } from '../../../store_form-builder/store-form-builder.selectors';
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
-import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+
 
 @Component({
   selector: 'app-input-types-section',

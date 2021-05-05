@@ -44,9 +44,19 @@
       <input matInput name="fontSize" (ngModelChange)="styleChanged($event, 'fontSize')" [(ngModel)] = 'fontSize'>
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field class="fontWeightStyle">
       <mat-label>Font Weight</mat-label>
-      <input matInput name="fontWeigth" (ngModelChange)="styleChanged($event, 'fontWeight')" [(ngModel)] = 'fontWeight'>
+      <mat-select [(value)]="fontWeight">
+        <mat-option value='100' (click)="styleChanged(fontWeight, 'fontWeight')">
+          lighter
+        </mat-option>
+        <mat-option value='400' (click)="styleChanged(fontWeight, 'fontWeight')">
+          normal
+        </mat-option>
+        <mat-option value='700' (click)="styleChanged(fontWeight, 'fontWeight')">
+          bold
+        </mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field>

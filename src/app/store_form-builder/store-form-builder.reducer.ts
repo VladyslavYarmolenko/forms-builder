@@ -4,7 +4,6 @@ import { setSelectedFieldId, addConstructorField, changeFieldProp, setConstructo
 export interface State {
   constructorFields: ConstructorField[];
   selectedFieldId: SelectedFieldId;
-  // selectedFieldOrder : SelectedFieldOrder; 
 }
 
 export type Styles = {
@@ -21,8 +20,6 @@ export type ConstructorField = {
   placeholder?: string;
   text?: string;
 }
-
-// export type SelectedFieldOrder = number;
 
 export type SelectedFieldId = number | null;
 
@@ -119,30 +116,6 @@ const formBuilderReducer = createReducer(
       })
     }
   ),
-  // on(addNewOption, (state, { optionValue }) => {
-
-  //   let constructorFields = state.constructorFields;
-  //   const field: ConstructorField | undefined = constructorFields.find((field: ConstructorField) => field.id == constructorFieldId)
-  //   let changedField: ConstructorField | null = null;
-    
-  //   if (field) {
-  //     changedField = { ...field };
-      
-  //     if (changedField.options?.length)
-  //       changedField.options = [...changedField.options, optionValue];
-  //   }
-      
-
-  //   if (changedField) {
-  //     constructorFields = constructorFields.filter((field: ConstructorField) => field.id !== constructorFieldId);
-  //     constructorFields.push(changedField);
-  //   }
-      
-  //   return({
-  //     ...state,
-  //     constructorFields: [...constructorFields]
-  //   })
-  // })
 )
 
 export function reducer(state: State | undefined, action: Action){

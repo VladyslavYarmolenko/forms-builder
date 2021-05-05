@@ -56,7 +56,6 @@ export class FieldStylingFormComponent implements OnInit {
       this.border = field.styles.border ?? this.border;
       this.fontSize = field.styles.fontSize ?? this.fontSize;
       this.fontWeight = field.styles.fontWeight ?? this.fontWeight;
-      this.fontWeight = field.styles.color ?? this.color;
       this.isRequired = field.styles.isRequired ?? this.isRequired;
 
     })
@@ -74,10 +73,8 @@ export class FieldStylingFormComponent implements OnInit {
         propToChange:  propName,
         newPropState: value
       }));
-
       return;
     }
-
     const fieldStyles: Styles = { ...field.styles };
 
     fieldStyles[propName] = value;
@@ -118,7 +115,6 @@ export class FieldStylingFormComponent implements OnInit {
     this.optionsList.splice(index, 1);
     this.store.dispatch(changeFieldProp({ constructorFieldId: this.selectedFieldId , propToChange: 'options', newPropState: this.optionsList }))
   }
-
   ngOnInit(): void {
   }
 

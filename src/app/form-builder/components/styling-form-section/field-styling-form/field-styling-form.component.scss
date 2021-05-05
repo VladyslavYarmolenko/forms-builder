@@ -50,3 +50,14 @@ button {
   border-bottom: 1px solid black;
 }
 
+.fontWeightStyle mat-select ::ng-deep {
+  padding-left: 10px;
+  box-sizing: border-box;
+}
+
+
+.mat-select-value {
+  color: #f1f3f5;
+}
+
+

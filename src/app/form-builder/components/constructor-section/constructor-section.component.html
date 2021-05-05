@@ -52,7 +52,7 @@
                      (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside($event, i)"
                      [exclude]="'.styles'"
                      [ngStyle]="getFieldStyles(i)"
-                     >Check me!</mat-checkbox>
+                     >{{getFieldProp(i, 'label')}}</mat-checkbox>
       
       <mat-form-field *ngIf="field =='select'">
         <mat-label>{{getFieldProp(i, 'label')}}</mat-label>
