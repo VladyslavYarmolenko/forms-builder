@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
@@ -13,10 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { InputTypesSectionComponent } from './components/input-types-section/input-types-section.component';
 import { ConstructorSectionComponent } from './components/constructor-section/constructor-section.component';
-import { 
-  StylingFormSectionComponent
-  // ,ComponentPortalExample 
-} from './components/styling-form-section/styling-form-section.component';
+import { StylingFormSectionComponent } from './components/styling-form-section/styling-form-section.component';
 import { FormBuilderComponent } from './form-builder.component';
 import { FieldStylingFormComponent } from './components/styling-form-section/field-styling-form/field-styling-form.component'
 import { GeneralStylingFormComponent } from './components/styling-form-section/general-styling-form/general-styling-form.component'; 
@@ -39,7 +35,6 @@ import { GeneralStylingFormComponent } from './components/styling-form-section/g
   entryComponents: 
     [
       StylingFormSectionComponent,
-      // ComponentPortalExample
     ],
   declarations: [
     FormBuilderComponent,
@@ -48,7 +43,6 @@ import { GeneralStylingFormComponent } from './components/styling-form-section/g
     StylingFormSectionComponent,
     FieldStylingFormComponent,
     GeneralStylingFormComponent,
-    // ComponentPortalExample
   ],
   exports: [FormBuilderComponent],
   providers: [],

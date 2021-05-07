@@ -1,9 +1,21 @@
 <div class='login-wrapper'>
   <form #loginForm="ngForm" class="login-form">
       <p>Email:</p>
-      <input type="text" matInput name="email" [(ngModel)]="email" >
+      <input 
+             type="text"
+             matInput 
+             name="email" 
+             [(ngModel)]="email" >
       <p>Password:</p>
-      <input matInput type="text" name="password" [(ngModel)]="password">
-      <button mat-button type='submit' (click)="onSubmit(loginForm)">Login</button>
+      <input 
+             matInput 
+             type="text" 
+             name="password" 
+             [(ngModel)]="password">
+
+      <button mat-button
+       type='submit'
+        (click)="onSubmit(loginForm)"
+      >Login</button>
   </form>
 </div>

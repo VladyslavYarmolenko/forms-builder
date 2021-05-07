@@ -1,7 +1,9 @@
-import { HttpService } from './../services/login-service';
+import { HttpService } from './../services/login.service';
 import { Component, OnInit } from '@angular/core';
-import * as Cookies from 'js-cookie';
 import { Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
+
+
 
 @Component({
   selector: 'app-login',
@@ -13,16 +15,17 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
 
+  form: FormGroup;
+
   constructor(private httpService: HttpService, private router: Router) { }
 
   onSubmit(formData: any){
     const { email, password } = formData.value;
-    console.log('formData.value', formData.value)
     this.httpService.fetchLogin(formData.value)
                 .subscribe(
                     (data: any) => {
                       if (data.accessToken) {
-                        Cookies.set('accessToken', data.accessToken);
+                        localStorage.setItem('token', data.accessToken)
                         this.router.navigate(['/form-builder']);
                       }
                     },
@@ -31,11 +34,10 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const accessToken = Cookies.get('accessToken');
+    const accessToken = localStorage.getItem('token');
 
     if (accessToken) {
       this.router.navigate(['/form-builder']);
     }
   }
-
 }

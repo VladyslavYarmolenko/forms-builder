@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
@@ -7,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +16,8 @@ import { StoreModule } from '@ngrx/store';
 
 import * as fromReducer from './store_form-builder/store-form-builder.reducer';
 import { LoginComponent } from './login/login.component';
+import { FormBuilderGuard } from './guard-route/form-builder.guard';
+
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { LoginComponent } from './login/login.component';
     HttpClientModule,
     StoreModule.forRoot({storeFormBuilder: fromReducer.reducer})
   ],
-  providers: [HttpClientModule],
-  bootstrap: [AppComponent]
+  providers: [FormBuilderGuard, HttpClientModule],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
