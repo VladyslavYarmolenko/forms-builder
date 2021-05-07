@@ -16,13 +16,15 @@ import { StoreModule } from '@ngrx/store';
 
 import * as fromReducer from './store_form-builder/store-form-builder.reducer';
 import { LoginComponent } from './login/login.component';
-import { FormBuilderGuard } from './guard-route/form-builder.guard';
+import { FormBuilderGuard } from '../guard-route/form-builder.guard';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { FieldTypes, SelectedFieldId} from './store-form-builder.reducer';
+import { FieldTypes, SelectedFieldId} from '../../interfaces/interfaces';
 
 export const setSelectedFieldId = createAction(
   '[FORM BUILDER] SET_SELECTED_FIELD_ID', 

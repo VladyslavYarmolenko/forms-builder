@@ -4,12 +4,13 @@ import { Router } from '@angular/router';
 
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss'],
   providers: [HttpService]
 })
-export class LoginComponent implements OnInit {
+
+export class RegisterComponent implements OnInit {
   email: string;
   password: string;
 
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit(formData: any){
     const { email, password } = formData.value;
-    this.httpService.fetchLogin(formData.value)
+    this.httpService.registr(formData.value)
                 .subscribe(
                     (data: any) => {
                       if (data.accessToken) {
@@ -28,16 +29,6 @@ export class LoginComponent implements OnInit {
                     error => console.log(error)
                 );
   }
-  
-  ngOnInit(): void {
-    const accessToken = localStorage.getItem('token');
-
-    if (accessToken) {
-      this.router.navigate(['/form-builder']);
-    }
-  }
-
-  redirectToRegister(){
-    this.router.navigate(['/register']);
+  ngOnInit()  {
   }
 }

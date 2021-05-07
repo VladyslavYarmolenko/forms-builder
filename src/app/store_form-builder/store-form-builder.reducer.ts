@@ -1,39 +1,8 @@
+import { formBuilderState, ConstructorField, ChangeFieldPropArguments } from '../../interfaces/interfaces';
 import { Action, createReducer, on } from '@ngrx/store';
 import { setSelectedFieldId, addConstructorField, changeFieldProp, setConstructorFields } from './store-form-builder.actions';
 
-export interface State {
-  constructorFields: ConstructorField[];
-  selectedFieldId: SelectedFieldId;
-}
-
-export type Styles = {
-  [key:string]: any;
-} 
-
-export type ConstructorField = {
-  id: number;
-  type: string;
-  styles: Styles;
-  order: number;
-  label?: string;
-  options?: string[];
-  placeholder?: string;
-  text?: string;
-}
-
-export type SelectedFieldId = number | null;
-
-export type DraggableField = string | null;
-
-export type FieldTypes = 'input' | 'textarea' | 'button' | 'select' | 'checkbox'; 
-
-export type ChangeFieldPropArguments = {
-  constructorFieldId: number;
-  propToChange: keyof ConstructorField
-  newPropState: number | string | string[] | String
-}
-
-const initialState: State = {
+const initialState: formBuilderState = {
   constructorFields: [],
   selectedFieldId: null 
 }
@@ -118,6 +87,6 @@ const formBuilderReducer = createReducer(
   ),
 )
 
-export function reducer(state: State | undefined, action: Action){
+export function reducer(state: formBuilderState | undefined, action: Action){
   return formBuilderReducer(state, action)
 }

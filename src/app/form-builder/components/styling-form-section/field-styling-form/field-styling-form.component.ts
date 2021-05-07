@@ -1,5 +1,5 @@
 import { changeFieldProp } from './../../../../store_form-builder/store-form-builder.actions';
-import { SelectedFieldId, ConstructorField, Styles } from './../../../../store_form-builder/store-form-builder.reducer';
+import { SelectedFieldId, ConstructorField, Styles } from '../../../../../interfaces/interfaces';
 import { selectSelectedFieldId, selectConstructorFields } from './../../../../store_form-builder/store-form-builder.selectors';
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';

@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { setSelectedFieldId } from '../../../store_form-builder/store-form-builder.actions';
 import { selectConstructorFields, selectSelectedFieldId } from './../../../store_form-builder/store-form-builder.selectors';
-import { ConstructorField, FieldTypes, SelectedFieldId } from './../../../store_form-builder/store-form-builder.reducer';
+import { ConstructorField, FieldTypes, SelectedFieldId } from '../../../../interfaces/interfaces';
 
 @Component({
   selector: 'app-constructor-section',

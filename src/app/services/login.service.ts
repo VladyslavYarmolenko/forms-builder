@@ -1,12 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import { User } from '../../interfaces/interfaces';
 
-
-
-export class User{
-  email: string;
-  password: string;
-}
 
 @Injectable()
 export class HttpService{
@@ -15,7 +10,13 @@ export class HttpService{
  
     fetchLogin(user: User){
           
-        const body = {email: user.email, password: user.password};
+        let body = {email: user.email, password: user.password};
         return this.http.post('http://localhost:3000/login', body); 
+    }
+
+    registr(user: User){
+        
+        let body = {email: user.email, password: user.password};
+        return this.http.post('http://localhost:3000/register', body)
     }
 }

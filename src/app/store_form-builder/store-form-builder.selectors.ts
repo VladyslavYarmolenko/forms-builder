@@ -1,5 +1,4 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
-// import { State } from './store_form-builder.reducer'
 
 const state = createFeatureSelector('storeFormBuilder')
 

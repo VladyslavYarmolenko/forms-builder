@@ -1,5 +1,5 @@
 import { setConstructorFields } from './../../../../store_form-builder/store-form-builder.actions';
-import { ConstructorField } from './../../../../store_form-builder/store-form-builder.reducer';
+import { ConstructorField } from '../../../../../interfaces/interfaces';
 import { selectConstructorFields } from './../../../../store_form-builder/store-form-builder.selectors';
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
