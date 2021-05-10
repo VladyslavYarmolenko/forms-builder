@@ -3,16 +3,33 @@ export interface formBuilderState {
   selectedFieldId: SelectedFieldId;
 }
 
+// export interface RouterStateUrl {
+//   url: string;
+//   queryParams: Params;
+// }
 
-export interface User{
+export interface loginState {
+  user: User;
+  error: Error;
+}
+
+export interface User {
   email: string;
   password: string;
 }
 
+export interface Error {
+  code: number;
+  message: string;
+}
+
+export interface AuthResponse {
+  accessToken: string;
+}
 
 export type Styles = {
   [key:string]: any;
-} 
+}
 
 export type ConstructorField = {
   id: number;

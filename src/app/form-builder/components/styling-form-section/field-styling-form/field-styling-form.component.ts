@@ -39,7 +39,6 @@ export class FieldStylingFormComponent implements OnInit {
 
       this.fieldType = field?.type
       
-
       if (!field) 
         return;
 

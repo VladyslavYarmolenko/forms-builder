@@ -1,34 +1,42 @@
-import { HttpService } from './../services/login.service';
+import { getUser } from './../store-auth/store-auth.selectors';
+import { RegisterAction } from './../store-auth/store-auth.actions';
+import { User } from './../../interfaces/interfaces';
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  providers: [HttpService]
 })
 
 export class RegisterComponent implements OnInit {
-  email: string;
-  password: string;
+  form: FormGroup;
+  user$: Observable<User>;
 
-  constructor(private httpService: HttpService, private router: Router) { }
+  constructor(private store: Store, private router: Router) {}
 
-  onSubmit(formData: any){
-    const { email, password } = formData.value;
-    this.httpService.registr(formData.value)
-                .subscribe(
-                    (data: any) => {
-                      if (data.accessToken) {
-                        localStorage.setItem('token', data.accessToken)
-                        this.router.navigate(['/form-builder']);
-                      }
-                    },
-                    error => console.log(error)
-                );
+  ngOnInit(): void {
+    this.initForm();
+    this.user$ = this.store.select(getUser);
   }
-  ngOnInit()  {
+
+  ngOnChanges() {
+    console.log('CHANGES')
+  }
+
+  private initForm(): void {
+    this.form = new FormGroup({
+      email: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required)
+    });
+  }
+
+  onSubmit(formData: any) {
+    console.log('SUBMIT', formData.value)
+    this.store.dispatch(new RegisterAction(formData.value));
   }
 }

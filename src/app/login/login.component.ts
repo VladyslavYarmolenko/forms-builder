@@ -1,41 +1,26 @@
-import { HttpService } from './../services/login.service';
+import { LoginAction } from './../store-auth/store-auth.actions';
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
+
 
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  providers: [HttpService]
 })
 export class LoginComponent implements OnInit {
   email: string;
   password: string;
 
-  constructor(private httpService: HttpService, private router: Router) { }
+  constructor(private store: Store, private router: Router) { }
 
   onSubmit(formData: any){
-    const { email, password } = formData.value;
-    this.httpService.fetchLogin(formData.value)
-                .subscribe(
-                    (data: any) => {
-                      if (data.accessToken) {
-                        localStorage.setItem('token', data.accessToken)
-                        this.router.navigate(['/form-builder']);
-                      }
-                    },
-                    error => console.log(error)
-                );
+    this.store.dispatch(new LoginAction(formData.value))
   }
   
-  ngOnInit(): void {
-    const accessToken = localStorage.getItem('token');
-
-    if (accessToken) {
-      this.router.navigate(['/form-builder']);
-    }
-  }
+  ngOnInit(): void {}
 
   redirectToRegister(){
     this.router.navigate(['/register']);

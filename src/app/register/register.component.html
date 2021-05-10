@@ -1,21 +1,11 @@
 <div class='login-wrapper'>
-  <form #loginForm="ngForm" class="login-form">
-      <p>Email:</p>
-      <input 
-             type="text"
-             matInput 
-             name="email" 
-             [(ngModel)]="email" >
-      <p>Password:</p>
-      <input 
-             matInput 
-             type="text" 
-             name="password" 
-             [(ngModel)]="password">
-
-      <button mat-button
-       type='submit'
-        (click)="onSubmit(loginForm)"
-      >Register</button>
+  <form [formGroup]="form" class="login-form" ngNativeValidate>
+		<p>Email:</p>
+		<input type="email" formControlName='email' placeholder="enter your email" />
+		
+		<p>Password:</p>
+		<input  type="password"  formControlName='password' placeholder="enter a password" />
+		
+		<button 	mat-button type='submit' (click)="onSubmit(form)">Sign-up</button>
   </form>
 </div>

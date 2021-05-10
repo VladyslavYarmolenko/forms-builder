@@ -17,8 +17,7 @@ const formBuilderReducer = createReducer(
   }),
   on(addConstructorField, (state, { constructorFieldType }) => {
     const constructorFields = state.constructorFields;
-    console.log(constructorFields)
-
+    
     let fieldId = constructorFields.length;
 
     if (constructorFields.length === 0){
@@ -39,7 +38,7 @@ const formBuilderReducer = createReducer(
       newField.options = ['example'];
     }
 
-    if (constructorFieldType === 'checkbox' || constructorFieldType === 'select') {
+    if (constructorFieldType === 'checkbox' || constructorFieldType === 'select'){
       newField.label = 'Default label';
     }
 

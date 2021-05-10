@@ -35,6 +35,8 @@ import { GeneralStylingFormComponent } from './components/styling-form-section/g
   entryComponents: 
     [
       StylingFormSectionComponent,
+      GeneralStylingFormComponent,
+      FieldStylingFormComponent,
     ],
   declarations: [
     FormBuilderComponent,
