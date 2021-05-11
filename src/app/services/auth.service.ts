@@ -14,7 +14,6 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   public register(user: User): Observable<AuthResponse>{
-    console.log('REGISTER SERVICE ', user)
     return this.http.post<AuthResponse>(`${environment.baseUrl}/users/register`, user);
   }
 

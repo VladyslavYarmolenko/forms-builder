@@ -11,8 +11,6 @@ import { Component, OnInit } from '@angular/core';
 })
 
 
-
-
 export class GeneralStylingFormComponent implements OnInit {
 
 width: null | string = null;
@@ -40,6 +38,5 @@ color: null | number = null;
   }
   ngOnInit(): void {
   }
-
 }
 

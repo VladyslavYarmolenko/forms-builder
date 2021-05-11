@@ -1,33 +1,35 @@
+@import '../../../utilities/variables';
+
 .inputs {
   grid-area: inputs ;
   height: 100%;
   padding: 15px;
-}
-
-.field-types-title {
-  font-weight: 700;
-  font-size: 25px;
-  margin-bottom: 20px;
-}
-
-.input-types {
-  font-weight: 500;
-  font-size: 15px;
-  margin-bottom: 20px;
-}
-
-.field-types {
-  font-weight: 500;
-  font-size: 15px;
-  margin-bottom: 12px;
+  
+  &-types {
+    font-weight: 500;
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
 }
 
 .field-wrapper {
   margin-bottom: 15px;
   padding: 10px;
   border-radius: 10px;
-  background-color: #262729;
-  color:#f1f3f5; 
+  background-color: $fieldWrapper;
+  color: $text-color; 
+}
+
+.field-types {
+  font-weight: 500;
+  font-size: 15px;
+  margin-bottom: 12px;
+
+  &-title {
+    font-weight: 700;
+    font-size: 25px;
+    margin-bottom: 20px;
+  }
 }
 
 .text_field  input,
@@ -37,19 +39,9 @@
   border-radius: 3px;
 }
 
-
 .text_field,
 .textarea_field {
   width: 80%;
-
 }
 
-.text_field,
-.textarea_field,
-.button,
-.checkbox,
-.field-types-title
- {
-  // margin-top: 20px;
-}
 

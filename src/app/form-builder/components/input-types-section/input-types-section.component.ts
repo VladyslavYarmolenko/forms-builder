@@ -22,5 +22,4 @@ export class InputTypesSectionComponent implements OnInit {
     'checkbox',
     'select',
   ]
-
 }

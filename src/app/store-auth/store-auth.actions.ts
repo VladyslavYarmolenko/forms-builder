@@ -1,6 +1,4 @@
-import { AuthResponse } from './../../interfaces/interfaces';
 import { Action } from '@ngrx/store';
-
 import { User, Error } from '../../interfaces/interfaces';
 
 export enum ActionTypes {

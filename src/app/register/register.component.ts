@@ -36,7 +36,6 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(formData: any) {
-    console.log('SUBMIT', formData.value)
     this.store.dispatch(new RegisterAction(formData.value));
   }
 }

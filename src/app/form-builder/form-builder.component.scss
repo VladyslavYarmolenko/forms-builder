@@ -1,8 +1,10 @@
+@import '../utilities/variables';
+
 .form-builder-wrapper {
   display: grid;
   grid-template-areas: styles constructor inputs ;
   grid-template-columns: 1fr 2fr 1fr;
   min-height: 100%;
   height: 100%;
-  background-color: #303133;
+  background-color: $background;
 }

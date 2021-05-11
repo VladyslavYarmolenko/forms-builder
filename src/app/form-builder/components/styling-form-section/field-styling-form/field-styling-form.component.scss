@@ -1,3 +1,5 @@
+@import '../../../../utilities/variables';
+
 .style-field-wrapper {
   height: 100%;
   padding: 15px;
@@ -17,11 +19,15 @@
   padding-bottom: 10px;
   margin-bottom: 5px;
   border-radius: 10px;
-  background-color: #262729;
+  background-color: $fieldWrapper;
 }
 
 input {
   padding-left: 10px;
+}
+
+button {
+  margin-bottom: 10px;
 }
 
 mat-form-field {
@@ -29,9 +35,10 @@ mat-form-field {
 }
 
 mat-form-field  mat-label {
-  color:#f1f3f5;
+  color: $text-color;
   padding: 10px;
-  }
+  
+}
 
 .isRequired {
   margin: 13px;
@@ -42,12 +49,8 @@ mat-form-field  mat-label {
   flex-direction: column;
 }
 
-button {
-  margin-bottom: 10px;
-}
-
 .option-input {
-  border-bottom: 1px solid black;
+  border-bottom: $border;
 }
 
 .fontWeightStyle mat-select ::ng-deep {
@@ -55,9 +58,6 @@ button {
   box-sizing: border-box;
 }
 
-
 .mat-select-value {
-  color: #f1f3f5;
+  color: $text-color;
 }
-
-

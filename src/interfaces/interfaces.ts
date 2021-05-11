@@ -3,11 +3,6 @@ export interface formBuilderState {
   selectedFieldId: SelectedFieldId;
 }
 
-// export interface RouterStateUrl {
-//   url: string;
-//   queryParams: Params;
-// }
-
 export interface loginState {
   user: User;
   error: Error;
