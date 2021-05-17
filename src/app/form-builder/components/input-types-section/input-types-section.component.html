@@ -1,0 +1,39 @@
+<div class="inputs">
+    <div 
+    cdkDropList
+    [cdkDropListData]="fieldTypes"
+  >
+    <p class="field-types-title">DROP SECTION</p>
+    <div 
+      cdkDrag
+      class="field-wrapper" 
+      *ngFor="let field of fieldTypes"
+    >
+    <mat-form-field *ngIf="field =='input'" class="text_field">
+      <p class="input-types">Input type: text</p>
+      <input matInput >
+    </mat-form-field>
+    
+      <mat-form-field *ngIf="field =='textarea'" class="textarea_field">
+        <p class="inputs-types">Input type: textarea</p>
+        <textarea 
+        matInput
+        >
+      </textarea>
+    </mat-form-field>
+    
+      <p class="field-types" *ngIf="field =='button'">Button:</p>
+      <button *ngIf="field =='button'" mat-raised-button color="primary" class="button">Button</button>
+      
+      <p class="field-types" *ngIf="field =='checkbox'">Checkbox with label:</p>
+      <mat-checkbox *ngIf="field =='checkbox'" class="checkbox">Label</mat-checkbox>
+      
+      <p class="field-types" *ngIf="field =='select'">Select with options:</p>
+      <mat-select *ngIf="field =='select'" class="select"> 
+        <mat-option  class="select_option">
+          option
+        </mat-option>
+      </mat-select>
+    </div>
+  </div>
+</div>

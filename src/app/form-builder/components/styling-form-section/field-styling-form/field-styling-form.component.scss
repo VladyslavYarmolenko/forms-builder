@@ -1,0 +1,63 @@
+@import '../../../../utilities/variables';
+
+.style-field-wrapper {
+  height: 100%;
+  padding: 15px;
+  max-height: 100vh;
+  overflow: auto;
+}
+
+.style-field-title {
+  font-weight: 700;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
+.stylize-field {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  background-color: $fieldWrapper;
+}
+
+input {
+  padding-left: 10px;
+}
+
+button {
+  margin-bottom: 10px;
+}
+
+mat-form-field {
+  margin-top: 15px;
+}
+
+mat-form-field  mat-label {
+  color: $text-color;
+  padding: 10px;
+  
+}
+
+.isRequired {
+  margin: 13px;
+}
+
+.optionList {
+  display: flex;
+  flex-direction: column;
+}
+
+.option-input {
+  border-bottom: $border;
+}
+
+.fontWeightStyle mat-select ::ng-deep {
+  padding-left: 10px;
+  box-sizing: border-box;
+}
+
+.mat-select-value {
+  color: $text-color;
+}

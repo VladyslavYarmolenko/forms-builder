@@ -1,0 +1,35 @@
+@import '../../../../utilities/variables';
+
+.style-form-wrapper {
+  height: 100%;
+  padding: 15px;
+}
+
+.style-form-title {
+  font-weight: 700;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
+.stylize-form {
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  padding-bottom: 10px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  background-color: $fieldWrapper;
+}
+
+input {
+  padding-left: 10px;
+}
+
+mat-form-field {
+  margin-top: 20px;
+}
+
+mat-form-field  mat-label{
+    color: $text-color;
+    padding: 10px;
+  }

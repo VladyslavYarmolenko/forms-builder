@@ -1,1 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap');
+@import './app/utilities/variables';
+
+html,
+body {
+  height: 100%;
+  font-family: $fontFamily;
+  color: $text-color;
+}
+
+body,
+p,
+h1,
+h2 {
+  margin: 0;
+}
+
+.cdk-overlay-container {
+  pointer-events: none;
+}

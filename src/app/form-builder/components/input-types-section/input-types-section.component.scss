@@ -1,0 +1,47 @@
+@import '../../../utilities/variables';
+
+.inputs {
+  grid-area: inputs ;
+  height: 100%;
+  padding: 15px;
+  
+  &-types {
+    font-weight: 500;
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+}
+
+.field-wrapper {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: $fieldWrapper;
+  color: $text-color; 
+}
+
+.field-types {
+  font-weight: 500;
+  font-size: 15px;
+  margin-bottom: 12px;
+
+  &-title {
+    font-weight: 700;
+    font-size: 25px;
+    margin-bottom: 20px;
+  }
+}
+
+.text_field  input,
+.textarea_field textarea,
+.select_option {
+  height: 30px;
+  border-radius: 3px;
+}
+
+.text_field,
+.textarea_field {
+  width: 80%;
+}
+
+
