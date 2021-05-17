@@ -1,8 +1,8 @@
-import { LoginAction } from './../store-auth/store-auth.actions';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 
+import { LoginAction } from './../store-auth/store-auth.actions';
 
 
 @Component({

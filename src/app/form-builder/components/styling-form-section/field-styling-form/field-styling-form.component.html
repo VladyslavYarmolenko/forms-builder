@@ -3,19 +3,19 @@
     SELECT FIELD STYLES
   </p>
   <form class="stylize-field">
-    <mat-form-field *ngIf="placeholder != null">
+    <mat-form-field *ngIf="styles.placeholder != null">
       <mat-label>Placeholder</mat-label>
-      <input matInput name="placeholder" (ngModelChange)="styleChanged($event, 'placeholder')" [(ngModel)] = 'placeholder'>
+      <input matInput name="placeholder" (ngModelChange)="styleChanged($event, 'placeholder')" [(ngModel)] = 'styles.placeholder'>
     </mat-form-field>
 
-    <mat-form-field *ngIf="text != null">
+    <mat-form-field *ngIf="styles.text != null">
       <mat-label>Text</mat-label>
-      <input matInput name="text" (ngModelChange)="styleChanged($event, 'text')" [(ngModel)] = 'text'>
+      <input matInput name="text" (ngModelChange)="styleChanged($event, 'text')" [(ngModel)] = 'styles.text'>
     </mat-form-field>
 
-    <mat-form-field *ngIf="label != null">
+    <mat-form-field *ngIf="styles.label != null">
       <mat-label>Label</mat-label>
-      <input matInput name="label" (ngModelChange)="styleChanged($event, 'label')" [(ngModel)] = 'label'>
+      <input matInput name="label" (ngModelChange)="styleChanged($event, 'label')" [(ngModel)] = 'styles.label'>
     </mat-form-field>
 
       <button mat-button  *ngIf="fieldType === 'select'" (click)='addNewOption()'>+</button>
@@ -26,27 +26,22 @@
 
     <mat-form-field>
       <mat-label>Width</mat-label>
-      <input matInput name="width" (ngModelChange)="styleChanged($event, 'width')" [(ngModel)] = 'width'>
+      <input matInput name="width" (ngModelChange)="styleChanged($event, 'width')" [(ngModel)] = 'styles.width'>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Height</mat-label>
-      <input matInput name="height" (ngModelChange)="styleChanged($event, 'height')" [(ngModel)] = 'height'>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Border</mat-label>
-      <input matInput name="border" (ngModelChange)="styleChanged($event, 'border')" [(ngModel)] = 'border'>
+      <input matInput name="height" (ngModelChange)="styleChanged($event, 'height')" [(ngModel)] = 'styles.height'>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Font Size</mat-label>
-      <input matInput name="fontSize" (ngModelChange)="styleChanged($event, 'fontSize')" [(ngModel)] = 'fontSize'>
+      <input matInput name="fontSize" (ngModelChange)="styleChanged($event, 'fontSize')" [(ngModel)] = 'styles.fontSize'>
     </mat-form-field>
 
     <mat-form-field class="fontWeightStyle">
       <mat-label>Font Weight</mat-label>
-      <mat-select [(value)]="fontWeight">
+      <mat-select [(value)]="styles.fontWeight">
         <mat-option value='100' (click)="styleChanged(fontWeight, 'fontWeight')">
           lighter
         </mat-option>
@@ -61,9 +56,10 @@
 
     <mat-form-field>
       <mat-label>Color</mat-label>
-      <input matInput name="color" (ngModelChange)="styleChanged($event, 'color')"  [(ngModel)] = 'color'>
+      <input matInput name="color" (ngModelChange)="styleChanged($event, 'color')"  [(ngModel)] = 'styles.color'>
     </mat-form-field>
-    <mat-checkbox class="isRequired" name="isRequired" (ngModelChange)="styleChanged($event, 'false')"  [(ngModel)] = 'isRequired'>Required</mat-checkbox>
+
+    <mat-checkbox *ngIf="fieldType === 'input' || fieldType === 'textarea'" class="isRequired" name="isRequired" (ngModelChange)="isRequiredField()"  [(ngModel)] = 'styles.isRequired'>Required</mat-checkbox>
   </form>
 </div>
 

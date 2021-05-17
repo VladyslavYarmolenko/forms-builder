@@ -8,70 +8,70 @@
     [cdkDropListData]="constructorFieldsTypesList"
     (cdkDropListDropped)="drop($event)"
     >
-    <form
-      cdkDrag *ngFor="let field of constructorFieldsTypesList; let i = index"
-      class="form-container"
-    >
-     
-      <mat-form-field *ngIf="field =='input'" class="text_field field-wrapper" [ngStyle]="getFieldStyles(i)">
-        <input 
-          *ngIf="field =='input'" 
-          matInput
-          [placeholder]="getFieldProp(i, 'placeholder')"  
-          (click)="handleFieldClick(i)" 
-          (clickOutside)="handleFieldClickOutside($event, i)" 
-          [exclude]="'.styles'"
-          [ngStyle]="getFieldStyles(i)"
-        >
-      </mat-form-field>
-
-      <mat-form-field *ngIf="field =='textarea'" class="textarea_field field-wrapper" [ngStyle]="getFieldStyles(i)" >
-        <textarea
-            *ngIf="field =='textarea'" 
+    <form>
+      <div class="form-container" cdkDrag *ngFor="let field of constructorFieldsTypesList; let i = index">
+        <mat-form-field *ngIf="field =='input'" class="text_field field-wrapper" [ngStyle]="getFieldStyles(i)">
+          <input 
+            *ngIf="field =='input'" 
             matInput
             [placeholder]="getFieldProp(i, 'placeholder')"  
-             (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside($event, i)"
+            (click)="handleFieldClick(i)" 
+            (clickOutside)="handleFieldClickOutside($event, i)" 
             [exclude]="'.styles'"
             [ngStyle]="getFieldStyles(i)"
-            ></textarea>
-      </mat-form-field>
-      
-      <button 
-            *ngIf="field =='button'"
-            mat-raised-button color="primary" 
-            class="button"
-            (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside($event, i)"
-            [exclude]="'.styles'"
-            [ngStyle]="getFieldStyles(i)"
-      >
-        {{getFieldProp(i, 'text')}}
-      </button>
-      
-      <mat-checkbox  *ngIf="field =='checkbox'"
-                     class="checkbox"
-                     (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside($event, i)"
-                     [exclude]="'.styles'"
-                     [ngStyle]="getFieldStyles(i)"
-                     >{{getFieldProp(i, 'label')}}</mat-checkbox>
-      
-      <mat-form-field *ngIf="field =='select'">
-        <mat-label>{{getFieldProp(i, 'label')}}</mat-label>
-        <mat-select *ngIf="field =='select'" 
-                    class="select"
-                    (openedChange)="handleSelectOpenedChange($event, i)" 
-                    [ngStyle]="getFieldStyles(i)"
-                    (clickOutside)="handleFieldClickOutside($event, i)"
-                    [exclude]="'.styles, .cdk-overlay-backdrop'"
-                  >
-          
-          <mat-option *ngFor="let option of getFieldProp(i, 'options')" 
-                      class="select_option" 
+            [required]="isRequired"
+          >
+        </mat-form-field>
+
+        <mat-form-field *ngIf="field =='textarea'" class="textarea_field field-wrapper" [ngStyle]="getFieldStyles(i)" >
+          <textarea
+              *ngIf="field =='textarea'" 
+              matInput
+              [placeholder]="getFieldProp(i, 'placeholder')"  
+              (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside($event, i)"
+              [exclude]="'.styles'"
+              [ngStyle]="getFieldStyles(i)"
+              [required]="isRequired"
+              ></textarea>
+        </mat-form-field>
+        
+        <button 
+              *ngIf="field =='button'"
+              mat-raised-button color="primary" 
+              class="button"
+              (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside($event, i)"
+              [exclude]="'.styles'"
+              [ngStyle]="getFieldStyles(i)"
+        >
+          {{getFieldProp(i, 'text')}}
+        </button>
+        
+        <mat-checkbox  *ngIf="field =='checkbox'"
+                      class="checkbox"
+                      (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside($event, i)"
+                      [exclude]="'.styles'"
                       [ngStyle]="getFieldStyles(i)"
-                      >
-            {{ option }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+                      >{{getFieldProp(i, 'label')}}</mat-checkbox>
+        
+        <mat-form-field *ngIf="field =='select'">
+          <mat-label>{{getFieldProp(i, 'label')}}</mat-label>
+          <mat-select *ngIf="field =='select'" 
+                      class="select"
+                      (openedChange)="handleSelectOpenedChange($event, i)" 
+                      [ngStyle]="getFieldStyles(i)"
+                      (clickOutside)="handleFieldClickOutside($event, i)"
+                      [exclude]="'.styles, .cdk-overlay-backdrop'"
+                    >
+            
+            <mat-option *ngFor="let option of getFieldProp(i, 'options')" 
+                        class="select_option" 
+                        [ngStyle]="getFieldStyles(i)"
+                        >
+              {{ option }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </form>
   </div>
   </div>

@@ -1,8 +1,11 @@
-import { changeFieldProp } from './../../../../store_form-builder/store-form-builder.actions';
-import { SelectedFieldId, ConstructorField, Styles } from '../../../../../interfaces/interfaces';
-import { selectSelectedFieldId, selectConstructorFields } from './../../../../store_form-builder/store-form-builder.selectors';
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
+
+import { SelectedFieldId, ConstructorField, Styles, StyleList } from '../../../../../interfaces/interfaces';
+import { defaultValues, propNames, typeFields } from './../../../../constants/constants';
+
+import { changeFieldProp, changeInStyleList } from './../../../../store_form-builder/store-form-builder.actions';
+import { selectSelectedFieldId, selectConstructorFields, getStylingState } from './../../../../store_form-builder/store-form-builder.selectors';
 
 
 @Component({
@@ -10,79 +13,75 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './field-styling-form.component.html',
   styleUrls: ['./field-styling-form.component.scss']
 })
-export class FieldStylingFormComponent implements OnInit {
 
-  placeholder: null | string = null;
-  text: null | string = null;
-  label: null | string = null;
-  width: null | string = null;
-  height: null | number = null;
-  border: null | string = null
-  fontSize: null | number = null;
-  fontWeight: null | number = null;
-  color: null | number = null;
-  isRequired: boolean;
-  optionsList: string[] = [];
+export class FieldStylingFormComponent implements OnInit {
+  styles: StyleList;
+  
   fieldType: string | undefined;
   
   selectedFieldId : SelectedFieldId = null;
-  constructorFieldsLocal: ConstructorField[] = []
+  constructorFieldsLocal: ConstructorField[] = [];
+  
+  optionsList: string[] = [];
 
-  constructor(private store: Store<{state : any}>) {
-    store.select(selectSelectedFieldId).subscribe((selectedFieldId: SelectedFieldId) => {
+  constructor(private store: Store<{state : any}>) {}
+
+  ngOnInit(): void {
+    this.store.select(selectSelectedFieldId).subscribe((selectedFieldId: SelectedFieldId) => {
       this.selectedFieldId = selectedFieldId;
     })
-    store.select(selectConstructorFields).subscribe((res: ConstructorField[]) => {
+
+    this.store.select(selectConstructorFields)
+    .subscribe((res: ConstructorField[]) => {
       this.constructorFieldsLocal = res.map(item => Object.assign({}, item));
-      let field = this.constructorFieldsLocal.find(item => item.id === this.selectedFieldId);
+
+      let field = this.constructorFieldsLocal.find(item => item.id == this.selectedFieldId);
       this.optionsList= <string[]>field?.options?.map(option => option);
+      this.fieldType = field?.type;
 
-      this.fieldType = field?.type
-      
-      if (!field) 
-        return;
+      this.fieldType == typeFields.input || this.fieldType == typeFields.textarea? this.store.dispatch(changeInStyleList({propToChange: propNames.placeholder, newPropState: field.placeholder})) : null;
+      this.fieldType  == typeFields.button? this.store.dispatch(changeInStyleList({propToChange: propNames.text, newPropState: field.text})) : null;
+      this.fieldType === typeFields.checkbox? this.store.dispatch(changeInStyleList({propToChange: propNames.label, newPropState: field.label })) : null;
+    })
 
-
-      this.placeholder = field.placeholder ?? this.placeholder;
-      this.text = field.text ?? this.text;
-      this.label = field.label ?? this.label;
-      
-      if (!field.styles)
-        return;
-
-      this.width = field.styles.width ?? this.width;
-      this.height = field.styles.height ?? this.height;
-      this.border = field.styles.border ?? this.border;
-      this.fontSize = field.styles.fontSize ?? this.fontSize;
-      this.fontWeight = field.styles.fontWeight ?? this.fontWeight;
-      this.isRequired = field.styles.isRequired ?? this.isRequired;
-
+    this.store.select(getStylingState)
+      .subscribe((stylesObj) => {
+        this.styles = {...stylesObj};
     })
   }
 
   styleChanged(value: any, propName: any) {
     let field = this.constructorFieldsLocal.find(item => item.id === this.selectedFieldId);
-    
     if (!field)
       return;
-
-    if (propName === 'placeholder' || propName === 'text' || propName === 'label') {
+    
+    if (propName === propNames.placeholder || propName === propNames.text || propName === propNames.label) {
+    
       this.store.dispatch(changeFieldProp({
         constructorFieldId: this.selectedFieldId,
         propToChange:  propName,
-        newPropState: value
+        newPropState: value,
       }));
+
+      this.store.dispatch(changeInStyleList({
+        propToChange: propName, 
+        newPropState: value }))
       return;
     }
+
     const fieldStyles: Styles = { ...field.styles };
 
     fieldStyles[propName] = value;
 
     this.store.dispatch(changeFieldProp({
       constructorFieldId: this.selectedFieldId,
-      propToChange:  'styles',
-      newPropState: fieldStyles 
+      propToChange:  propNames.styles,
+      newPropState: fieldStyles
     }))
+
+    this.store.dispatch(changeInStyleList({
+      propToChange: propName, 
+      newPropState: value }))
   }
   
   addNewOption() {
@@ -99,22 +98,24 @@ export class FieldStylingFormComponent implements OnInit {
 
     let arr: string[] = [...fieldOptArr];
 
-    arr.push('Default option');
+    arr.push(defaultValues.option[0]);
 
-    this.store.dispatch(changeFieldProp({ constructorFieldId: this.selectedFieldId , propToChange: 'options', newPropState: arr }))
+    this.store.dispatch(changeFieldProp({ constructorFieldId: this.selectedFieldId, propToChange: propNames.options, newPropState: arr }))
   }
 
   changeInputValue(event: any, index: number){
     let value = event.target.value;
     this.optionsList.splice(index, 1, value)
-    this.store.dispatch(changeFieldProp({ constructorFieldId: this.selectedFieldId , propToChange: 'options', newPropState: this.optionsList }))
+    this.store.dispatch(changeFieldProp({ constructorFieldId: this.selectedFieldId , propToChange: propNames.options, newPropState: this.optionsList }))
   }
 
   deleteOption(index : number){
     this.optionsList.splice(index, 1);
-    this.store.dispatch(changeFieldProp({ constructorFieldId: this.selectedFieldId , propToChange: 'options', newPropState: this.optionsList }))
-  }
-  ngOnInit(): void {
+    this.store.dispatch(changeFieldProp({ constructorFieldId: this.selectedFieldId , propToChange: propNames.options, newPropState: this.optionsList }))
   }
 
+  isRequiredField(){
+    this.store.dispatch(changeFieldProp({ constructorFieldId: this.selectedFieldId , propToChange: propNames.isRequired, newPropState: !this.styles.isRequired}))
+    
+  }
 }

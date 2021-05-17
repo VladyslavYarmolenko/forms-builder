@@ -1,6 +1,7 @@
 export interface formBuilderState {
   constructorFields: ConstructorField[];
   selectedFieldId: SelectedFieldId;
+  stylesFields: StyleList,
 }
 
 export interface loginState {
@@ -35,6 +36,7 @@ export type ConstructorField = {
   options?: string[];
   placeholder?: string;
   text?: string;
+  isRequired?: boolean;
 }
 
 export type SelectedFieldId = number | null;
@@ -49,7 +51,15 @@ export type ChangeFieldPropArguments = {
   newPropState: number | string | string[] | String
 }
 
-const initialState: formBuilderState = {
-  constructorFields: [],
-  selectedFieldId: null 
+export type StyleList = {
+  placeholder: null | string,
+  text: null | string,
+  label: null | string,  
+  width: null | string;
+  height: null | number;
+  border: null | string;
+  fontSize: null | number;
+  fontWeight: null | number;
+  color: null | number;
+  isRequired: null | boolean;
 }

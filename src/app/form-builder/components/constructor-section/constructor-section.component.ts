@@ -1,10 +1,13 @@
-import { addConstructorField, setConstructorFields } from './../../../store_form-builder/store-form-builder.actions';
-import { CdkDragDrop, copyArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { CdkDragDrop, copyArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
+
+import { ConstructorField, FieldTypes, SelectedFieldId } from '../../../../interfaces/interfaces';
+
+import { addConstructorField, returnInitialState, setConstructorFields } from './../../../store_form-builder/store-form-builder.actions';
 import { setSelectedFieldId } from '../../../store_form-builder/store-form-builder.actions';
 import { selectConstructorFields, selectSelectedFieldId } from './../../../store_form-builder/store-form-builder.selectors';
-import { ConstructorField, FieldTypes, SelectedFieldId } from '../../../../interfaces/interfaces';
+
 
 @Component({
   selector: 'app-constructor-section',
@@ -16,20 +19,30 @@ export class ConstructorSectionComponent implements OnInit {
   constructorFieldsTypesList: FieldTypes[] = [];
   constructorFieldsLocal: ConstructorField[] = [];
   selectedFieldId: SelectedFieldId = null;
+  isRequired: boolean = null;
 
 
-  constructor(private store: Store<{ state: any }>) {
-    store.select(selectConstructorFields).subscribe((res: ConstructorField[]) => {
-      this.constructorFieldsLocal = res
-        .map(item => Object.assign({}, item))
-      this.constructorFieldsTypesList = <FieldTypes[]>res.map((item: ConstructorField) => item.type);
-    })
-    store.select(selectSelectedFieldId).subscribe((selectedFieldId: SelectedFieldId) => {
-      this.selectedFieldId = selectedFieldId
-    });
-  }
+  constructor(private store: Store<{ state: any }>) {}
 
   ngOnInit(): void {
+    this.store.select(selectConstructorFields)
+    .subscribe((res: ConstructorField[]) => {
+      this.constructorFieldsLocal = res
+        .map(item => Object.assign({}, item))
+        .sort((a: ConstructorField, b: ConstructorField) => a.order > b.order ? 1 : -1);
+      
+        this.constructorFieldsTypesList = <FieldTypes[]>this.constructorFieldsLocal.map((item: ConstructorField) => item.type);
+    })
+
+    this.store.select(selectSelectedFieldId)
+    .subscribe((selectedFieldId: SelectedFieldId) => {
+      this.selectedFieldId = selectedFieldId
+      let field = this.constructorFieldsLocal.find(item => item.id === this.selectedFieldId);
+      console.log(field)
+      if(field){
+        this.isRequired == field.isRequired;
+      }
+    });
   }
 
   handleSelectOpenedChange(status: boolean, i: number) {
@@ -41,14 +54,13 @@ export class ConstructorSectionComponent implements OnInit {
 
   handleFieldClick(index: number) {
     const fieldId = this.constructorFieldsLocal[index].id;
-  
+    
     this.store.dispatch(setSelectedFieldId({ selectedFieldId: fieldId }));
   }
 
   handleFieldClickOutside(event: any, index: number) {
     const target = event.target;
     const fieldId = this.constructorFieldsLocal[index].id;
-
     const isSelectOverlay = target.closest('.cdk-overlay-backdrop');
     const isStylesArea = target.closest('.styles');
 
@@ -56,17 +68,17 @@ export class ConstructorSectionComponent implements OnInit {
       return;
 
     this.store.dispatch(setSelectedFieldId({ selectedFieldId: null }));
+    this.store.dispatch(returnInitialState());
   }
 
   getFieldStyles(index: number) {
-
     const field = this.constructorFieldsLocal[index]
-
     return field ? field.styles : {}; 
   }
 
   getFieldProp(index: number, prop: string) {
     const field: ConstructorField = this.constructorFieldsLocal[index];
+
     //@ts-ignore
     return (field && field[prop]) ? field[prop] : null;   
   }
@@ -90,7 +102,6 @@ export class ConstructorSectionComponent implements OnInit {
       } else if (currentIndex > prevIndex && index >= prevIndex && index < currentIndex) {
         item.order--;
       }
-
     })
 
     arr = arr.sort((a: ConstructorField, b: ConstructorField) => a.order > b.order ? 1 : -1);

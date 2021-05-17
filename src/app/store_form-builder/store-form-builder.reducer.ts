@@ -1,18 +1,62 @@
-import { formBuilderState, ConstructorField, ChangeFieldPropArguments } from '../../interfaces/interfaces';
 import { Action, createReducer, on } from '@ngrx/store';
-import { setSelectedFieldId, addConstructorField, changeFieldProp, setConstructorFields } from './store-form-builder.actions';
+
+import { typeFields ,propNames, defaultValues } from './../constants/constants';
+import { formBuilderState, ConstructorField, ChangeFieldPropArguments } from '../../interfaces/interfaces';
+
+import { setSelectedFieldId, addConstructorField, changeFieldProp, setConstructorFields, changeInStyleList, returnInitialState } from './store-form-builder.actions';
+
 
 const initialState: formBuilderState = {
   constructorFields: [],
-  selectedFieldId: null 
+  selectedFieldId: null,
+  stylesFields: {
+    isRequired: false,
+    placeholder: null,
+    text: null,
+    label: null,  
+    width: null,
+    height: null,
+    border: null,
+    fontSize: null,
+    fontWeight: null,
+    color: null,
+  }
 }
 
-const formBuilderReducer = createReducer(
+export const formBuilderReducer = createReducer(
   initialState,
   on(setSelectedFieldId, (state, { selectedFieldId }) => {
+
+    let constructorFields = state.constructorFields;
+    const field: ConstructorField | undefined = constructorFields.find((field: ConstructorField) => field.id == selectedFieldId)
+    
+
+    let newStylesFields = {...state.stylesFields}
+    for (let prop in field) {
+      switch(prop){
+        case propNames.isRequired:
+          newStylesFields.isRequired = field[prop];
+        break;
+  
+        case propNames.placeholder:
+        case propNames.label:
+        case propNames.text:
+          newStylesFields[prop] = field[prop];
+        break;
+  
+        case propNames.styles:
+          const styles = field[prop];
+          for (let style in styles) {
+            newStylesFields[style] = styles[style];
+          }
+        break; 
+      }
+    }
+
     return({
       ...state,
       selectedFieldId : selectedFieldId,
+      stylesFields: newStylesFields
     })
   }),
   on(addConstructorField, (state, { constructorFieldType }) => {
@@ -33,23 +77,15 @@ const formBuilderReducer = createReducer(
       id: constructorFields.length,
     };
 
-    if (constructorFieldType === 'select') {
-      newField.label = 'Default label';
-      newField.options = ['example'];
+    newField.label = constructorFieldType === typeFields.select || constructorFieldType === typeFields.checkbox ?  defaultValues.label : null;
+    newField.options = constructorFieldType === typeFields.select ? defaultValues.option : null;
+    newField.placeholder = constructorFieldType === typeFields.input || constructorFieldType === typeFields.textarea ? defaultValues.placeholder : null;
+    newField.text = constructorFieldType === typeFields.button ? defaultValues.button : null;
+
+    if(constructorFieldType === typeFields.input || constructorFieldType === typeFields.textarea){
+      newField.isRequired = false;
     }
 
-    if (constructorFieldType === 'checkbox' || constructorFieldType === 'select'){
-      newField.label = 'Default label';
-    }
-
-    if (constructorFieldType === 'input' || constructorFieldType === 'textarea'){
-      newField.placeholder = 'Default placeholder';
-    }
-
-    if (constructorFieldType === 'button') {
-      newField.text = 'Button'
-    }
-    
     return ({
       ...state,
       constructorFields: state.constructorFields.concat(newField)
@@ -60,6 +96,7 @@ const formBuilderReducer = createReducer(
     let constructorFields = state.constructorFields;
     const field: ConstructorField | undefined = constructorFields.find((field: ConstructorField) => field.id == constructorFieldId)
     let changedField: ConstructorField | null = null;
+
     
     if (field) {
       changedField = { ...field };
@@ -70,22 +107,57 @@ const formBuilderReducer = createReducer(
     constructorFields = constructorFields.filter((field: ConstructorField) => field.id !== constructorFieldId);
     if (changedField)
       constructorFields.push(changedField);
-    
-    return ({
+
+    return {
       ...state,
       constructorFields: [...constructorFields]
-      })
     }
-  ),
+  }),
   on(setConstructorFields, (state, { newConstructorArr }) => {
+
     return({
       ...state,
       constructorFields: [...newConstructorArr]
       })
     }
   ),
+  on(changeInStyleList, (state, { propToChange, newPropState }) => {
+
+    let stateStyles = {...state.stylesFields};
+
+        for(let key in stateStyles){
+          if(key.toUpperCase() == propToChange.toUpperCase()){
+              stateStyles[key] = newPropState;
+          }
+        }
+          return({ 
+              ...state,
+              stylesFields : stateStyles
+          })
+        }
+    ),
+    on(returnInitialState, (state) => {
+
+      let stateStyles = {...state.stylesFields};
+
+      for(let key in stateStyles){
+        if(stateStyles.isRequired){
+         stateStyles.isRequired = false;
+        } else {
+          stateStyles[key] = null;
+        }
+      }
+      return({ 
+          ...state,
+          stylesFields : stateStyles
+            })
+          }
+      ),
 )
 
 export function reducer(state: formBuilderState | undefined, action: Action){
   return formBuilderReducer(state, action)
 }
+
+
+

@@ -1,11 +1,15 @@
-import { getUser } from './../store-auth/store-auth.selectors';
-import { RegisterAction } from './../store-auth/store-auth.actions';
-import { User } from './../../interfaces/interfaces';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+
+import { User } from './../../interfaces/interfaces';
+
+import { getUser } from './../store-auth/store-auth.selectors';
+import { RegisterAction } from './../store-auth/store-auth.actions';
+
+
 
 @Component({
   selector: 'app-register',
@@ -24,9 +28,6 @@ export class RegisterComponent implements OnInit {
     this.user$ = this.store.select(getUser);
   }
 
-  ngOnChanges() {
-    console.log('CHANGES')
-  }
 
   private initForm(): void {
     this.form = new FormGroup({

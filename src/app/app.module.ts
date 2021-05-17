@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,11 +17,13 @@ import { FormBuilderModule } from './form-builder/form-builder.module';
 import { StoreModule } from '@ngrx/store';
 import { AuthEffects } from './store-auth/store-auth.effects'
 
-import * as fromReducer from './store_form-builder/store-form-builder.reducer';
+import * as formBuilderReducer from './store_form-builder/store-form-builder.reducer';
+
 import { LoginComponent } from './login/login.component';
 import { FormBuilderGuard } from '../guard-route/form-builder.guard';
 import { RegisterComponent } from './register/register.component';
 import { EffectsModule } from '@ngrx/effects';
+
 
 
 @NgModule({
@@ -39,9 +43,14 @@ import { EffectsModule } from '@ngrx/effects';
     FormBuilderModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    StoreModule.forRoot({storeFormBuilder: fromReducer.reducer}),
+    StoreModule.forRoot({storeFormBuilder: formBuilderReducer.reducer }),
     EffectsModule.forRoot([ AuthEffects ]),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreDevtoolsModule,
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production, 
+    }),
   ],
   providers: [FormBuilderGuard, HttpClientModule],
   bootstrap: [AppComponent],

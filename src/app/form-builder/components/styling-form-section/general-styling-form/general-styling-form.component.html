@@ -5,22 +5,22 @@
   <form class="stylize-form">
     <mat-form-field>
       <mat-label>Width</mat-label>
-      <input matInput name="width" (ngModelChange)="globalStyleChange($event, 'width')" [(ngModel)] = 'width'>
+      <input matInput name="width" (ngModelChange)="globalStyleChange($event, 'width')" [(ngModel)] = 'styles.width'>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Height</mat-label>
-      <input matInput name="height" (ngModelChange)="globalStyleChange($event, 'height')" [(ngModel)] = 'height'>
+      <input matInput name="height" (ngModelChange)="globalStyleChange($event, 'height')" [(ngModel)] = 'styles.height'>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Font Size</mat-label>
-      <input matInput name="fontSize" (ngModelChange)="globalStyleChange($event, 'fontSize')" [(ngModel)] = 'fontSize'>
+      <input matInput name="fontSize" (ngModelChange)="globalStyleChange($event, 'fontSize')" [(ngModel)] = 'styles.fontSize'>
     </mat-form-field>
 
     <mat-form-field class="fontWeightStyle">
       <mat-label>Font Weight</mat-label>
-      <mat-select [(value)]="fontWeight">
+      <mat-select [(value)]="styles.fontWeight">
         <mat-option value='100' (click)="globalStyleChange(fontWeight, 'fontWeight')">
           lighter
         </mat-option>
@@ -35,7 +35,7 @@
 
     <mat-form-field>
       <mat-label>Color</mat-label>
-      <input matInput name="color" (ngModelChange)="globalStyleChange($event, 'color')"  [(ngModel)] = 'color'>
+      <input matInput name="color" (ngModelChange)="globalStyleChange($event, 'color')"  [(ngModel)] = 'styles.color'>
     </mat-form-field>
 
   </form>
