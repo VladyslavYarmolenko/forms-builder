@@ -15,7 +15,6 @@ import { getStylingState, selectConstructorFields } from './../../../../store_fo
 
 export class GeneralStylingFormComponent implements OnInit {
 
-
 styles: StyleList;
 
 constructorFieldLocal: ConstructorField[] = [];

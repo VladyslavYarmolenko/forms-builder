@@ -41,14 +41,14 @@
 
     <mat-form-field class="fontWeightStyle">
       <mat-label>Font Weight</mat-label>
-      <mat-select [(value)]="styles.fontWeight">
-        <mat-option value='100' (click)="styleChanged(fontWeight, 'fontWeight')">
+      <mat-select [(value)]="styles.fontWeight" panelClass="styling-field-select-panel">
+        <mat-option value='100' (click)="styleChanged('100', 'fontWeight')">
           lighter
         </mat-option>
-        <mat-option value='400' (click)="styleChanged(fontWeight, 'fontWeight')">
+        <mat-option value='400' (click)="styleChanged('400', 'fontWeight')">
           normal
         </mat-option>
-        <mat-option value='700' (click)="styleChanged(fontWeight, 'fontWeight')">
+        <mat-option value='700' (click)="styleChanged('700', 'fontWeight')">
           bold
         </mat-option>
       </mat-select>

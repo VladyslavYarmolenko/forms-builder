@@ -21,13 +21,13 @@
     <mat-form-field class="fontWeightStyle">
       <mat-label>Font Weight</mat-label>
       <mat-select [(value)]="styles.fontWeight">
-        <mat-option value='100' (click)="globalStyleChange(fontWeight, 'fontWeight')">
+        <mat-option value='100' (click)="globalStyleChange('100', 'fontWeight')">
           lighter
         </mat-option>
-        <mat-option value='400' (click)="globalStyleChange(fontWeight, 'fontWeight')">
+        <mat-option value='400' (click)="globalStyleChange('400', 'fontWeight')">
           normal
         </mat-option>
-        <mat-option value='700' (click)="globalStyleChange(fontWeight, 'fontWeight')">
+        <mat-option value='700' (click)="globalStyleChange('700', 'fontWeight')">
           bold
         </mat-option>
       </mat-select>

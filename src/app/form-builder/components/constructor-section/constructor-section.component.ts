@@ -61,7 +61,7 @@ export class ConstructorSectionComponent implements OnInit {
   handleFieldClickOutside(event: any, index: number) {
     const target = event.target;
     const fieldId = this.constructorFieldsLocal[index].id;
-    const isSelectOverlay = target.closest('.cdk-overlay-backdrop');
+    const isSelectOverlay = target.closest('.cdk-overlay-backdrop, .styling-field-select-panel');
     const isStylesArea = target.closest('.styles');
 
     if (isStylesArea || isSelectOverlay || fieldId !== this.selectedFieldId)

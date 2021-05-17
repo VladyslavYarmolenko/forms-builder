@@ -108,6 +108,8 @@ export const formBuilderReducer = createReducer(
     if (changedField)
       constructorFields.push(changedField);
 
+    console.log(state.stylesFields.fontWeight, 'FONT-WEIGHT')
+    
     return {
       ...state,
       constructorFields: [...constructorFields]
