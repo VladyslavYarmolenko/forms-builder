@@ -3,7 +3,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { typeFields ,propNames, defaultValues } from './../constants/constants';
 import { formBuilderState, ConstructorField, ChangeFieldPropArguments } from '../../interfaces/interfaces';
 
-import { setSelectedFieldId, addConstructorField, changeFieldProp, setConstructorFields, changeInStyleList, returnInitialState } from './store-form-builder.actions';
+import { setSelectedFieldId, addConstructorField, changeFieldProp, setConstructorFields, changeInStyleList, returnInitialState, submitForm } from './store-form-builder.actions';
 
 
 const initialState: formBuilderState = {
@@ -107,8 +107,6 @@ export const formBuilderReducer = createReducer(
     constructorFields = constructorFields.filter((field: ConstructorField) => field.id !== constructorFieldId);
     if (changedField)
       constructorFields.push(changedField);
-
-    console.log(state.stylesFields.fontWeight, 'FONT-WEIGHT')
     
     return {
       ...state,
@@ -155,6 +153,25 @@ export const formBuilderReducer = createReducer(
             })
           }
       ),
+    on(submitForm, (state) => {
+      
+      let formArr = state.constructorFields;
+      
+      let resultArr;
+
+      if(formArr.length == 0){
+        return;
+      } else {
+         resultArr = formArr.filter((elem)=> {
+          elem.type == 'button' || elem.type == 'checkbox'
+        })
+      }
+      console.log(resultArr)
+      console.log()
+      return({
+        ...state,
+      })
+    })
 )
 
 export function reducer(state: formBuilderState | undefined, action: Action){

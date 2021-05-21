@@ -1,0 +1,11 @@
+<div>
+  <label>{{label}}</label>
+  <textarea
+    [(ngModel)]="value"
+    [ngStyle]="stylesObj"
+    [placeholder]="placeholder"
+    (blur)='onTouched()'
+  ></textarea>
+</div>
+
+<ng-content></ng-content>

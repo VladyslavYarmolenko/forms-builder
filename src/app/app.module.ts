@@ -23,6 +23,7 @@ import { LoginComponent } from './login/login.component';
 import { FormBuilderGuard } from '../guard-route/form-builder.guard';
 import { RegisterComponent } from './register/register.component';
 import { EffectsModule } from '@ngrx/effects';
+import { FormDataComponent } from './form-builder/form-data/form-data.component';
 
 
 
@@ -31,6 +32,7 @@ import { EffectsModule } from '@ngrx/effects';
     AppComponent,
     LoginComponent,
     RegisterComponent,
+    FormDataComponent,
   ],
   imports: [
     BrowserModule,

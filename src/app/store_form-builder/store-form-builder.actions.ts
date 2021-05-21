@@ -32,3 +32,12 @@ export const changeInStyleList = createAction(
 export const returnInitialState = createAction(
   '[FORM BUILDER] RETURN_INITIAL_STATE'
 )
+
+export const onDataChange = createAction(
+  '[FORM BUILDER] ON_DATA_CHANGE',
+  props <{ event: any, typeField: any, index: number }>()
+)
+
+export const submitForm = createAction(
+    '[FORM BUILDER] SUBMIT_FORM'
+  )
