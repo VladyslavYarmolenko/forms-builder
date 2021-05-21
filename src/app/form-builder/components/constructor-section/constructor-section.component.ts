@@ -1,12 +1,15 @@
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CdkDragDrop, copyArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 
 import { ConstructorField, FieldTypes, SelectedFieldId } from '../../../../interfaces/interfaces';
 
-import { addConstructorField, returnInitialState, setConstructorFields } from './../../../store_form-builder/store-form-builder.actions';
+import { addConstructorField, returnInitialState, setConstructorFields, submitForm } from './../../../store_form-builder/store-form-builder.actions';
 import { setSelectedFieldId } from '../../../store_form-builder/store-form-builder.actions';
 import { selectConstructorFields, selectSelectedFieldId } from './../../../store_form-builder/store-form-builder.selectors';
+
+
 
 
 @Component({
@@ -16,13 +19,22 @@ import { selectConstructorFields, selectSelectedFieldId } from './../../../store
 })
 
 export class ConstructorSectionComponent implements OnInit {
-  constructorFieldsTypesList: FieldTypes[] = [];
   constructorFieldsLocal: ConstructorField[] = [];
   selectedFieldId: SelectedFieldId = null;
   isRequired: boolean = null;
 
+  fieldTypes = [
+    'input',
+    'textarea',
+    'button',
+    'checkbox',
+    'select',
+  ]
 
-  constructor(private store: Store<{ state: any }>) {}
+  formConstructor: FormGroup = new FormGroup({})
+
+  constructor(private store: Store<{ state: any }>) {
+  }
 
   ngOnInit(): void {
     this.store.select(selectConstructorFields)
@@ -30,15 +42,15 @@ export class ConstructorSectionComponent implements OnInit {
       this.constructorFieldsLocal = res
         .map(item => Object.assign({}, item))
         .sort((a: ConstructorField, b: ConstructorField) => a.order > b.order ? 1 : -1);
-      
-        this.constructorFieldsTypesList = <FieldTypes[]>this.constructorFieldsLocal.map((item: ConstructorField) => item.type);
+
+        this.updateControls(this.constructorFieldsLocal);
+    
     })
 
     this.store.select(selectSelectedFieldId)
     .subscribe((selectedFieldId: SelectedFieldId) => {
       this.selectedFieldId = selectedFieldId
       let field = this.constructorFieldsLocal.find(item => item.id === this.selectedFieldId);
-      console.log(field)
       if(field){
         this.isRequired == field.isRequired;
       }
@@ -56,6 +68,7 @@ export class ConstructorSectionComponent implements OnInit {
     const fieldId = this.constructorFieldsLocal[index].id;
     
     this.store.dispatch(setSelectedFieldId({ selectedFieldId: fieldId }));
+    this.store.dispatch(submitForm());
   }
 
   handleFieldClickOutside(event: any, index: number) {
@@ -110,17 +123,25 @@ export class ConstructorSectionComponent implements OnInit {
    
   }
 
-  drop(event: CdkDragDrop<any>) {
+  updateControls(fieldsArr): void {
+    fieldsArr.forEach(element => {
+      console.log(' updateControls contols', element.type + '-' + element.id)
+      this.formConstructor.addControl(element.type + '-' + element.id, new FormControl('', [Validators.required, Validators.minLength(6)]));
+    })
+  }
 
+
+  drop(event: CdkDragDrop<any>) {
   if(event.previousContainer !== event.container){
       copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
       const fieldType = <FieldTypes>event.previousContainer.data[event.previousIndex];
-      this.store.dispatch(addConstructorField({ constructorFieldType: fieldType }))
+      this.store.dispatch(addConstructorField({ constructorFieldType: fieldType }));
+
   } else {
     const prevIndex = event.previousIndex;
     const currentIndex = event.currentIndex;
 
-    moveItemInArray(this.constructorFieldsTypesList, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.fieldTypes, event.previousIndex, event.currentIndex);
     const reorderedArray = this.setConstructorFieldsOrder(prevIndex, currentIndex);
 
     this.store.dispatch(setConstructorFields({newConstructorArr: reorderedArray}))

@@ -1,6 +1,8 @@
+import { SharedModule } from './shared/shared.module';
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { PortalModule } from '@angular/cdk/portal';
 import { MatIconModule } from '@angular/material/icon';
@@ -31,6 +33,8 @@ import { GeneralStylingFormComponent } from './components/styling-form-section/g
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
+    ReactiveFormsModule,
+    SharedModule,
     ],
   entryComponents: 
     [
@@ -45,6 +49,7 @@ import { GeneralStylingFormComponent } from './components/styling-form-section/g
     StylingFormSectionComponent,
     FieldStylingFormComponent,
     GeneralStylingFormComponent,
+
   ],
   exports: [FormBuilderComponent],
   providers: [],
