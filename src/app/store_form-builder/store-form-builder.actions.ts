@@ -38,6 +38,12 @@ export const onDataChange = createAction(
   props <{ event: any, typeField: any, index: number }>()
 )
 
-export const submitForm = createAction(
-    '[FORM BUILDER] SUBMIT_FORM'
-  )
+// export const submitForm = createAction(
+//     '[FORM BUILDER] SUBMIT_FORM'
+//   )
+
+
+// export const deleteField = createAction(
+//   '[FORM BUILDER] DELETE_FIELD',
+//   props <{ fieldId : number }>()
+// )

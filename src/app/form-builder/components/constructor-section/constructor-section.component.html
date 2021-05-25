@@ -16,8 +16,8 @@
           <!-- <input 
             *ngSwitchCase="'input'" 
             matInput
-            [placeholder]="getFieldProp(i, 'placeholder')"  
-            (click)="handleFieldClick(i)" 
+            [placeholder]="getFieldProp(i, 'placeholder')"
+            (click)="handleFieldClick(i)"
             (clickOutside)="handleFieldClickOutside($event, i)" 
             [exclude]="'.styles'"
             [ngStyle]="getFieldStyles(i)"
@@ -80,14 +80,28 @@
           {{getFieldProp(i, 'text')}}
         </button>
         
-        <mat-checkbox *ngSwitchCase="'checkbox'" 
+        <!-- <mat-checkbox *ngSwitchCase="'checkbox'" 
                       class="checkbox"
                       (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside($event, i)"
                       [exclude]="'.styles'"
                       [ngStyle]="getFieldStyles(i)"
-                      >{{getFieldProp(i, 'label')}}</mat-checkbox>
+                      >{{getFieldProp(i, 'label')}}
+        </mat-checkbox> -->
         
-        <mat-form-field *ngSwitchCase="'select'" >
+        <ng-container *ngSwitchCase="'checkbox'">
+          <app-checkbox
+            [label]="field.label"
+            [formControlName]="field.type + '-' + field.id"
+            (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside($event, i)"
+            [exclude]="'.styles'"
+            [stylesObj]="getFieldStyles(i)"
+            (change)="onCheckboxChange($event , i)"
+            [(ngModel)]="field.isChecked"
+          >
+          </app-checkbox>
+        </ng-container>
+
+        <!-- <mat-form-field *ngSwitchCase="'select'" >
           <mat-label>{{getFieldProp(i, 'label')}}</mat-label>
           <mat-select *ngSwitchCase="'select'" 
                       class="select"
@@ -96,15 +110,28 @@
                       (clickOutside)="handleFieldClickOutside($event, i)"
                       [exclude]="'.styles, .cdk-overlay-backdrop'"
                     >
-            
             <mat-option *ngFor="let option of getFieldProp(i, 'options')" 
                         class="select_option" 
                         [ngStyle]="getFieldStyles(i)"
+                        value = {{option}}
                         >
               {{ option }}
             </mat-option>
           </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
+        <!-- (openedChange)="handleSelectOpenedChange($event, i)" -->
+        
+        <app-select 
+          *ngSwitchCase="'select'"
+          [formControlName]="field.type + '-' + field.id"
+          (click)="handleSelectOpenedChange($event, i)"
+          [stylesObj]="getFieldStyles(i)"
+          (clickOutside)="handleFieldClickOutside($event, i)"
+          [exclude]="'.styles, .cdk-overlay-backdrop'"
+          [options]='field.options'
+          [label]="getFieldProp(i, 'label')"
+        >
+        </app-select>
       </div>
       </div>
     </form>

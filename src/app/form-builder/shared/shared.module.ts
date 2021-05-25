@@ -1,15 +1,19 @@
+import { CheckboxComponent } from './components/checkbox/checkbox.component';
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputComponent } from './components/input/Input.component';
 import { TextareaComponent } from './components/textarea/textarea.component';
+import { SelectComponent } from './components/select/select.component';
 
 
 @NgModule({
   declarations: [
     InputComponent,
     TextareaComponent,
+    CheckboxComponent,
+    SelectComponent,
   ],
   imports: [
     CommonModule,
@@ -18,6 +22,8 @@ import { TextareaComponent } from './components/textarea/textarea.component';
   exports: [
     InputComponent,
     TextareaComponent,
+    CheckboxComponent,
+    SelectComponent,
   ]
 })
 

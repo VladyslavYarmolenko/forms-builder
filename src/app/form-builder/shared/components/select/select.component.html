@@ -1,0 +1,13 @@
+<div>
+  <label>{{label}}</label>
+  <select 
+  [ngStyle]='stylesObj'
+  >
+    <option *ngFor='let option of options' value='{{option}}'>
+      {{option}}
+    </option>
+
+</select>
+</div>
+
+<ng-content></ng-content>
