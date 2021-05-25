@@ -59,7 +59,12 @@
       <input matInput name="color" (ngModelChange)="styleChanged($event, 'color')"  [(ngModel)] = 'styles.color'>
     </mat-form-field>
 
-    <mat-checkbox *ngIf="fieldType === 'input' || fieldType === 'textarea'" class="isRequired" name="isRequired" (ngModelChange)="isRequiredField()"  [(ngModel)] = 'styles.isRequired'>Required</mat-checkbox>
+    <mat-checkbox *ngIf="fieldType === 'input' || fieldType === 'textarea'" 
+                    class="isRequired" name="isRequired" 
+                    (ngModelChange)="isRequiredField()"  
+                    [(ngModel)] = 'styles.isRequired'>Required
+    </mat-checkbox>
+    
   </form>
 </div>
 

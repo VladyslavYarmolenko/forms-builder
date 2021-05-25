@@ -37,6 +37,7 @@ export type ConstructorField = {
   placeholder?: string;
   text?: string;
   isRequired?: boolean;
+  isChecked?: boolean;
 }
 
 export type SelectedFieldId = number | null;
@@ -62,4 +63,5 @@ export type StyleList = {
   fontWeight: null | number;
   color: null | number;
   isRequired: null | boolean;
+  isChecked: null | boolean;
 }

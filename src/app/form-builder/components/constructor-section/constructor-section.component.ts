@@ -1,13 +1,15 @@
+import { propNames } from './../../../constants/constants';
+
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CdkDragDrop, copyArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 
-import { ConstructorField, FieldTypes, SelectedFieldId } from '../../../../interfaces/interfaces';
+import { ConstructorField, FieldTypes, SelectedFieldId, StyleList } from '../../../../interfaces/interfaces';
 
-import { addConstructorField, returnInitialState, setConstructorFields, submitForm } from './../../../store_form-builder/store-form-builder.actions';
+import { addConstructorField, changeFieldProp, returnInitialState, setConstructorFields, changeInStyleList } from './../../../store_form-builder/store-form-builder.actions';
 import { setSelectedFieldId } from '../../../store_form-builder/store-form-builder.actions';
-import { selectConstructorFields, selectSelectedFieldId } from './../../../store_form-builder/store-form-builder.selectors';
+import { getStylingState, selectConstructorFields, selectSelectedFieldId } from './../../../store_form-builder/store-form-builder.selectors';
 
 
 
@@ -31,6 +33,9 @@ export class ConstructorSectionComponent implements OnInit {
     'select',
   ]
 
+
+  styles: StyleList;
+
   formConstructor: FormGroup = new FormGroup({})
 
   constructor(private store: Store<{ state: any }>) {
@@ -42,9 +47,8 @@ export class ConstructorSectionComponent implements OnInit {
       this.constructorFieldsLocal = res
         .map(item => Object.assign({}, item))
         .sort((a: ConstructorField, b: ConstructorField) => a.order > b.order ? 1 : -1);
-
+        
         this.updateControls(this.constructorFieldsLocal);
-    
     })
 
     this.store.select(selectSelectedFieldId)
@@ -55,6 +59,11 @@ export class ConstructorSectionComponent implements OnInit {
         this.isRequired == field.isRequired;
       }
     });
+
+    this.store.select(getStylingState)
+    .subscribe((stylesObj) => {
+      this.styles = {...stylesObj}
+    })
   }
 
   handleSelectOpenedChange(status: boolean, i: number) {
@@ -68,7 +77,6 @@ export class ConstructorSectionComponent implements OnInit {
     const fieldId = this.constructorFieldsLocal[index].id;
     
     this.store.dispatch(setSelectedFieldId({ selectedFieldId: fieldId }));
-    this.store.dispatch(submitForm());
   }
 
   handleFieldClickOutside(event: any, index: number) {
@@ -91,7 +99,6 @@ export class ConstructorSectionComponent implements OnInit {
 
   getFieldProp(index: number, prop: string) {
     const field: ConstructorField = this.constructorFieldsLocal[index];
-
     //@ts-ignore
     return (field && field[prop]) ? field[prop] : null;   
   }
@@ -125,26 +132,39 @@ export class ConstructorSectionComponent implements OnInit {
 
   updateControls(fieldsArr): void {
     fieldsArr.forEach(element => {
-      console.log(' updateControls contols', element.type + '-' + element.id)
       this.formConstructor.addControl(element.type + '-' + element.id, new FormControl('', [Validators.required, Validators.minLength(6)]));
     })
   }
 
+  onCheckboxChange(event: any, i : number){
+
+    let uptoDateStyles = {...this.styles}
+
+    uptoDateStyles.isChecked = event.target.checked;
+  
+    this.store.dispatch(changeFieldProp({
+      constructorFieldId: i,
+      propToChange:  propNames.isChecked,
+      newPropState: event.target.checked,
+    }));
+
+    this.store.dispatch(changeInStyleList({ propToChange: propNames.isChecked, newPropState: event.target.checked }))
+  }
 
   drop(event: CdkDragDrop<any>) {
-  if(event.previousContainer !== event.container){
-      copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
-      const fieldType = <FieldTypes>event.previousContainer.data[event.previousIndex];
-      this.store.dispatch(addConstructorField({ constructorFieldType: fieldType }));
+    if(event.previousContainer !== event.container){
+        copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+        const fieldType = <FieldTypes>event.previousContainer.data[event.previousIndex];
+        this.store.dispatch(addConstructorField({ constructorFieldType: fieldType }));
 
-  } else {
-    const prevIndex = event.previousIndex;
-    const currentIndex = event.currentIndex;
+    } else {
+      const prevIndex = event.previousIndex;
+      const currentIndex = event.currentIndex;
 
-    moveItemInArray(this.fieldTypes, event.previousIndex, event.currentIndex);
-    const reorderedArray = this.setConstructorFieldsOrder(prevIndex, currentIndex);
+      moveItemInArray(this.fieldTypes, event.previousIndex, event.currentIndex);
+      const reorderedArray = this.setConstructorFieldsOrder(prevIndex, currentIndex);
 
-    this.store.dispatch(setConstructorFields({newConstructorArr: reorderedArray}))
+      this.store.dispatch(setConstructorFields({newConstructorArr: reorderedArray}))
     }
   }
 }

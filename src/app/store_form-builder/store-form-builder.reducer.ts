@@ -3,7 +3,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { typeFields ,propNames, defaultValues } from './../constants/constants';
 import { formBuilderState, ConstructorField, ChangeFieldPropArguments } from '../../interfaces/interfaces';
 
-import { setSelectedFieldId, addConstructorField, changeFieldProp, setConstructorFields, changeInStyleList, returnInitialState, submitForm } from './store-form-builder.actions';
+import { setSelectedFieldId, addConstructorField, changeFieldProp, setConstructorFields, changeInStyleList, returnInitialState, } from './store-form-builder.actions';
 
 
 const initialState: formBuilderState = {
@@ -11,6 +11,7 @@ const initialState: formBuilderState = {
   selectedFieldId: null,
   stylesFields: {
     isRequired: false,
+    isChecked: false,
     placeholder: null,
     text: null,
     label: null,  
@@ -34,10 +35,8 @@ export const formBuilderReducer = createReducer(
     let newStylesFields = {...state.stylesFields}
     for (let prop in field) {
       switch(prop){
+        case propNames.isChecked:
         case propNames.isRequired:
-          newStylesFields.isRequired = field[prop];
-        break;
-  
         case propNames.placeholder:
         case propNames.label:
         case propNames.text:
@@ -81,6 +80,7 @@ export const formBuilderReducer = createReducer(
     newField.options = constructorFieldType === typeFields.select ? defaultValues.option : null;
     newField.placeholder = constructorFieldType === typeFields.input || constructorFieldType === typeFields.textarea ? defaultValues.placeholder : null;
     newField.text = constructorFieldType === typeFields.button ? defaultValues.button : null;
+    newField.isChecked = constructorFieldType === typeFields.checkbox ? defaultValues.isChecked : null;
 
     if(constructorFieldType === typeFields.input || constructorFieldType === typeFields.textarea){
       newField.isRequired = false;
@@ -96,7 +96,6 @@ export const formBuilderReducer = createReducer(
     let constructorFields = state.constructorFields;
     const field: ConstructorField | undefined = constructorFields.find((field: ConstructorField) => field.id == constructorFieldId)
     let changedField: ConstructorField | null = null;
-
     
     if (field) {
       changedField = { ...field };
@@ -107,7 +106,10 @@ export const formBuilderReducer = createReducer(
     constructorFields = constructorFields.filter((field: ConstructorField) => field.id !== constructorFieldId);
     if (changedField)
       constructorFields.push(changedField);
-    
+
+
+    console.log(constructorFields)
+
     return {
       ...state,
       constructorFields: [...constructorFields]
@@ -143,7 +145,9 @@ export const formBuilderReducer = createReducer(
       for(let key in stateStyles){
         if(stateStyles.isRequired){
          stateStyles.isRequired = false;
-        } else {
+        } else if (stateStyles.isChecked){
+          stateStyles.isChecked = false;
+        }else {
           stateStyles[key] = null;
         }
       }
@@ -153,25 +157,33 @@ export const formBuilderReducer = createReducer(
             })
           }
       ),
-    on(submitForm, (state) => {
+    // on(submitForm, (state) => {
       
-      let formArr = state.constructorFields;
+    //   let formArr = state.constructorFields;
       
-      let resultArr;
+    //   let resultArr;
 
-      if(formArr.length == 0){
-        return;
-      } else {
-         resultArr = formArr.filter((elem)=> {
-          elem.type == 'button' || elem.type == 'checkbox'
-        })
-      }
-      console.log(resultArr)
-      console.log()
-      return({
-        ...state,
-      })
-    })
+    //   if(formArr.length == 0){
+    //     return;
+    //   } else {
+    //       resultArr = formArr.filter((elem)=> {
+    //       elem.type == 'button' || elem.type == 'checkbox'
+    //     })
+    //   }
+
+    //   return({
+    //     ...state,
+    //   })
+    // }),
+    // on(deleteField, (state, { fieldId } ) => {
+      
+    //   let formArr = state.constructorFields;
+
+
+    //   return({
+    //     ...state,
+    //   })
+    // })
 )
 
 export function reducer(state: formBuilderState | undefined, action: Action){

@@ -14,6 +14,7 @@ export const propNames = {
   options: 'options',
   styles: 'styles',
   isRequired: 'isRequired',
+  isChecked: 'isChecked',
 }
 
 
@@ -23,4 +24,5 @@ export const defaultValues = {
   placeholder: 'Default placeholder',
   option: ['Default option'],
   button: 'Button',
+  isChecked: false,
 }
