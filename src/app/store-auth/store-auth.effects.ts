@@ -2,17 +2,20 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { AuthService } from '../services/auth.service';
-import { 
-  ActionTypes, 
+import { Router } from '@angular/router';
+
+import { AuthService } from 'app/services/auth.service';
+
+import {
+  ActionTypes,
   LoginAction,
-  LoginFailedAction, 
-  LoginSuccessAction, 
-  RegisterAction, 
+  LoginFailedAction,
+  LoginSuccessAction,
+  RegisterAction,
   RegisterFailedAction,
   RegisterSuccessAction,
 } from './store-auth.actions';
-import { Router } from '@angular/router';
+
 
 @Injectable()
 
@@ -30,7 +33,7 @@ export class AuthEffects {
 
             this.router.navigate(['/form-builder']);
 
-            return new LoginSuccessAction(action)
+            return new LoginSuccessAction(action);
           }),
           catchError(error => of(new LoginFailedAction(error)))
         )
@@ -45,7 +48,7 @@ export class AuthEffects {
         this.authService.register(action).pipe(
           map((res) => {
             localStorage.setItem('token', res.accessToken);
-            
+
             this.router.navigate(['/form-builder']);
 
             return new RegisterSuccessAction(action)

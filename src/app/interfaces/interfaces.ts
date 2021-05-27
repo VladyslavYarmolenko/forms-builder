@@ -1,12 +1,7 @@
-export interface formBuilderState {
+export interface FormBuilderState {
   constructorFields: ConstructorField[];
   selectedFieldId: SelectedFieldId;
-  stylesFields: StyleList,
-}
-
-export interface loginState {
-  user: User;
-  error: Error;
+  stylesFields: StyleList;
 }
 
 export interface User {
@@ -24,8 +19,8 @@ export interface AuthResponse {
 }
 
 export type Styles = {
-  [key:string]: any;
-}
+  [key: string]: any;
+};
 
 export type ConstructorField = {
   id: number;
@@ -38,24 +33,22 @@ export type ConstructorField = {
   text?: string;
   isRequired?: boolean;
   isChecked?: boolean;
-}
+};
 
 export type SelectedFieldId = number | null;
 
-export type DraggableField = string | null;
-
-export type FieldTypes = 'input' | 'textarea' | 'button' | 'select' | 'checkbox'; 
+export type FieldTypes = 'input' | 'textarea' | 'button' | 'select' | 'checkbox';
 
 export type ChangeFieldPropArguments = {
   constructorFieldId: number;
   propToChange: keyof ConstructorField
-  newPropState: number | string | string[] | String
-}
+  newPropState: number | string | string[]
+};
 
 export type StyleList = {
   placeholder: null | string,
   text: null | string,
-  label: null | string,  
+  label: null | string,
   width: null | string;
   height: null | number;
   border: null | string;
@@ -64,4 +57,4 @@ export type StyleList = {
   color: null | number;
   isRequired: null | boolean;
   isChecked: null | boolean;
-}
+};

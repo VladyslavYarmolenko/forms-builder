@@ -1,5 +1,5 @@
-import { User, Error } from '../../interfaces/interfaces';
-import { Actions, ActionTypes } from '../store-auth/store-auth.actions';
+import { User, Error } from 'app/interfaces/interfaces';
+import { Actions, ActionTypes } from 'app/store-auth/store-auth.actions';
 
 
 export interface State {
@@ -10,7 +10,7 @@ export interface State {
 const INIT_STATE: State = {
   user: null,
   error: null
-}
+};
 
 export function reducer(state: State = INIT_STATE, action: Actions): State {
   switch (action.type) {

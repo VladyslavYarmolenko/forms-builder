@@ -1,10 +1,10 @@
 export const typeFields = {
   input : 'input',
-  textarea :'textarea',
-  select :'select',
-  checkbox :'checkbox',
+  textarea : 'textarea',
+  select : 'select',
+  checkbox : 'checkbox',
   button : 'button',
-}
+};
 
 export const propNames = {
   placeholder: 'placeholder',
@@ -15,7 +15,7 @@ export const propNames = {
   styles: 'styles',
   isRequired: 'isRequired',
   isChecked: 'isChecked',
-}
+};
 
 
 export const defaultValues = {
@@ -25,4 +25,4 @@ export const defaultValues = {
   option: ['Default option'],
   button: 'Button',
   isChecked: false,
-}
+};

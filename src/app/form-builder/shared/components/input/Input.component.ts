@@ -6,7 +6,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   selector: 'app-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -15,6 +14,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
+
 export class InputComponent implements OnInit, ControlValueAccessor {
   @Input() label!: string;
   @Input() placeholder!: string;
@@ -26,16 +26,9 @@ export class InputComponent implements OnInit, ControlValueAccessor {
     this.writeValue(value);
   }
 
+  // tslint:disable-next-line:variable-name
   _value: any = '';
 
-  get value(): any {
-    return this._value;
-  }
-
-  constructor() {
-  }
-
-  
   onChange = (value) => {};
 
   onTouched = () => {};
@@ -56,5 +49,5 @@ export class InputComponent implements OnInit, ControlValueAccessor {
 
 }
 
- 
+
 

@@ -16,7 +16,6 @@
     height: 100%;
     margin-top: 10px;
     padding: 20px;
-    padding-top: 20px;
     box-sizing: border-box;
     background: $dropWrapBackground;
     border-radius: 12px;
@@ -39,7 +38,7 @@
   background-color: $backgroundInner;
   border-radius: 12px;
   padding: 10px;
-  
+
 }
 
 .form-container {
@@ -87,7 +86,7 @@
   padding: 10px;
   border-radius: 10px;
   background-color: $fieldWrapper;
-  color: $text-color; 
+  color: $text-color;
 }
 
 .field-types {

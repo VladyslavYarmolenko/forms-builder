@@ -1,5 +1,5 @@
 
-import { Component, forwardRef, Input, OnChanges, Output, SimpleChanges, EventEmitter } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 
@@ -17,36 +17,28 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 })
 
 export class SelectComponent implements  ControlValueAccessor {
-  
-
   @Input() options: string[];
-  @Input() stylesObj!: any; 
+  @Input() stylesObj!: any;
   @Input() label: string;
-  
+
 
   get value(): any {
-    return this.value
-    console.log(this.value)
+    return this.value;
   }
-
-
-  constructor(){}
-
 
   public onChange: any = (value) => {};
   public onTouched: any = () => {};
 
 
- 
-  registerOnChange(fn: any) {
+  registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any) { 
+  registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 
-  writeValue(value: any) {
+  writeValue(value: any): void {
     this.onChange(value);
   }
 }

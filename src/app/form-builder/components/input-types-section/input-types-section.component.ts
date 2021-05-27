@@ -1,5 +1,5 @@
-import { Store } from '@ngrx/store';
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {typeFields} from 'app/constants/constants';
 
 
 @Component({
@@ -7,19 +7,11 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './input-types-section.component.html',
   styleUrls: ['./input-types-section.component.scss']
 })
+
 export class InputTypesSectionComponent implements OnInit {
+  public fieldTypes: string[];
 
-  constructor(private store: Store<{ state: any }>) {}
-
-  ngOnInit() {
-    
-  }
-
-  fieldTypes = [
-    'input',
-    'textarea',
-    'button',
-    'checkbox',
-    'select',
-  ]
+  ngOnInit(): void {
+   this.fieldTypes = [...Object.values(typeFields)];
+ }
 }
