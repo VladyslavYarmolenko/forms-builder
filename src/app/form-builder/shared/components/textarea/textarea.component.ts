@@ -22,18 +22,12 @@ export class TextareaComponent implements OnInit, ControlValueAccessor {
   @Input() stylesObj!: any;
 
   @Input()
-    set value(value: any) {
+  set value(value: any) {
     this._value = value;
     this.writeValue(value);
   }
 
-  get value(): any {
-    return this._value;
-  }
-
-  constructor() {
-  }
-
+  // tslint:disable-next-line:variable-name
   _value: any = '';
 
   onChange = (value) => {};
@@ -41,7 +35,6 @@ export class TextareaComponent implements OnInit, ControlValueAccessor {
   onTouched = () => {};
 
   ngOnInit(): void {}
-
 
   writeValue(value): void {
     this.onChange(value);
@@ -57,5 +50,5 @@ export class TextareaComponent implements OnInit, ControlValueAccessor {
 
   }
 
- 
+
 

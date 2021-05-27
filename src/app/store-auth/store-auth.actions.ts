@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { User, Error } from '../../interfaces/interfaces';
+import { User, Error } from 'app/interfaces/interfaces';
 
 export enum ActionTypes {
   Login = '[Auth] Login',
@@ -48,4 +48,5 @@ export class RegisterFailedAction implements Action {
 }
 
 
-export type Actions = LoginAction | LoginSuccessAction | LoginFailedAction | RegisterAction | RegisterSuccessAction | RegisterFailedAction;
+export type Actions = LoginAction | LoginSuccessAction | LoginFailedAction
+              | RegisterAction | RegisterSuccessAction | RegisterFailedAction;

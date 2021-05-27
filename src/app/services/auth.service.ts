@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { AuthResponse, User } from '../../interfaces/interfaces';
+import { AuthResponse, User } from 'app/interfaces/interfaces';
 import { environment } from '../../environments/environment';
 
 @Injectable({

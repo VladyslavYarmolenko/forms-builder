@@ -1,6 +1,6 @@
 <div class='constructor'>
   <p class="constructor-field-title">form builder</p>
-  <div 
+  <div
     class="constructor-wrapper">
   <div
     class="drop-container"
@@ -11,18 +11,6 @@
     <form class="form-container" [formGroup]='formConstructor'>
       <div cdkDrag *ngFor="let field of constructorFieldsLocal; let i = index">
         <div [ngSwitch]='field.type'>
-          
-          <!-- <mat-form-field *ngSwitchCase="'input'" class="text_field field-wrapper" [ngStyle]="getFieldStyles(i)"> -->
-          <!-- <input 
-            *ngSwitchCase="'input'" 
-            matInput
-            [placeholder]="getFieldProp(i, 'placeholder')"
-            (click)="handleFieldClick(i)"
-            (clickOutside)="handleFieldClickOutside($event, i)" 
-            [exclude]="'.styles'"
-            [ngStyle]="getFieldStyles(i)"
-            [required]="isRequired"
-          > -->
 
           <ng-container *ngSwitchCase="'input'">
             <app-input
@@ -31,28 +19,15 @@
               [formControlName]="field.type + '-' + field.id"
               [label]="field.label"
               [placeholder]="getFieldProp(i, 'placeholder')"
-              (click)="handleFieldClick(i)" 
-              (clickOutside)="handleFieldClickOutside($event, i)" 
+              (click)="handleFieldClick(i)"
+              (clickOutside)="handleFieldClickOutside($event, i)"
             >
             </app-input>
-            <p *ngIf="formConstructor.controls[field.type + '-' + field.id].invalid && formConstructor.controls[field.type + '-' + field.id].touched">
+            <p *ngIf="formConstructor.controls[field.type + '-' + field.id].invalid
+                && formConstructor.controls[field.type + '-' + field.id].touched">
               Enter correct value
             </p>
           </ng-container>
-          
-         <!-- </mat-form-field> -->
-
-        <!-- <mat-form-field *ngSwitchCase="'textarea'" class="textarea_field field-wrapper" [ngStyle]="getFieldStyles(i)" >
-          <textarea
-              *ngSwitchCase="'textarea'" 
-              matInput
-              [placeholder]="getFieldProp(i, 'placeholder')"  
-              (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside($event, i)"
-              [exclude]="'.styles'"
-              [ngStyle]="getFieldStyles(i)"
-              [required]="isRequired"
-              ></textarea>
-        </mat-form-field> -->
 
         <ng-container *ngSwitchCase="'textarea'">
         <app-textarea
@@ -61,17 +36,18 @@
             [formControlName]="field.type + '-' + field.id"
             [label]="field.label"
             [placeholder]="getFieldProp(i, 'placeholder')"
-            (click)="handleFieldClick(i)" 
+            (click)="handleFieldClick(i)"
             (clickOutside)="handleFieldClickOutside($event, i)" >
         </app-textarea>
-        <p *ngIf="formConstructor.controls[field.type + '-' + field.id].invalid && formConstructor.controls[field.type + '-' + field.id].touched">
+        <p *ngIf="formConstructor.controls[field.type + '-' + field.id].invalid
+            && formConstructor.controls[field.type + '-' + field.id].touched">
           Enter correct value
         </p>
         </ng-container>
-        
-        <button 
-              *ngSwitchCase="'button'" 
-              mat-raised-button color="primary" 
+
+        <button
+              *ngSwitchCase="'button'"
+              mat-raised-button color="primary"
               class="button"
               (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside($event, i)"
               [exclude]="'.styles'"
@@ -79,15 +55,7 @@
         >
           {{getFieldProp(i, 'text')}}
         </button>
-        
-        <!-- <mat-checkbox *ngSwitchCase="'checkbox'" 
-                      class="checkbox"
-                      (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside($event, i)"
-                      [exclude]="'.styles'"
-                      [ngStyle]="getFieldStyles(i)"
-                      >{{getFieldProp(i, 'label')}}
-        </mat-checkbox> -->
-        
+
         <ng-container *ngSwitchCase="'checkbox'">
           <app-checkbox
             [label]="field.label"
@@ -101,27 +69,7 @@
           </app-checkbox>
         </ng-container>
 
-        <!-- <mat-form-field *ngSwitchCase="'select'" >
-          <mat-label>{{getFieldProp(i, 'label')}}</mat-label>
-          <mat-select *ngSwitchCase="'select'" 
-                      class="select"
-                      (openedChange)="handleSelectOpenedChange($event, i)" 
-                      [ngStyle]="getFieldStyles(i)"
-                      (clickOutside)="handleFieldClickOutside($event, i)"
-                      [exclude]="'.styles, .cdk-overlay-backdrop'"
-                    >
-            <mat-option *ngFor="let option of getFieldProp(i, 'options')" 
-                        class="select_option" 
-                        [ngStyle]="getFieldStyles(i)"
-                        value = {{option}}
-                        >
-              {{ option }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field> -->
-        <!-- (openedChange)="handleSelectOpenedChange($event, i)" -->
-        
-        <app-select 
+        <app-select
           *ngSwitchCase="'select'"
           [formControlName]="field.type + '-' + field.id"
           (click)="handleSelectOpenedChange($event, i)"
