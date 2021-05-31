@@ -1,4 +1,3 @@
-
 import { Component, forwardRef, Input } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
@@ -21,24 +20,25 @@ export class SelectComponent implements  ControlValueAccessor {
   @Input() stylesObj!: any;
   @Input() label: string;
 
+  private value: any;
+  private onTouchedCallback: () => void;
+  private onChangeCallback: (_: any) => void;
 
-  get value(): any {
-    return this.value;
+
+  change(val): void {
+    this.onChangeCallback(val);
   }
 
-  public onChange: any = (value) => {};
-  public onTouched: any = () => {};
-
+  writeValue(id: any): void {
+    this.value = id;
+  }
 
   registerOnChange(fn: any): void {
-    this.onChange = fn;
+    this.onChangeCallback = fn;
   }
 
   registerOnTouched(fn: any): void {
-    this.onTouched = fn;
+    this.onTouchedCallback = fn;
   }
 
-  writeValue(value: any): void {
-    this.onChange(value);
-  }
 }

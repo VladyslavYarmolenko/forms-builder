@@ -5,14 +5,12 @@ import { CdkDragDrop, copyArrayItem, moveItemInArray } from '@angular/cdk/drag-d
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import {ConstructorField, FieldTypes, FormBuilderState, SelectedFieldId, StyleList, Styles} from 'app/interfaces/interfaces';
-import { propNames, typeFields } from 'app/constants/constants';
+import { ConstructorField, FieldTypes, FormBuilderState, SelectedFieldId, StyleList, Styles } from 'app/interfaces/interfaces';
+import { typeFields } from 'app/constants/constants';
 
 import { addConstructorField,
-         changeFieldProp,
          returnInitialState,
          setConstructorFields,
-         changeInStyleList,
          setSelectedFieldId } from 'app/store_form-builder/store-form-builder.actions';
 
 import { getStylingState,
@@ -39,6 +37,7 @@ export class ConstructorSectionComponent implements OnInit, OnDestroy {
   formConstructor: FormGroup = new FormGroup({});
 
   constructor(private store: Store<{ state: FormBuilderState }>) {}
+
   ngOnInit(): void {
 
     this.fieldTypes = [...Object.values(typeFields)];
@@ -71,7 +70,7 @@ export class ConstructorSectionComponent implements OnInit, OnDestroy {
       });
   }
 
-    handleSelectOpenedChange(status: MouseEvent, i: number): void {
+  handleSelectOpenedChange(status: MouseEvent, i: number): void {
     if (!status) {
       return;
     }
@@ -137,33 +136,22 @@ export class ConstructorSectionComponent implements OnInit, OnDestroy {
   }
 
   updateControls(fieldsArr): void {
-    fieldsArr.forEach(element => {
+    fieldsArr.forEach(elem => {
+      const initValue = elem.type === 'checkbox' ? false : '';
       this.formConstructor
-        .addControl(element.type + '-' + element.id,
-          new FormControl('', [Validators.required, Validators.minLength(6)]));
+        .addControl(elem.type + '-' + elem.id,
+          new FormControl(initValue, [Validators.required, Validators.minLength(6)]));
     });
   }
 
-  onCheckboxChange(event: any, i: number): void {
-
-    const uptoDateStyles = {...this.styles};
-
-    uptoDateStyles.isChecked = event.target.checked;
-
-    this.store.dispatch(changeFieldProp({
-      constructorFieldId: i,
-      propToChange:  propNames.isChecked,
-      newPropState: event.target.checked,
-    }));
-
-    this.store.dispatch(changeInStyleList({ propToChange: propNames.isChecked, newPropState: event.target.checked }));
-  }
 
   drop(event: CdkDragDrop<any>): void {
     if (event.previousContainer !== event.container){
         copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
         const fieldType = event.previousContainer.data[event.previousIndex] as FieldTypes;
+
         this.store.dispatch(addConstructorField({ constructorFieldType: fieldType }));
+
     } else {
 
       const prevIndex = event.previousIndex;
@@ -176,6 +164,9 @@ export class ConstructorSectionComponent implements OnInit, OnDestroy {
     }
   }
 
+  onSubmit(): any {
+    alert(JSON.stringify(this.formConstructor.value));
+  }
   ngOnDestroy(): void {
     this.ngUnsubscribe$.next();
     this.ngUnsubscribe$.complete();

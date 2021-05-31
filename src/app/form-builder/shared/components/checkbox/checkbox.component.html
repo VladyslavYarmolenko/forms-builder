@@ -1,11 +1,11 @@
-<label>
-   <input 
+<label>{{label}}
+   <input
       type="checkbox"
       [ngStyle]="stylesObj"
-      (change)="onChanged($event)"
-      [checked]="isChecked"
-      (blur)="onBlur($event)"
-    >{{label}}
+      (blur)="onTouched()"
+      (ngModelChange)="onChange($event)"
+      [ngModel]="value"
+   >
 </label>
 
 <ng-content></ng-content>

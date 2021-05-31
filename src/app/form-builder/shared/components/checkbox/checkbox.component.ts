@@ -9,41 +9,37 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => CheckboxComponent),
-      multi: true
+      multi: true,
     }
   ]
 })
 
 export class CheckboxComponent implements ControlValueAccessor {
+  constructor() {}
 
   @Input() label: 'string';
   @Input() stylesObj!: any;
 
-  isChecked: boolean;
-
-  get value(): any {
-    return this.isChecked;
-  }
+  value: boolean;
 
   onChange = (_) => {};
   onBlur = (_) => {};
+  onTouched = () => {};
 
-  writeValue(checked: boolean): void {
-    this.isChecked = checked;
+  writeValue(value: any): void {
+    this.value = value;
+    console.log('VALUE', value)
+    this.onChange(value);
   }
 
-  registerOnChange(fn: (value: number) => void): void {
+  registerOnChange(fn: (_: any) => void): void {
+    console.log('fn', fn)
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: () => void): void {
-    this.onBlur = fn;
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
   }
-
-  onChanged($event): void {
-    this.isChecked = $event && $event.target && $event.target.checked;
-  }
-
 }
 
 

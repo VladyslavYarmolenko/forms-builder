@@ -21,7 +21,7 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   @Input() stylesObj!: any;
 
   @Input()
-    set value(value: any) {
+  set value(value: any) {
     this._value = value;
     this.writeValue(value);
   }
@@ -46,8 +46,4 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
-
 }
-
-
-

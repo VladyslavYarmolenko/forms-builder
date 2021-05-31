@@ -8,7 +8,7 @@
     [cdkDropListData]="fieldTypes"
     (cdkDropListDropped)="drop($event)"
   >
-    <form class="form-container" [formGroup]='formConstructor'>
+    <form class="form-container" [formGroup]='formConstructor' (ngSubmit)="onSubmit()">
       <div cdkDrag *ngFor="let field of constructorFieldsLocal; let i = index">
         <div [ngSwitch]='field.type'>
 
@@ -52,6 +52,8 @@
               (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside($event, i)"
               [exclude]="'.styles'"
               [ngStyle]="getFieldStyles(i)"
+              type="submit"
+
         >
           {{getFieldProp(i, 'text')}}
         </button>
@@ -63,8 +65,6 @@
             (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside($event, i)"
             [exclude]="'.styles'"
             [stylesObj]="getFieldStyles(i)"
-            (change)="onCheckboxChange($event , i)"
-            [(ngModel)]="field.isChecked"
           >
           </app-checkbox>
         </ng-container>
