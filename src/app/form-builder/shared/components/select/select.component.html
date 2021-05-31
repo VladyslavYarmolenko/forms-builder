@@ -1,7 +1,8 @@
 <div>
   <label>{{label}}</label>
-  <select 
+  <select
   [ngStyle]='stylesObj'
+  (change)="change(select.value)" #select
   >
     <option *ngFor='let option of options' value='{{option}}'>
       {{option}}

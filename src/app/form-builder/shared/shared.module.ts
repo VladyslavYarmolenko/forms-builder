@@ -3,7 +3,7 @@ import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { InputComponent } from './components/input/Input.component';
+import { InputComponent } from './components/input/input.component';
 import { TextareaComponent } from './components/textarea/textarea.component';
 import { SelectComponent } from './components/select/select.component';
 

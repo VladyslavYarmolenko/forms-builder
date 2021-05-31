@@ -35,7 +35,8 @@ export type ConstructorField = {
   isChecked?: boolean;
 };
 
-export type SelectedFieldId = number | null;
+// export type SelectedFieldId = number | null;
+export type SelectedFieldId = number;
 
 export type FieldTypes = 'input' | 'textarea' | 'button' | 'select' | 'checkbox';
 
