@@ -18,7 +18,7 @@ import { StylingFormSectionComponent } from './components/styling-form-section/s
 import { FormBuilderComponent } from './form-builder.component';
 import { FieldStylingFormComponent } from './components/styling-form-section/field-styling-form/field-styling-form.component'
 import { GeneralStylingFormComponent } from './components/styling-form-section/general-styling-form/general-styling-form.component';
-
+import { ReactiveComponentModule } from '@ngrx/component';
 
 @NgModule({
   imports: [
@@ -35,6 +35,7 @@ import { GeneralStylingFormComponent } from './components/styling-form-section/g
     MatButtonModule,
     ReactiveFormsModule,
     SharedModule,
+    ReactiveComponentModule
     ],
   entryComponents:
     [

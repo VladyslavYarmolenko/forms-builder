@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store';
+import {  createAction, props } from '@ngrx/store';
 import { User, Error } from 'app/interfaces/interfaces';
 
 export enum ActionTypes {
@@ -11,42 +11,18 @@ export enum ActionTypes {
   RegisterFailed = '[Auth] Register failed',
 }
 
-export class LoginAction implements Action {
-  readonly type = ActionTypes.Login;
+export const LoginAction = createAction(ActionTypes.Login, props<{ payload: User }>());
 
-  constructor(public payload: User) {}
-}
+export const LoginSuccessAction = createAction(ActionTypes.LoginSuccess, props<{ payload: User }>());
 
-export class LoginSuccessAction implements Action {
-  readonly type = ActionTypes.LoginSuccess;
+export const LoginFailedAction = createAction(ActionTypes.LoginFailed, props<{ payload: Error }>());
 
-  constructor(public payload: User) {}
-}
+export const RegisterAction = createAction(ActionTypes.Register, props<{ payload: User }>());
 
-export class LoginFailedAction implements Action {
-  readonly type = ActionTypes.LoginFailed;
+export const RegisterSuccessAction = createAction(ActionTypes.RegisterSuccess, props<{ payload: User }>());
 
-  constructor(public payload: Error) {}
-}
-
-export class RegisterAction implements Action {
-  readonly type = ActionTypes.Register;
-
-  constructor(public payload: User) {}
-}
-
-export class RegisterSuccessAction implements Action {
-  readonly type = ActionTypes.RegisterSuccess;
-
-  constructor(public payload: User) {}
-}
-
-export class RegisterFailedAction implements Action {
-  readonly type = ActionTypes.RegisterFailed;
-
-  constructor(public payload: Error) {}
-}
+export const RegisterFailedAction = createAction(ActionTypes.RegisterFailed, props<{ payload: Error }>());
 
 
-export type Actions = LoginAction | LoginSuccessAction | LoginFailedAction
-              | RegisterAction | RegisterSuccessAction | RegisterFailedAction;
+export type Actions = typeof LoginAction |typeof LoginSuccessAction | typeof LoginFailedAction |
+                      typeof RegisterAction | typeof RegisterSuccessAction | typeof RegisterFailedAction;

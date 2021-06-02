@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   constructor(private store: Store, private router: Router) {}
 
   onSubmit(formData: any): void {
-    this.store.dispatch(new LoginAction(formData.value));
+    this.store.dispatch(LoginAction(formData.value));
   }
 
   ngOnInit(): void {}

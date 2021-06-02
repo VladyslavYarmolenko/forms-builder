@@ -11,8 +11,6 @@ import { getUser } from 'app/store-auth/store-auth.selectors';
 import { RegisterAction } from 'app/store-auth/store-auth.actions';
 
 
-
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -30,7 +28,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.user$ = this.store.select(getUser);
   }
 
-
   private initForm(): void {
     this.form = new FormGroup({
       email: new FormControl('', Validators.required),
@@ -39,7 +36,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(formData: any): void {
-    this.store.dispatch(new RegisterAction(formData.value));
+    this.store.dispatch(RegisterAction(formData.value));
   }
 
   ngOnDestroy(): void {

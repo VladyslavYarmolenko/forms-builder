@@ -23,17 +23,14 @@ export class CheckboxComponent implements ControlValueAccessor {
   value: boolean;
 
   onChange = (_) => {};
-  onBlur = (_) => {};
   onTouched = () => {};
 
   writeValue(value: any): void {
     this.value = value;
-    console.log('VALUE', value)
     this.onChange(value);
   }
 
   registerOnChange(fn: (_: any) => void): void {
-    console.log('fn', fn)
     this.onChange = fn;
   }
 

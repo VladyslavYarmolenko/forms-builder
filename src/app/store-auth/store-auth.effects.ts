@@ -4,14 +4,13 @@ import { catchError, exhaustMap, map } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 
+
 import { AuthService } from 'app/services/auth.service';
 
 import {
   ActionTypes,
-  LoginAction,
   LoginFailedAction,
   LoginSuccessAction,
-  RegisterAction,
   RegisterFailedAction,
   RegisterSuccessAction,
 } from './store-auth.actions';
@@ -25,7 +24,6 @@ export class AuthEffects {
   onLogin$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ActionTypes.Login),
-      map((action: LoginAction) => action.payload),
       exhaustMap(action =>
         this.authService.login(action).pipe(
           map((res) => {
@@ -33,9 +31,9 @@ export class AuthEffects {
 
             this.router.navigate(['/form-builder']);
 
-            return new LoginSuccessAction(action);
+            return  LoginSuccessAction(action);
           }),
-          catchError(error => of(new LoginFailedAction(error)))
+          catchError(error => of(LoginFailedAction(error)))
         )
       )
     ));
@@ -43,7 +41,6 @@ export class AuthEffects {
   onRegister$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ActionTypes.Register),
-      map((action: RegisterAction) => action.payload),
       exhaustMap(action =>
         this.authService.register(action).pipe(
           map((res) => {
@@ -51,9 +48,9 @@ export class AuthEffects {
 
             this.router.navigate(['/form-builder']);
 
-            return new RegisterSuccessAction(action)
+            return  RegisterSuccessAction(action);
           }),
-          catchError(error => of(new RegisterFailedAction(error)))
+          catchError(error => of(RegisterFailedAction(error)))
         )
       )
     ));

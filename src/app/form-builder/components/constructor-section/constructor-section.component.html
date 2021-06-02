@@ -9,7 +9,7 @@
     (cdkDropListDropped)="drop($event)"
   >
     <form class="form-container" [formGroup]='formConstructor' (ngSubmit)="onSubmit()">
-      <div cdkDrag *ngFor="let field of constructorFieldsLocal; let i = index">
+      <div cdkDrag *ngFor="let field of formFields$ | ngrxPush; let i = index">
         <div [ngSwitch]='field.type'>
 
           <ng-container *ngSwitchCase="'input'">

@@ -1,4 +1,4 @@
-import { ActionReducerMap, createSelector, MetaReducer } from '@ngrx/store';
+import { createSelector } from '@ngrx/store';
 
 import * as authStore from 'app/store-auth/store-auth.reducer';
 

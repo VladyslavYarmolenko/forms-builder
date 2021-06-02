@@ -1,7 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { ConstructorField, FieldTypes, SelectedFieldId } from 'app/interfaces/interfaces';
-
+import { ConstructorField, FieldTypes, SelectedFieldId} from 'app/interfaces/interfaces';
 
 
 export const setSelectedFieldId = createAction(
