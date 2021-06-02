@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {typeFields} from 'app/constants/constants';
+import { Component, OnInit } from '@angular/core';
+import { typeFields } from 'app/constants/constants';
 
 
 @Component({

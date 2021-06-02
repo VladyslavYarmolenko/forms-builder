@@ -15,6 +15,7 @@ import { environment } from '../environments/environment';
 import { FormBuilderGuard } from './guard-route/form-builder.guard';
 
 import * as formBuilderReducer from './store_form-builder/store-form-builder.reducer';
+import * as authReducer from './store-auth/store-auth.reducer';
 import { AuthEffects } from './store-auth/store-auth.effects';
 
 import { AppComponent } from './app.component';
@@ -23,7 +24,6 @@ import { RegisterComponent } from './register/register.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { FormBuilderModule } from './form-builder/form-builder.module';
-
 
 
 @NgModule({
@@ -43,7 +43,10 @@ import { FormBuilderModule } from './form-builder/form-builder.module';
     FormBuilderModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    StoreModule.forRoot({storeFormBuilder: formBuilderReducer.reducer }),
+    StoreModule.forRoot({
+      storeFormBuilder: formBuilderReducer.reducer,
+      authReducer: authReducer.reducer
+    }),
     EffectsModule.forRoot([ AuthEffects ]),
     ReactiveFormsModule,
     StoreDevtoolsModule,

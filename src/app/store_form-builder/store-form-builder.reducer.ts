@@ -29,7 +29,7 @@ const initialState: FormBuilderState = {
   }
 };
 
-// @ts-ignore
+
 export const formBuilderReducer = createReducer(
   initialState,
   on(setSelectedFieldId, (state, { selectedFieldId }) => {

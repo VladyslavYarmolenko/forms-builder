@@ -2,8 +2,8 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CdkDragDrop, copyArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { map, takeUntil, tap } from 'rxjs/operators';
 
 import { ConstructorField, FieldTypes, FormBuilderState, SelectedFieldId, StyleList, Styles } from 'app/interfaces/interfaces';
 import { typeFields } from 'app/constants/constants';
@@ -32,6 +32,7 @@ export class ConstructorSectionComponent implements OnInit, OnDestroy {
   public selectedFieldId: SelectedFieldId = null;
   public isRequired: boolean | undefined;
 
+  public formFields$: Observable<ConstructorField[]>;
   public ngUnsubscribe$ = new Subject<void>();
 
   formConstructor: FormGroup = new FormGroup({});
@@ -42,15 +43,17 @@ export class ConstructorSectionComponent implements OnInit, OnDestroy {
 
     this.fieldTypes = [...Object.values(typeFields)];
 
-    this.store.select(selectConstructorFields)
-      .pipe(takeUntil(this.ngUnsubscribe$))
-      .subscribe((res: ConstructorField[]) => {
-        this.constructorFieldsLocal = res
-          .map(item => Object.assign({}, item))
-          .sort((a: ConstructorField, b: ConstructorField) => a.order > b.order ? 1 : -1);
-
-        this.updateControls(this.constructorFieldsLocal);
-      });
+    this.formFields$ = this.store.select(selectConstructorFields)
+      .pipe(
+        takeUntil(this.ngUnsubscribe$),
+        map(resArr => {
+          return resArr.map(item => Object.assign({}, item))
+            .sort((a: ConstructorField, b: ConstructorField) => a.order > b.order ? 1 : -1);
+        }),
+        tap(resArr => {
+          this.updateControls(resArr);
+          this.constructorFieldsLocal = resArr;
+        }));
 
     this.store.select(selectSelectedFieldId)
       .pipe(takeUntil(this.ngUnsubscribe$))
@@ -131,7 +134,6 @@ export class ConstructorSectionComponent implements OnInit, OnDestroy {
     });
 
     arr = arr.sort((a: ConstructorField, b: ConstructorField) => a.order > b.order ? 1 : -1);
-
     return arr;
   }
 
@@ -154,13 +156,13 @@ export class ConstructorSectionComponent implements OnInit, OnDestroy {
 
     } else {
 
-      const prevIndex = event.previousIndex;
-      const currentIndex = event.currentIndex;
+        const prevIndex = event.previousIndex;
+        const currentIndex = event.currentIndex;
 
-      moveItemInArray(this.fieldTypes, event.previousIndex, event.currentIndex);
-      const reorderedArray = this.setConstructorFieldsOrder(prevIndex, currentIndex);
+        moveItemInArray(this.fieldTypes, event.previousIndex, event.currentIndex);
+        const reorderedArray = this.setConstructorFieldsOrder(prevIndex, currentIndex);
 
-      this.store.dispatch(setConstructorFields({newConstructorArr: reorderedArray}));
+        this.store.dispatch(setConstructorFields({newConstructorArr: reorderedArray}));
     }
   }
 

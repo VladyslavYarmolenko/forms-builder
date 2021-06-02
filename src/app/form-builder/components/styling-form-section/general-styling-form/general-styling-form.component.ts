@@ -10,8 +10,7 @@ import { getStylingState, selectConstructorFields } from 'app/store_form-builder
 
 
 @Component({
-  // tslint:disable-next-line:component-selector
-  selector: 'general-styling-form',
+  selector: 'app-general-styling-form',
   templateUrl: './general-styling-form.component.html',
   styleUrls: ['./general-styling-form.component.scss']
 })

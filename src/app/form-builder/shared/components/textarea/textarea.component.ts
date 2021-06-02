@@ -23,12 +23,12 @@ export class TextareaComponent implements OnInit, ControlValueAccessor {
 
   @Input()
   set value(value: any) {
-    this._value = value;
+    this.Value = value;
     this.writeValue(value);
   }
 
-  // tslint:disable-next-line:variable-name
-  _value: any = '';
+
+  Value: any = '';
 
   onChange = (value) => {};
 
