@@ -30,6 +30,16 @@
   }
 }
 
+.buttons-panel {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+}
+
+.functional-buttons button {
+  margin-right: 15px;
+}
+
 .drop-container {
   box-sizing: border-box;
   min-width: 100%;

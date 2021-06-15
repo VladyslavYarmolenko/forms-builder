@@ -1,11 +1,11 @@
 import { createAction, props } from '@ngrx/store';
 
-import { ConstructorField, FieldTypes, SelectedFieldId} from 'app/interfaces/interfaces';
+import { ConstructorField, FieldTypes, selectedFieldId} from 'app/interfaces/interfaces';
 
 
 export const setSelectedFieldId = createAction(
   '[FORM BUILDER] SET_SELECTED_FIELD_ID',
-  props<{ selectedFieldId: SelectedFieldId }>()
+  props<{ selectedFieldId: selectedFieldId }>()
 );
 
 export const addConstructorField = createAction(
@@ -23,12 +23,6 @@ export const setConstructorFields = createAction(
   props<{ newConstructorArr: ConstructorField[] }>()
 );
 
-export const changeInStyleList = createAction(
-  '[FORM BUILDER] CHANGE_IN_STYLE_LIST',
-  props<{ propToChange: string, newPropState: any }>()
+export const deleteField = createAction(
+  '[FORM BUILDER] DELETE_FIELD'
 );
-
-export const returnInitialState = createAction(
-  '[FORM BUILDER] RETURN_INITIAL_STATE'
-);
-

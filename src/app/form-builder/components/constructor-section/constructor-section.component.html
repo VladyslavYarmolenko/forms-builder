@@ -1,5 +1,12 @@
 <div class='constructor'>
   <p class="constructor-field-title">form builder</p>
+  <div class="buttons-panel">
+    <div class="functional-buttons">
+      <button mat-raised-button color="primary" (click)="handleChangeField()" [disabled]="isDisabled">Change Field</button>
+      <button mat-raised-button color="warn" (click)="handleDeleteField()"  [disabled]="isDisabled">Delete Field</button>
+    </div>
+    <button mat-raised-button color="warn">Logout</button>
+  </div>
   <div
     class="constructor-wrapper">
   <div
@@ -15,12 +22,12 @@
           <ng-container *ngSwitchCase="'input'">
             <app-input
               *ngSwitchCase="'input'"
-              [stylesObj]="getFieldStyles(i)"
+              [stylesObj]="field.styles"
               [formControlName]="field.type + '-' + field.id"
-              [label]="field.label"
-              [placeholder]="getFieldProp(i, 'placeholder')"
+              [label]="field.styles.label"
+              [placeholder]="field.styles.placeholder"
               (click)="handleFieldClick(i)"
-              (clickOutside)="handleFieldClickOutside($event, i)"
+              [required]="field.styles.isRequired"
             >
             </app-input>
             <p *ngIf="formConstructor.controls[field.type + '-' + field.id].invalid
@@ -32,12 +39,13 @@
         <ng-container *ngSwitchCase="'textarea'">
         <app-textarea
             *ngSwitchCase="'textarea'"
-            [stylesObj]="getFieldStyles(i)"
+            [stylesObj]="field.styles"
             [formControlName]="field.type + '-' + field.id"
             [label]="field.label"
-            [placeholder]="getFieldProp(i, 'placeholder')"
+            [placeholder]="field.styles.placeholder"
             (click)="handleFieldClick(i)"
-            (clickOutside)="handleFieldClickOutside($event, i)" >
+            [required]="field.styles.isRequired"
+        >
         </app-textarea>
         <p *ngIf="formConstructor.controls[field.type + '-' + field.id].invalid
             && formConstructor.controls[field.type + '-' + field.id].touched">
@@ -49,22 +57,20 @@
               *ngSwitchCase="'button'"
               mat-raised-button color="primary"
               class="button"
-              (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside($event, i)"
-              [exclude]="'.styles'"
-              [ngStyle]="getFieldStyles(i)"
+              (click)="handleFieldClick(i)"
+              [ngStyle]="field.styles"
               type="submit"
 
         >
-          {{getFieldProp(i, 'text')}}
+          {{field.styles.text}}
         </button>
 
         <ng-container *ngSwitchCase="'checkbox'">
           <app-checkbox
-            [label]="field.label"
+            [label]="field.styles.label"
             [formControlName]="field.type + '-' + field.id"
-            (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside($event, i)"
-            [exclude]="'.styles'"
-            [stylesObj]="getFieldStyles(i)"
+            (click)="handleFieldClick(i)"
+            [stylesObj]="field.styles"
           >
           </app-checkbox>
         </ng-container>
@@ -73,11 +79,9 @@
           *ngSwitchCase="'select'"
           [formControlName]="field.type + '-' + field.id"
           (click)="handleSelectOpenedChange($event, i)"
-          [stylesObj]="getFieldStyles(i)"
-          (clickOutside)="handleFieldClickOutside($event, i)"
-          [exclude]="'.styles, .cdk-overlay-backdrop'"
+          [stylesObj]="field.styles"
           [options]='field.options'
-          [label]="getFieldProp(i, 'label')"
+          [label]="field.styles.label"
         >
         </app-select>
       </div>

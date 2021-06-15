@@ -20,6 +20,7 @@ export class TextareaComponent implements OnInit, ControlValueAccessor {
   @Input() label!: string;
   @Input() placeholder!: string;
   @Input() stylesObj!: any;
+  @Input() isRequired : boolean;
 
   @Input()
   set value(value: any) {

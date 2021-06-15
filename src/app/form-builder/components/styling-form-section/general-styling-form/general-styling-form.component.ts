@@ -6,7 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ConstructorField, FormBuilderState, StyleList } from 'app/interfaces/interfaces';
 
 import { setConstructorFields } from 'app/store_form-builder/store-form-builder.actions';
-import { getStylingState, selectConstructorFields } from 'app/store_form-builder/store-form-builder.selectors';
+import { selectConstructorFields } from 'app/store_form-builder/store-form-builder.selectors';
 
 
 @Component({
@@ -32,12 +32,12 @@ constructor(private store: Store<{ state: FormBuilderState }>) {}
         this.constructorFieldLocal = res.map(item => Object.assign({}, item));
     });
 
-    this.store.select(getStylingState)
-      .pipe(takeUntil(this.ngUnsubscribe$))
-      .subscribe((stylesObj) => {
-
-        this.styles = { ...stylesObj };
-    });
+    // this.store.select(getStylingState)
+    //   .pipe(takeUntil(this.ngUnsubscribe$))
+    //   .subscribe((stylesObj) => {
+    //
+    //     this.styles = { ...stylesObj };
+    // });
 }
 
   globalStyleChange(value: any, propName: any): void {

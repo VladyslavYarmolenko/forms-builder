@@ -17,9 +17,3 @@ export const selectConstructorFields = createSelector(
   }
 );
 
-export const getStylingState = createSelector(
-  state, (currentState: FormBuilderState) => {
-    return currentState.stylesFields;
-  }
-);
-
