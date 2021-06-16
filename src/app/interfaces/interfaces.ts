@@ -45,6 +45,11 @@ export type ChangeFieldPropArguments = {
   newPropState: number | string | string[]
 };
 
+export interface Field {
+  type : FieldTypes,
+  styles: Styles,
+}
+
 export type StyleList = {
   placeholder: '' | string;
   text: '' | string;

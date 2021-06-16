@@ -1,20 +1,21 @@
 import { Store } from '@ngrx/store';
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { concatMap, filter, find, map, take, takeUntil, tap } from 'rxjs/operators';
 
 import {
   selectedFieldId,
   ConstructorField,
   StyleList,
   FormBuilderState,
-  styles
+  styles, Styles, Field
 } from 'app/interfaces/interfaces';
 import { defaultValues, propNames, typeFields } from 'app/constants/constants';
 
-import { changeFieldProp } from 'app/store_form-builder/store-form-builder.actions';
+import { changeFieldProp, changeFieldStyles } from 'app/store_form-builder/store-form-builder.actions';
 import { selectSelectedFieldId, selectConstructorFields } from 'app/store_form-builder/store-form-builder.selectors';
 import { FormControl, FormGroup } from "@angular/forms";
+
 
 
 
@@ -26,42 +27,41 @@ import { FormControl, FormGroup } from "@angular/forms";
 
 export class FieldStylingFormComponent implements OnInit, OnDestroy {
 
-  status = true;
-  field;
-  styles: StyleList;
-  selectedFieldId: selectedFieldId = null;
-  constructorFieldsLocal: ConstructorField[] = [];
-  optionsList: string[] = [];
+  public selectedFieldId: selectedFieldId;
+
+  public  formFields$: Observable<ConstructorField[]>;
 
   public stylesForm = new FormGroup({});
 
   public ngUnsubscribe$ = new Subject<void>();
 
-  constructor(private store: Store<{ state: FormBuilderState }>) {}
+  // optionsList: string[] = [];
+
+  constructor(private store: Store<{ state: FormBuilderState }>) {
+    this.formFields$ = this.store.select(selectConstructorFields);
+  }
 
   ngOnInit(): void {
+
     this.store.select(selectSelectedFieldId)
       .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe((selectedFieldId: selectedFieldId) => {
         this.selectedFieldId = selectedFieldId;
+
     });
 
-    this.store.select(selectConstructorFields)
-      .pipe(takeUntil(this.ngUnsubscribe$))
-      .subscribe((res: ConstructorField[]) => {
-        this.constructorFieldsLocal = res.map(item => Object.assign({}, item));
-
-        this.field = this.constructorFieldsLocal.find(item => item.id === this.selectedFieldId);
-        this.styles = {...this.field.styles}
-    });
+    this.formFields$
+      .pipe(takeUntil(this.ngUnsubscribe$),
+            concatMap(fields => fields),
+            filter(fields => fields.id !== this.selectedFieldId))
 
    this.upDateControls(styles);
+
   }
 
   upDateControls(objOfStyles){
 
     const propsArr = Object.keys(objOfStyles);
-
 
     propsArr.forEach(elem => {
       this.stylesForm.addControl(elem, new FormControl(''))
@@ -105,10 +105,7 @@ export class FieldStylingFormComponent implements OnInit, OnDestroy {
   //
 
   onSubmit() : void {
-    console.log(this.stylesForm.value)
-    this.store.dispatch(changeFieldProp({ constructorFieldId: this.selectedFieldId,
-                                                propToChange: propNames.styles,
-                                                newPropState: this.stylesForm.value }))
+    this.store.dispatch(changeFieldStyles({newStyles: this.stylesForm.value}))
   }
 
   ngOnDestroy(): void {

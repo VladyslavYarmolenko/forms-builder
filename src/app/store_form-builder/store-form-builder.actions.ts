@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { ConstructorField, FieldTypes, selectedFieldId} from 'app/interfaces/interfaces';
+import { ConstructorField, FieldTypes, selectedFieldId, StyleList } from 'app/interfaces/interfaces';
 
 
 export const setSelectedFieldId = createAction(
@@ -25,4 +25,10 @@ export const setConstructorFields = createAction(
 
 export const deleteField = createAction(
   '[FORM BUILDER] DELETE_FIELD'
+);
+
+
+export const changeFieldStyles = createAction(
+  '[FORM BUILDER] CHANGE_FIELD_STYLES',
+  props<{ newStyles: StyleList }>()
 );

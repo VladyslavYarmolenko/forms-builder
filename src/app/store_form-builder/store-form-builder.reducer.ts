@@ -9,7 +9,7 @@ import {
   setSelectedFieldId,
   addConstructorField,
   changeFieldProp,
-  setConstructorFields, deleteField,
+  setConstructorFields, deleteField, changeFieldStyles,
 } from 'app/store_form-builder/store-form-builder.actions';
 import { typeFields } from "../constants/constants";
 
@@ -23,7 +23,6 @@ const initialState: FormBuilderState = {
 export const formBuilderReducer = createReducer(
   initialState,
   on(setSelectedFieldId, (state: FormBuilderState, { selectedFieldId } : any ) => {
-
     return({
       ...state,
       selectedFieldId,
@@ -57,11 +56,7 @@ export const formBuilderReducer = createReducer(
     //   ? defaultValues.button : null;
     // newField.isChecked = constructorFieldType === typeFields.checkbox
     //   ? defaultValues.isChecked : null;
-    //
-    //
-    // if (constructorFieldType === typeFields.input || constructorFieldType === typeFields.textarea){
-    //   newField.isRequired = false;
-    // }
+
 
     switch (constructorFieldType) {
       case typeFields.input:
@@ -87,29 +82,22 @@ export const formBuilderReducer = createReducer(
       });
     }
   ),
-  on(changeFieldProp, (state : FormBuilderState , { constructorFieldId, propToChange, newPropState } : any) => {
-    let constructorFields = state.constructorFields;
-    const field: ConstructorField | undefined = constructorFields.find((elem: ConstructorField) => elem.id === constructorFieldId);
+  on(changeFieldStyles, (state : FormBuilderState, { newStyles } : any) => {
 
-    let changedField: ConstructorField | null = null;
+    const fieldId = state.selectedFieldId;
+    const fieldsArr = [...state.constructorFields];
 
-    if (field) {
-      changedField = { ...field };
+    const field = fieldsArr.find(field => field.id === fieldId);
 
-      // @ts-ignore
-      changedField[propToChange] = newPropState;
-    }
+    const changedField = {...field};
+    changedField.styles = {...newStyles};
 
-    constructorFields = constructorFields.filter((elem: ConstructorField) => elem.id !== constructorFieldId);
+    fieldsArr.splice(fieldId, 1, changedField);
 
-    if (changedField) {
-      constructorFields.push(changedField);
-    }
-
-    return {
+    return ({
       ...state,
-      constructorFields: [...constructorFields]
-    };
+      constructorFields: fieldsArr,
+    })
   }),
   on(setConstructorFields, (state : FormBuilderState, { newConstructorArr } : any) => {
 
@@ -125,7 +113,6 @@ export const formBuilderReducer = createReducer(
     const filteredArr = state.constructorFields.filter(fields => fields.id !== fieldId );
 
     return({
-      ...state,
       selectedFieldId: null,
       constructorFields: filteredArr
     })
