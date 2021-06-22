@@ -3,96 +3,91 @@
     SELECT FIELD STYLES
   </p>
   <form  class="stylize-field" [formGroup]="stylesForm" (ngSubmit)="onSubmit()">
-    <mat-form-field *ngIf="(formFields$ | ngrxPush)[0].type === 'input' || (formFields$ | ngrxPush)[0].type === 'textarea' ">
-      <mat-label>Placeholder</mat-label>
-      <input matInput
-             name="placeholder"
-             formControlName="placeholder"
-             [value] ="(formFields$ | ngrxPush)[0].styles.placeholder">
-    </mat-form-field>
 
-    <mat-form-field *ngIf="(formFields$ | ngrxPush)[0].type === 'button'">
-      <mat-label>Text</mat-label>
-      <input matInput
-             name="text"
-             formControlName="text"
-             [value] ="(formFields$ | ngrxPush)[0].styles.text">
-    </mat-form-field>
+    <div *ngFor="let style of stylesKeysArr ; let i = index" >
 
-    <mat-form-field *ngIf="(formFields$ | ngrxPush)[0].type === 'checkbox'">
-      <mat-label>Label</mat-label>
-      <input matInput
-             name="label"
-             formControlName="label"
-             [value] ="(formFields$ | ngrxPush)[0].styles.label"
-      >
-    </mat-form-field>
+      <mat-form-field *ngIf="style === 'placeholder'" >
+        <mat-label>Placeholder</mat-label>
+        <input matInput
+               name="placeholder"
+               formControlName="placeholder"
+               [value] ="(formFields$ | ngrxPush)[0].styles.placeholder
+               ? (formFields$ | ngrxPush)[0].styles.placeholder : 'Default placeholder'"
+        >
+      </mat-form-field>
 
-<!--    <mat-form-field *ngIf="field.type === 'select'">-->
-<!--      <button mat-button  *ngIf="field.type === 'select'" (click)='addNewOption()'>+</button>-->
-<!--      <div *ngFor='let option of optionsList; let i = index' class="optionList">-->
-<!--        <input matInput (change)='changeInputValue($event, i)' value=" {{option}}">-->
-<!--        <button mat-button (click)='deleteOption(i)'>-</button>-->
+      <mat-form-field *ngIf="style === 'label'">
+        <mat-label>Label</mat-label>
+        <input matInput
+               name="label"
+               formControlName="label"
+               [value] ="(formFields$ | ngrxPush)[0].styles.label
+               ? (formFields$ | ngrxPush)[0].styles.label : 'Default label'"
+        >
+      </mat-form-field>
+
+      <mat-form-field *ngIf="style === 'text'">
+        <mat-label>Text</mat-label>
+        <input matInput
+               name="text"
+               formControlName="text"
+               [value] ="(formFields$ | ngrxPush)[0].styles.text
+               ? (formFields$ | ngrxPush)[0].styles.text : 'Default text'"
+        >
+      </mat-form-field>
+
+      <mat-form-field *ngIf="style === 'width'">
+        <mat-label>Width</mat-label>
+        <input matInput
+               name="width"
+               formControlName="width"
+               [value] ="(formFields$ | ngrxPush)[0].styles.width"
+        >
+      </mat-form-field>
+
+      <mat-form-field *ngIf="style === 'height'">
+        <mat-label>Height</mat-label>
+        <input matInput
+               name="height"
+               formControlName="height"
+               [value] ="(formFields$ | ngrxPush)[0].styles.height"
+        >
+      </mat-form-field>
+
+      <mat-form-field *ngIf="style === 'fontSize'">
+        <mat-label>fontSize</mat-label>
+        <input matInput
+               name="fontSize"
+               formControlName="fontSize"
+               [value] ="(formFields$ | ngrxPush)[0].styles.fontSize"
+        >
+      </mat-form-field>
+
+      <mat-form-field *ngIf="style === 'color'">
+        <mat-label>Color</mat-label>
+        <input matInput
+               name="color"
+               formControlName="color"
+               [value] ="(formFields$ | ngrxPush)[0].styles.color"
+        >
+      </mat-form-field>
+
+      <mat-checkbox *ngIf="style === 'isRequired'"
+                    name="isRequired"
+                    formControlName="isRequired"
+                    class="isRequired"
+      >Required Field
+      </mat-checkbox>
+
+    </div>
+
+<!--    <mat-form-field *ngIf="selectedField.type === 'select'">-->
+<!--      <button mat-button (click)='addNewOption()'>+</button>-->
+<!--      <div *ngFor='let option of optionsList; let i = index' class="optionList">&ndash;&gt;-->
+<!--        <input matInput (change)='changeInputValue($event, i)' value=" {{option}}">&ndash;&gt;-->
+<!--        <button mat-button (click)='deleteOption(i)'>-</button>&ndash;&gt;-->
 <!--      </div>-->
 <!--    </mat-form-field>-->
-
-
-    <mat-form-field>
-      <mat-label>Width</mat-label>
-      <input matInput
-             name="width"
-             formControlName="width"
-             [value] = "(formFields$ | ngrxPush)[0].styles.width? (formFields$ | ngrxPush)[0].styles.width : ''" >
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Height</mat-label>
-      <input matInput
-             name="height"
-             height="height"
-             formControlName="height"
-             [value] = "(formFields$ | ngrxPush)[0].styles.height? (formFields$ | ngrxPush)[0].styles.height : ''">
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Font Size</mat-label>
-      <input matInput
-             name="fontSize"
-             formControlName="fontSize"
-             [value] = "(formFields$ | ngrxPush)[0].styles.fontSize? (formFields$ | ngrxPush)[0].styles.fontSize : ''">
-    </mat-form-field>
-
-    <mat-form-field class="fontWeightStyle">
-      <mat-label>Font Weight</mat-label>
-      <mat-select formControlName = "fontWeight">
-        <mat-option class="option" value='100'>
-          lighter
-        </mat-option>
-        <mat-option class="option" value='400'>
-          normal
-        </mat-option>
-        <mat-option class="option" value='700'>
-          bold
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Color</mat-label>
-      <input matInput
-             name="color"
-             formControlName="color"
-             [value] = "(formFields$ | ngrxPush)[0].styles.color? (formFields$ | ngrxPush)[0].styles.color : ''"
-      >
-    </mat-form-field>
-
-<!--    <mat-checkbox *ngIf="(formFields$ | ngrxPush)[0].type === 'input' || (formFields$ | ngrxPush)[0].type === 'textarea'"-->
-<!--                    class="isRequired"-->
-<!--                    name="isRequired"-->
-<!--                    formControlName="isRequired"-->
-<!--                    [(ngModel)]="(formFields$ | ngrxPush)[0].styles.isRequired"-->
-<!--                    >Required-->
-<!--    </mat-checkbox>-->
 
     <button
       mat-raised-button color="primary"
@@ -106,4 +101,19 @@
 </div>
 
 
+
+<!--    <mat-form-field class="fontWeightStyle">-->
+<!--      <mat-label>Font Weight</mat-label>-->
+<!--      <mat-select formControlName = "fontWeight">-->
+<!--        <mat-option class="option" value='100'>-->
+<!--          lighter-->
+<!--        </mat-option>-->
+<!--        <mat-option class="option" value='400'>-->
+<!--          normal-->
+<!--        </mat-option>-->
+<!--        <mat-option class="option" value='700'>-->
+<!--          bold-->
+<!--        </mat-option>-->
+<!--      </mat-select>-->
+<!--    </mat-form-field>-->
 

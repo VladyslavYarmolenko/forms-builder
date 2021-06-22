@@ -1,5 +1,5 @@
 import { Store } from '@ngrx/store';
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, DoCheck, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { concatMap, filter, find, map, take, takeUntil, tap } from 'rxjs/operators';
 
@@ -29,11 +29,16 @@ export class FieldStylingFormComponent implements OnInit, OnDestroy {
 
   public selectedFieldId: selectedFieldId;
 
-  public  formFields$: Observable<ConstructorField[]>;
+  public formFields$: Observable<ConstructorField[]>;
 
   public stylesForm = new FormGroup({});
 
   public ngUnsubscribe$ = new Subject<void>();
+
+  public selectedField;
+
+  public stylesKeysArr;
+
 
   // optionsList: string[] = [];
 
@@ -47,23 +52,26 @@ export class FieldStylingFormComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe((selectedFieldId: selectedFieldId) => {
         this.selectedFieldId = selectedFieldId;
-
     });
 
-    this.formFields$
-      .pipe(takeUntil(this.ngUnsubscribe$),
-            concatMap(fields => fields),
-            filter(fields => fields.id !== this.selectedFieldId))
 
-   this.upDateControls(styles);
+    this.formFields$.subscribe(
+      fieldsArr => {
+          console.log(this.selectedFieldId)
+          this.selectedField = fieldsArr.find(field => field.id === this.selectedFieldId);
+          const fieldStyles = {...this.selectedField.styles};
+          this.stylesKeysArr = Object.keys(fieldStyles);
+      }
+    )
 
+    this.upDateControls(this.stylesKeysArr);
   }
 
-  upDateControls(objOfStyles){
 
-    const propsArr = Object.keys(objOfStyles);
+  upDateControls(styles){
 
-    propsArr.forEach(elem => {
+
+    styles.forEach(elem => {
       this.stylesForm.addControl(elem, new FormControl(''))
     })
   }
@@ -106,6 +114,7 @@ export class FieldStylingFormComponent implements OnInit, OnDestroy {
 
   onSubmit() : void {
     this.store.dispatch(changeFieldStyles({newStyles: this.stylesForm.value}))
+
   }
 
   ngOnDestroy(): void {

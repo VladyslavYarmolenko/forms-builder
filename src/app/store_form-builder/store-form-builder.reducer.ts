@@ -2,7 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 
 import {
   FormBuilderState,
-  ConstructorField,
+  ConstructorField, styles,
 } from 'app/interfaces/interfaces';
 
 import {
@@ -31,7 +31,7 @@ export const formBuilderReducer = createReducer(
   on(addConstructorField, (state : FormBuilderState, { constructorFieldType } : any) => {
     const constructorFields = state.constructorFields;
 
-    let fieldId = constructorFields.length;
+    let fieldId;
 
     if (constructorFields.length === 0){
       fieldId = constructorFields.length;
@@ -41,35 +41,25 @@ export const formBuilderReducer = createReducer(
 
     const newField: ConstructorField = {
       type: constructorFieldType,
-      styles: {},
+      styles: {...styles},
       order: constructorFields.length,
       id: constructorFields.length,
     };
-
-    // newField.label = constructorFieldType === typeFields.select || constructorFieldType === typeFields.checkbox
-    //   ?  defaultValues.label : null;
-    // newField.options = constructorFieldType === typeFields.select
-    //   ? defaultValues.option : null;
-    // newField.placeholder = constructorFieldType === typeFields.input || constructorFieldType === typeFields.textarea
-    //   ? defaultValues.placeholder : null;
-    // newField.text = constructorFieldType === typeFields.button
-    //   ? defaultValues.button : null;
-    // newField.isChecked = constructorFieldType === typeFields.checkbox
-    //   ? defaultValues.isChecked : null;
 
 
     switch (constructorFieldType) {
       case typeFields.input:
       case typeFields.textarea:
-        newField.styles.placeholder = 'Placeholder';
+        newField.styles.placeholder = 'Default placeholder';
         newField.styles.isRequired = false;
         break;
       case typeFields.checkbox:
       case typeFields.select:
-        newField.styles.label = 'Label';
+        newField.styles.label = 'Default label';
+        newField.styles.options = ['Default option']
         break;
       case typeFields.button:
-        newField.styles.text = 'Text';
+        newField.styles.text = 'Default text';
         break;
 
       default:

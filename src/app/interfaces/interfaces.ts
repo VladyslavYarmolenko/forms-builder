@@ -51,27 +51,19 @@ export interface Field {
 }
 
 export type StyleList = {
-  placeholder: '' | string;
-  text: '' | string;
-  label: '' | string;
   width: '' | string;
   height: '' | number;
   border: '' | string;
   fontSize: '' | number;
   fontWeight: '' | number;
   color: '' | number;
-  isRequired: '' | boolean;
 }
 
 export const styles: StyleList = {
-  placeholder: '',
-  text: '',
-  label: '',
   width: '',
   height: '',
   border: '',
   fontSize: '',
   fontWeight: '',
   color: '',
-  isRequired: '',
 }
