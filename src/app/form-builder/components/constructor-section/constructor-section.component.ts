@@ -5,18 +5,18 @@ import { CdkDragDrop, copyArrayItem, moveItemInArray } from '@angular/cdk/drag-d
 import { Observable, Subject } from 'rxjs';
 import { map, takeUntil, tap } from 'rxjs/operators';
 
-import { ConstructorField, FieldTypes, FormBuilderState, selectedFieldId, StyleList, Styles } from 'app/interfaces/interfaces';
+import { Field, FieldTypes, FormBuilderState, selectedFieldId, StyleList } from 'app/interfaces/interfaces';
 import { typeFields } from 'app/constants/constants';
+import { AuthService } from '../../../services/auth.service';
 
 import {
-  addConstructorField, deleteField,
-  setConstructorFields,
+  addConstructorField,
+  deleteField,
   setSelectedFieldId
 } from 'app/store_form-builder/store-form-builder.actions';
 
 import { selectConstructorFields,
          selectSelectedFieldId } from 'app/store_form-builder/store-form-builder.selectors';
-
 
 @Component({
   selector: 'app-constructor-section',
@@ -31,12 +31,12 @@ export class ConstructorSectionComponent implements OnInit, OnDestroy {
   public selectedFieldId: selectedFieldId = null;
   public isRequired: boolean | undefined;
 
-  public formFields$: Observable<ConstructorField[]>;
+  public formFields$: Observable<Field[]>;
   public ngUnsubscribe$ = new Subject<void>();
 
   formConstructor: FormGroup = new FormGroup({});
 
-  constructor(private store: Store<{ state: FormBuilderState }>) {}
+  constructor(private store: Store<{ state: FormBuilderState }>, private authService: AuthService) {}
 
   ngOnInit(): void {
 
@@ -46,8 +46,7 @@ export class ConstructorSectionComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.ngUnsubscribe$),
         map(resArr => {
-          return resArr.map(item => Object.assign({}, item))
-            .sort((a: ConstructorField, b: ConstructorField) => a.order > b.order ? 1 : -1);
+          return resArr.map(item => Object.assign({}, item));
         }),
         tap(resArr => {
           this.updateControls(resArr);
@@ -55,8 +54,8 @@ export class ConstructorSectionComponent implements OnInit, OnDestroy {
 
     this.store.select(selectSelectedFieldId)
       .pipe(takeUntil(this.ngUnsubscribe$))
-      .subscribe((selectedFieldId: selectedFieldId) => {
-        this.selectedFieldId = selectedFieldId;
+      .subscribe((selectedId: selectedFieldId) => {
+        this.selectedFieldId = selectedId;
 
       });
   }
@@ -70,13 +69,12 @@ export class ConstructorSectionComponent implements OnInit, OnDestroy {
   }
 
   handleFieldClick(index: number): void {
-
-    this.store.dispatch(setSelectedFieldId({ selectedFieldId: index }));
+    this.store.dispatch(setSelectedFieldId({ selectedId: index }));
     this.isDisabled = false;
   }
 
   handleChangeField(): void {
-    this.store.dispatch(setSelectedFieldId({ selectedFieldId: null }));
+    this.store.dispatch(setSelectedFieldId({ selectedId: null }));
     this.isDisabled = true;
   }
 
@@ -84,31 +82,6 @@ export class ConstructorSectionComponent implements OnInit, OnDestroy {
     this.store.dispatch(deleteField());
     this.isDisabled = true;
   }
-
-
-  // setConstructorFieldsOrder(prevIndex: number, currentIndex: number): ConstructorField[] {
-  //   let arr = [...this.constructorFieldsLocal];
-  //
-  //   const orderedField = arr[prevIndex];
-  //
-  //   arr.splice(prevIndex, 1);
-  //   arr.splice(currentIndex, 0, orderedField);
-  //
-  //   arr.map((item: ConstructorField, index: number, array: ConstructorField[]) => {
-  //     if (index === currentIndex) {
-  //       item.order = currentIndex;
-  //     }
-  //
-  //     if (currentIndex < prevIndex && index > currentIndex) {
-  //       item.order++;
-  //     } else if (currentIndex > prevIndex && index >= prevIndex && index < currentIndex) {
-  //       item.order--;
-  //     }
-  //   });
-  //
-  //   arr = arr.sort((a: ConstructorField, b: ConstructorField) => a.order > b.order ? 1 : -1);
-  //   return arr;
-  // }
 
   updateControls(fieldsArr): void {
     fieldsArr.forEach(elem => {
@@ -129,18 +102,17 @@ export class ConstructorSectionComponent implements OnInit, OnDestroy {
 
     } else {
 
-        const prevIndex = event.previousIndex;
-        const currentIndex = event.currentIndex;
-
         moveItemInArray(this.fieldTypes, event.previousIndex, event.currentIndex);
-        // const reorderedArray = this.setConstructorFieldsOrder(prevIndex, currentIndex);
 
-        // this.store.dispatch(setConstructorFields({newConstructorArr: reorderedArray}));
     }
   }
 
   onSubmit(): void {
     alert(JSON.stringify(this.formConstructor.value));
+  }
+
+  onLogout(): void {
+    this.authService.logOut();
   }
 
   ngOnDestroy(): void {

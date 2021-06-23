@@ -1,3 +1,5 @@
+import {StyleList} from '../interfaces/interfaces';
+
 export const typeFields = {
   input : 'input',
   textarea : 'textarea',
@@ -26,3 +28,12 @@ export const defaultValues = {
   button: 'Button',
   isChecked: false,
 };
+
+export const styles: StyleList = {
+  width: '',
+  height: '',
+  fontSize: '',
+  fontWeight: '',
+  color: '',
+};
+

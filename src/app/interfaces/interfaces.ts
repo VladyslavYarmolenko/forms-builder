@@ -1,5 +1,5 @@
 export interface FormBuilderState {
-  constructorFields: ConstructorField[];
+  constructorFields: Field[];
   selectedFieldId: selectedFieldId;
 }
 
@@ -21,49 +21,22 @@ export type Styles = {
   [key: string]: any;
 };
 
-export type ConstructorField = {
-  id: number;
-  type: string;
-  styles: Styles;
-  order: number;
-  label?: string;
-  options?: string[];
-  placeholder?: string;
-  text?: string;
-  isRequired?: boolean;
-  isChecked?: boolean;
-};
 
-// export type SelectedFieldId = number | null;
-export type selectedFieldId = number | null;
+export type selectedFieldId = number | null ;
 
 export type FieldTypes = 'input' | 'textarea' | 'button' | 'select' | 'checkbox';
 
-export type ChangeFieldPropArguments = {
-  constructorFieldId: number;
-  propToChange: keyof ConstructorField
-  newPropState: number | string | string[]
-};
 
 export interface Field {
-  type : FieldTypes,
-  styles: Styles,
+  type: FieldTypes;
+  styles: Styles;
+  id: selectedFieldId;
 }
 
 export type StyleList = {
   width: '' | string;
   height: '' | number;
-  border: '' | string;
   fontSize: '' | number;
   fontWeight: '' | number;
   color: '' | number;
-}
-
-export const styles: StyleList = {
-  width: '',
-  height: '',
-  border: '',
-  fontSize: '',
-  fontWeight: '',
-  color: '',
-}
+};

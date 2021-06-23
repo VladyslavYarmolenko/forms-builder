@@ -1,3 +1,4 @@
+<script src="constructor-section.component.ts"></script>
 <div class='constructor'>
   <p class="constructor-field-title">form builder</p>
   <div class="buttons-panel">
@@ -5,7 +6,7 @@
       <button mat-raised-button color="primary" (click)="handleChangeField()" [disabled]="isDisabled">Change Field</button>
       <button mat-raised-button color="warn" (click)="handleDeleteField()"  [disabled]="isDisabled">Delete Field</button>
     </div>
-    <button mat-raised-button color="warn">Logout</button>
+    <button mat-raised-button color="warn" (click)="onLogout()">Logout</button>
   </div>
   <div
     class="constructor-wrapper">
@@ -41,7 +42,7 @@
             *ngSwitchCase="'textarea'"
             [stylesObj]="field.styles"
             [formControlName]="field.type + '-' + field.id"
-            [label]="field.label"
+            [label]="field.styles.label"
             [placeholder]="field.styles.placeholder"
             (click)="handleFieldClick(i)"
             [required]="field.styles.isRequired"
@@ -80,7 +81,7 @@
           [formControlName]="field.type + '-' + field.id"
           (click)="handleSelectOpenedChange($event, i)"
           [stylesObj]="field.styles"
-          [options]='field.options'
+          [options]='field.styles.options'
           [label]="field.styles.label"
         >
         </app-select>

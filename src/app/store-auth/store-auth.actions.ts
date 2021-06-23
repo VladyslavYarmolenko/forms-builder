@@ -1,4 +1,4 @@
-import {  createAction, props } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 import { User, Error } from 'app/interfaces/interfaces';
 
 export enum ActionTypes {
@@ -25,4 +25,4 @@ export const RegisterFailedAction = createAction(ActionTypes.RegisterFailed, pro
 
 
 export type Actions = typeof LoginAction |typeof LoginSuccessAction | typeof LoginFailedAction |
-                      typeof RegisterAction | typeof RegisterSuccessAction | typeof RegisterFailedAction;
+                      typeof RegisterAction | typeof RegisterSuccessAction | typeof RegisterFailedAction

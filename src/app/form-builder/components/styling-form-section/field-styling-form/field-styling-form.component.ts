@@ -1,22 +1,13 @@
 import { Store } from '@ngrx/store';
-import { Component, DoCheck, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { concatMap, filter, find, map, take, takeUntil, tap } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
+import { FormControl, FormGroup } from '@angular/forms';
 
-import {
-  selectedFieldId,
-  ConstructorField,
-  StyleList,
-  FormBuilderState,
-  styles, Styles, Field
-} from 'app/interfaces/interfaces';
-import { defaultValues, propNames, typeFields } from 'app/constants/constants';
+import { selectedFieldId, FormBuilderState, Field } from 'app/interfaces/interfaces';
 
-import { changeFieldProp, changeFieldStyles } from 'app/store_form-builder/store-form-builder.actions';
+import { changeFieldStyles } from 'app/store_form-builder/store-form-builder.actions';
 import { selectSelectedFieldId, selectConstructorFields } from 'app/store_form-builder/store-form-builder.selectors';
-import { FormControl, FormGroup } from "@angular/forms";
-
-
 
 
 @Component({
@@ -28,19 +19,11 @@ import { FormControl, FormGroup } from "@angular/forms";
 export class FieldStylingFormComponent implements OnInit, OnDestroy {
 
   public selectedFieldId: selectedFieldId;
-
-  public formFields$: Observable<ConstructorField[]>;
-
+  public formFields$: Observable<Field[]>;
   public stylesForm = new FormGroup({});
-
   public ngUnsubscribe$ = new Subject<void>();
-
-  public selectedField;
-
-  public stylesKeysArr;
-
-
-  // optionsList: string[] = [];
+  public stylesKeysArr: string[];
+  public selectedField: Field;
 
   constructor(private store: Store<{ state: FormBuilderState }>) {
     this.formFields$ = this.store.select(selectConstructorFields);
@@ -50,71 +33,44 @@ export class FieldStylingFormComponent implements OnInit, OnDestroy {
 
     this.store.select(selectSelectedFieldId)
       .pipe(takeUntil(this.ngUnsubscribe$))
-      .subscribe((selectedFieldId: selectedFieldId) => {
-        this.selectedFieldId = selectedFieldId;
+      .subscribe((selectedId: selectedFieldId) => {
+
+        this.selectedFieldId = selectedId;
     });
 
-
-    this.formFields$.subscribe(
+    this.store.select(selectConstructorFields).subscribe(
       fieldsArr => {
-          console.log(this.selectedFieldId)
-          this.selectedField = fieldsArr.find(field => field.id === this.selectedFieldId);
-          const fieldStyles = {...this.selectedField.styles};
-          this.stylesKeysArr = Object.keys(fieldStyles);
+
+        if (this.selectedFieldId === null) {
+            return;
+        }
+
+        this.selectedField = fieldsArr.find(field => field.id === this.selectedFieldId);
+
+        const fieldStyles = {...this.selectedField.styles};
+
+        if (!fieldStyles){
+          return ;
+        }
+        this.stylesKeysArr = Object.keys(fieldStyles);
+
       }
-    )
+    );
 
     this.upDateControls(this.stylesKeysArr);
   }
 
-
-  upDateControls(styles){
-
-
-    styles.forEach(elem => {
-      this.stylesForm.addControl(elem, new FormControl(''))
-    })
+  upDateControls(stylesArr): void{
+      if (!stylesArr){
+        return;
+      }
+      stylesArr.forEach(elem => {
+      this.stylesForm.addControl(elem, new FormControl(''));
+    });
   }
 
-
-  // addNewOption(): void {
-  //   const field = this.constructorFieldsLocal.find(item => item.id === this.selectedFieldId);
-  //
-  //   if (!field) {
-  //     return;
-  //   }
-  //
-  //   let fieldOptArr: string[] = [];
-  //
-  //   if (field.options) {
-  //     fieldOptArr = field.options;
-  //   }
-  //
-  //   const newOptionsArr: string[] = [...fieldOptArr];
-  //
-  //   newOptionsArr.push(defaultValues.option[0]);
-  //
-  //   this.store.dispatch(
-  //     changeFieldProp({ constructorFieldId: this.selectedFieldId, propToChange: propNames.options, newPropState: newOptionsArr }));
-  // }
-  //
-  // changeInputValue(event: any, index: number): void {
-  //   const value = event.target.value;
-  //   this.optionsList.splice(index, 1, value);
-  //   this.store.dispatch(
-  //     changeFieldProp({ constructorFieldId: this.selectedFieldId , propToChange: propNames.options, newPropState: this.optionsList }));
-  // }
-  //
-  // deleteOption(index: number): void {
-  //   this.optionsList.splice(index, 1);
-  //   this.store.dispatch(
-  //     changeFieldProp({ constructorFieldId: this.selectedFieldId , propToChange: propNames.options, newPropState: this.optionsList }));
-  // }
-  //
-
-  onSubmit() : void {
-    this.store.dispatch(changeFieldStyles({newStyles: this.stylesForm.value}))
-
+  onSubmit(): void {
+    this.store.dispatch(changeFieldStyles({newStyles: this.stylesForm.value}));
   }
 
   ngOnDestroy(): void {

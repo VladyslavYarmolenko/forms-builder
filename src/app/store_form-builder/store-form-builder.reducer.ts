@@ -1,17 +1,14 @@
 import { Action, createReducer, on } from '@ngrx/store';
 
-import {
-  FormBuilderState,
-  ConstructorField, styles,
-} from 'app/interfaces/interfaces';
+import { Field, FormBuilderState } from 'app/interfaces/interfaces';
+import { typeFields, styles } from '../constants/constants';
+
 
 import {
   setSelectedFieldId,
   addConstructorField,
-  changeFieldProp,
   setConstructorFields, deleteField, changeFieldStyles,
 } from 'app/store_form-builder/store-form-builder.actions';
-import { typeFields } from "../constants/constants";
 
 
 const initialState: FormBuilderState = {
@@ -22,13 +19,13 @@ const initialState: FormBuilderState = {
 
 export const formBuilderReducer = createReducer(
   initialState,
-  on(setSelectedFieldId, (state: FormBuilderState, { selectedFieldId } : any ) => {
+  on(setSelectedFieldId, (state, { selectedId }): FormBuilderState => {
     return({
       ...state,
-      selectedFieldId,
+      selectedFieldId: selectedId,
     });
   }),
-  on(addConstructorField, (state : FormBuilderState, { constructorFieldType } : any) => {
+  on(addConstructorField, (state, { constructorFieldType }): FormBuilderState => {
     const constructorFields = state.constructorFields;
 
     let fieldId;
@@ -39,13 +36,11 @@ export const formBuilderReducer = createReducer(
       fieldId = constructorFields[constructorFields.length - 1].id + 1;
     }
 
-    const newField: ConstructorField = {
+    const newField: Field = {
       type: constructorFieldType,
       styles: {...styles},
-      order: constructorFields.length,
       id: constructorFields.length,
     };
-
 
     switch (constructorFieldType) {
       case typeFields.input:
@@ -56,7 +51,7 @@ export const formBuilderReducer = createReducer(
       case typeFields.checkbox:
       case typeFields.select:
         newField.styles.label = 'Default label';
-        newField.styles.options = ['Default option']
+        newField.styles.options = ['Default option'];
         break;
       case typeFields.button:
         newField.styles.text = 'Default text';
@@ -72,24 +67,35 @@ export const formBuilderReducer = createReducer(
       });
     }
   ),
-  on(changeFieldStyles, (state : FormBuilderState, { newStyles } : any) => {
+  on(changeFieldStyles, (state , { newStyles }): FormBuilderState => {
 
     const fieldId = state.selectedFieldId;
     const fieldsArr = [...state.constructorFields];
 
-    const field = fieldsArr.find(field => field.id === fieldId);
+    const field = fieldsArr.find(elem => elem.id === fieldId);
 
     const changedField = {...field};
-    changedField.styles = {...newStyles};
+
+    if (field.type === typeFields.select) {
+
+      // @ts-ignore
+      const optionsStr = newStyles.options;
+      const optionsArr = optionsStr.split('-');
+
+      changedField.styles = {...newStyles};
+      changedField.styles.options = [...optionsArr];
+    } else {
+      changedField.styles = {...newStyles};
+    }
 
     fieldsArr.splice(fieldId, 1, changedField);
 
     return ({
       ...state,
       constructorFields: fieldsArr,
-    })
+    });
   }),
-  on(setConstructorFields, (state : FormBuilderState, { newConstructorArr } : any) => {
+  on(setConstructorFields, (state , { newConstructorArr }): FormBuilderState => {
 
     return({
       ...state,
@@ -97,7 +103,7 @@ export const formBuilderReducer = createReducer(
       });
     }
   ),
-  on(deleteField, (state: FormBuilderState) => {
+  on(deleteField, (state: FormBuilderState): FormBuilderState => {
 
     const fieldId = state.selectedFieldId;
     const filteredArr = state.constructorFields.filter(fields => fields.id !== fieldId );
@@ -105,7 +111,7 @@ export const formBuilderReducer = createReducer(
     return({
       selectedFieldId: null,
       constructorFields: filteredArr
-    })
+    });
   })
 );
 
