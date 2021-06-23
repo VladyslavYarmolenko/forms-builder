@@ -18,12 +18,14 @@ import { selectSelectedFieldId, selectConstructorFields } from 'app/store_form-b
 
 export class FieldStylingFormComponent implements OnInit, OnDestroy {
 
-  public selectedFieldId: selectedFieldId;
   public formFields$: Observable<Field[]>;
-  public stylesForm = new FormGroup({});
   public ngUnsubscribe$ = new Subject<void>();
+
+  public stylesForm = new FormGroup({});
+
   public stylesKeysArr: string[];
   public selectedField: Field;
+  public selectedFieldId: selectedFieldId;
 
   constructor(private store: Store<{ state: FormBuilderState }>) {
     this.formFields$ = this.store.select(selectConstructorFields);
@@ -60,8 +62,8 @@ export class FieldStylingFormComponent implements OnInit, OnDestroy {
     this.upDateControls(this.stylesKeysArr);
   }
 
-  upDateControls(stylesArr): void{
-      if (!stylesArr){
+  upDateControls(stylesArr): void {
+      if (!stylesArr) {
         return;
       }
       stylesArr.forEach(elem => {

@@ -7,7 +7,7 @@ import { map, takeUntil, tap } from 'rxjs/operators';
 
 import { Field, FieldTypes, FormBuilderState, selectedFieldId, StyleList } from 'app/interfaces/interfaces';
 import { typeFields } from 'app/constants/constants';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from 'app/services/auth.service';
 
 import {
   addConstructorField,
@@ -45,12 +45,8 @@ export class ConstructorSectionComponent implements OnInit, OnDestroy {
     this.formFields$ = this.store.select(selectConstructorFields)
       .pipe(
         takeUntil(this.ngUnsubscribe$),
-        map(resArr => {
-          return resArr.map(item => Object.assign({}, item));
-        }),
-        tap(resArr => {
-          this.updateControls(resArr);
-        }));
+        map(resArr => resArr.map(item => Object.assign({}, item))),
+        tap(resArr => this.updateControls(resArr)));
 
     this.store.select(selectSelectedFieldId)
       .pipe(takeUntil(this.ngUnsubscribe$))

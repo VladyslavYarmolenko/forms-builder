@@ -21,16 +21,13 @@ import { selectConstructorFields } from 'app/store_form-builder/store-form-build
 export class GeneralStylingFormComponent implements OnInit, OnDestroy {
 
   public formFields$: Observable<Field[]>;
-
   public ngUnsubscribe$ = new Subject<void>();
 
   public generalStyling = new FormGroup({});
 
-  public localFieldsArr;
-
+  public localFieldsArr: Field[];
   public stylesKeysArr: string[];
-
-  styles: StyleList = styles;
+  public styles: StyleList = styles;
 
 
 
@@ -43,9 +40,7 @@ constructor(private store: Store<{ state: FormBuilderState }>) {
     this.formFields$
       .pipe(
         takeUntil(this.ngUnsubscribe$),
-        map(resArr => {
-          return resArr.map(item => Object.assign({}, item));
-        }))
+        map(resArr => resArr.map(item => Object.assign({}, item))))
       .subscribe(resArr => this.localFieldsArr = [...resArr]);
 
 
