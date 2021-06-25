@@ -4,7 +4,6 @@ import { catchError, exhaustMap, map } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 
-
 import { AuthService } from 'app/services/auth.service';
 
 import {

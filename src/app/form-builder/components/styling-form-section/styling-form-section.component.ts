@@ -35,7 +35,6 @@ export class StylingFormSectionComponent implements OnInit, OnDestroy {
         this.selectedPortal = this.componentFieldStylingPortal;
       }
     });
-
     this.componentGeneralStylingPortal = new ComponentPortal(GeneralStylingFormComponent);
     this.componentFieldStylingPortal = new ComponentPortal(FieldStylingFormComponent);
 

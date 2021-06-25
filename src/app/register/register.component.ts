@@ -1,13 +1,7 @@
-import { Observable } from 'rxjs';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { first } from 'rxjs/operators';
 
-import { User } from 'app/interfaces/interfaces';
-
-import { getUser } from 'app/store-auth/store-auth.selectors';
 import { RegisterAction } from 'app/store-auth/store-auth.actions';
 
 
@@ -17,15 +11,13 @@ import { RegisterAction } from 'app/store-auth/store-auth.actions';
   styleUrls: ['./register.component.scss'],
 })
 
-export class RegisterComponent implements OnInit, OnDestroy {
+export class RegisterComponent implements OnInit {
   form: FormGroup;
-  user$: Observable<User>;
 
-  constructor(private store: Store, private router: Router) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.initForm();
-    this.user$ = this.store.select(getUser);
   }
 
   private initForm(): void {
@@ -37,9 +29,5 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   onSubmit(formData: any): void {
     this.store.dispatch(RegisterAction(formData.value));
-  }
-
-  ngOnDestroy(): void {
-    this.user$.pipe(first());
   }
 }

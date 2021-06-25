@@ -2,85 +2,104 @@
   <p class="style-field-title">
     SELECT FIELD STYLES
   </p>
-  <form class="stylize-field">
-    <mat-form-field *ngIf="styles.placeholder != null">
-      <mat-label>Placeholder</mat-label>
-      <input matInput name="placeholder"
-             (ngModelChange)="styleChanged($event, 'placeholder')"
-             [(ngModel)] = 'styles.placeholder'>
-    </mat-form-field>
+  <form  class="stylize-field" [formGroup]="stylesForm" (ngSubmit)="onSubmit()">
 
-    <mat-form-field *ngIf="styles.text != null">
-      <mat-label>Text</mat-label>
-      <input matInput name="text"
-             (ngModelChange)="styleChanged($event, 'text')"
-             [(ngModel)] = 'styles.text'>
-    </mat-form-field>
+    <div *ngFor="let style of stylesKeysArr ; let i = index" >
+      <mat-form-field *ngIf="style === 'placeholder'" >
+        <mat-label>Placeholder</mat-label>
+        <input matInput
+               name="placeholder"
+               formControlName="placeholder"
+               [value] ="this.selectedField.styles.placeholder"
+        >
+      </mat-form-field>
 
-    <mat-form-field *ngIf="styles.label != null">
-      <mat-label>Label</mat-label>
-      <input matInput name="label"
-             (ngModelChange)="styleChanged($event, 'label')"
-             [(ngModel)] = 'styles.label'>
-    </mat-form-field>
+      <mat-form-field *ngIf="style === 'label'">
+        <mat-label>Label</mat-label>
+        <input matInput
+               name="label"
+               formControlName="label"
+               [value] ="this.selectedField.styles.label"
+        >
+      </mat-form-field>
 
-      <button mat-button  *ngIf="fieldType === 'select'" (click)='addNewOption()'>+</button>
-      <div *ngFor='let option of optionsList; let i = index' class="optionList">
-        <input matInput (change)='changeInputValue($event, i)' value=" {{option}}">
-        <button mat-button (click)='deleteOption(i)'>-</button>
-      </div>
+      <mat-form-field *ngIf="style === 'text'">
+        <mat-label>Text</mat-label>
+        <input matInput
+               name="text"
+               formControlName="text"
+               [value] ="this.selectedField.styles.text"
+        >
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Width</mat-label>
-      <input matInput name="width"
-             (ngModelChange)="styleChanged($event, 'width')"
-             [(ngModel)] = 'styles.width'>
-    </mat-form-field>
+      <mat-form-field *ngIf="style === 'width'">
+        <mat-label>Width</mat-label>
+        <input matInput
+               name="width"
+               formControlName="width"
+               [value] ="this.selectedField.styles.width"
+        >
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Height</mat-label>
-      <input matInput name="height"
-             (ngModelChange)="styleChanged($event, 'height')"
-             [(ngModel)] = 'styles.height'>
-    </mat-form-field>
+      <mat-form-field *ngIf="style === 'height'">
+        <mat-label>Height</mat-label>
+        <input matInput
+               name="height"
+               formControlName="height"
+               [value] ="this.selectedField.styles.height"
+        >
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Font Size</mat-label>
-      <input matInput name="fontSize"
-             (ngModelChange)="styleChanged($event, 'fontSize')"
-             [(ngModel)] = 'styles.fontSize'>
-    </mat-form-field>
+      <mat-form-field *ngIf="style === 'fontSize'">
+        <mat-label>fontSize</mat-label>
+        <input matInput
+               name="fontSize"
+               formControlName="fontSize"
+               [value] ="this.selectedField.styles.fontSize"
+        >
+      </mat-form-field>
 
-    <mat-form-field class="fontWeightStyle">
-      <mat-label>Font Weight</mat-label>
-      <mat-select [(value)]="styles.fontWeight" panelClass="styling-field-select-panel">
-        <mat-option value='100' (click)="styleChanged('100', 'fontWeight')">
-          lighter
-        </mat-option>
-        <mat-option value='400' (click)="styleChanged('400', 'fontWeight')">
-          normal
-        </mat-option>
-        <mat-option value='700' (click)="styleChanged('700', 'fontWeight')">
-          bold
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field *ngIf="style === 'color'">
+        <mat-label>Color</mat-label>
+        <input matInput
+               name="color"
+               formControlName="color"
+               [value] ="this.selectedField.styles.color"
+        >
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Color</mat-label>
-      <input matInput name="color"
-             (ngModelChange)="styleChanged($event, 'color')"
-             [(ngModel)] = 'styles.color'>
-    </mat-form-field>
+      <mat-form-field *ngIf="style === 'fontWeight'" class="fontWeightStyle">
+        <mat-label>Font Weight</mat-label>
+        <mat-select formControlName = "fontWeight" [value] ="this.selectedField.styles.fontWeight">
+          <mat-option class="option" value='100'>
+            lighter
+          </mat-option>
+          <mat-option class="option" value='400'>
+            normal
+          </mat-option>
+          <mat-option class="option" value='700'>
+            bold
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-checkbox *ngIf="fieldType === 'input' || fieldType === 'textarea'"
-                    class="isRequired" name="isRequired"
-                    (ngModelChange)="isRequiredField()"
-                    [(ngModel)] = 'styles.isRequired'>Required
-    </mat-checkbox>
+      <mat-form-field *ngIf="style === 'options'">
+        <mat-label>Add options using separator: '-'</mat-label>
+        <input matInput
+               name="options"
+               formControlName="options"
+        >
+      </mat-form-field>
 
+      <mat-checkbox *ngIf="style === 'isRequired'"
+                    name="isRequired"
+                    formControlName="isRequired"
+                    class="isRequired"
+                    [checked] ="this.selectedField.styles.isChecked"
+      >Required Field
+      </mat-checkbox>
+
+    </div>
+    <button mat-raised-button color="primary" class="button" type="submit">Change styles</button>
   </form>
 </div>
-
-
-

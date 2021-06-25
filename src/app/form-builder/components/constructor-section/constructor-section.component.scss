@@ -1,4 +1,4 @@
-@import '../../../utilities/variables';
+@import '~app/utilities/variables';
 
 .constructor {
   grid-area: constructor;
@@ -28,6 +28,16 @@
     font-size: 30px;
     text-transform: uppercase;
   }
+}
+
+.buttons-panel {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+}
+
+.functional-buttons button {
+  margin-right: 15px;
 }
 
 .drop-container {

@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+
+import { environment } from 'environments/environment';
 
 import { AuthResponse, User } from 'app/interfaces/interfaces';
-import { environment } from '../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +14,7 @@ import { environment } from '../../environments/environment';
 
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   public register(user: User): Observable<AuthResponse>{
     return this.http.post<AuthResponse>(`${environment.baseUrl}/users/register`, user);
@@ -19,5 +22,10 @@ export class AuthService {
 
   public login(user: User): Observable<AuthResponse>{
     return this.http.post<AuthResponse>(`${environment.baseUrl}/login`, user);
+  }
+
+  public logOut(): void {
+    localStorage.clear();
+    this.router.navigate(['/']);
   }
 }

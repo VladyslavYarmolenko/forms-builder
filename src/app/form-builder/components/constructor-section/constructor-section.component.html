@@ -1,88 +1,92 @@
+<script src="constructor-section.component.ts"></script>
 <div class='constructor'>
   <p class="constructor-field-title">form builder</p>
-  <div
-    class="constructor-wrapper">
-  <div
-    class="drop-container"
-    cdkDropList
-    [cdkDropListData]="fieldTypes"
-    (cdkDropListDropped)="drop($event)"
-  >
-    <form class="form-container" [formGroup]='formConstructor' (ngSubmit)="onSubmit()">
-      <div cdkDrag *ngFor="let field of formFields$ | ngrxPush; let i = index">
-        <div [ngSwitch]='field.type'>
+  <div class="buttons-panel">
+    <div class="functional-buttons">
+      <button mat-raised-button color="primary" (click)="handleChangeField()" [disabled]="isDisabled">Change Field</button>
+      <button mat-raised-button color="warn" (click)="handleDeleteField()"  [disabled]="isDisabled">Delete Field</button>
+    </div>
+    <button mat-raised-button color="warn" (click)="onLogout()">Logout</button>
+  </div>
+    <div
+      class="constructor-wrapper">
+    <div
+      class="drop-container"
+      cdkDropList
+      [cdkDropListData]="fieldTypes"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <form class="form-container" [formGroup]='formConstructor' (ngSubmit)="onSubmit()">
+        <div cdkDrag *ngFor="let field of formFields$ | ngrxPush; let i = index">
+          <div [ngSwitch]='field.type'>
 
-          <ng-container *ngSwitchCase="'input'">
-            <app-input
-              *ngSwitchCase="'input'"
-              [stylesObj]="getFieldStyles(i)"
+            <ng-container *ngSwitchCase="'input'">
+              <app-input
+                *ngSwitchCase="'input'"
+                [stylesObj]="field.styles"
+                [formControlName]="field.type + '-' + field.id"
+                [label]="field.styles.label"
+                [placeholder]="field.styles.placeholder"
+                (click)="handleFieldClick(i)"
+                [required]="field.styles.isRequired"
+              >
+              </app-input>
+              <p *ngIf="formConstructor.controls[field.type + '-' + field.id].invalid
+                  && formConstructor.controls[field.type + '-' + field.id].touched">
+                Enter correct value
+              </p>
+            </ng-container>
+
+          <ng-container *ngSwitchCase="'textarea'">
+          <app-textarea
+              *ngSwitchCase="'textarea'"
+              [stylesObj]="field.styles"
               [formControlName]="field.type + '-' + field.id"
-              [label]="field.label"
-              [placeholder]="getFieldProp(i, 'placeholder')"
+              [label]="field.styles.label"
+              [placeholder]="field.styles.placeholder"
               (click)="handleFieldClick(i)"
-              (clickOutside)="handleFieldClickOutside($event, i)"
-            >
-            </app-input>
-            <p *ngIf="formConstructor.controls[field.type + '-' + field.id].invalid
-                && formConstructor.controls[field.type + '-' + field.id].touched">
-              Enter correct value
-            </p>
+              [required]="field.styles.isRequired"
+          >
+          </app-textarea>
+          <p *ngIf="formConstructor.controls[field.type + '-' + field.id].invalid
+              && formConstructor.controls[field.type + '-' + field.id].touched">
+            Enter correct value
+          </p>
           </ng-container>
 
-        <ng-container *ngSwitchCase="'textarea'">
-        <app-textarea
-            *ngSwitchCase="'textarea'"
-            [stylesObj]="getFieldStyles(i)"
-            [formControlName]="field.type + '-' + field.id"
-            [label]="field.label"
-            [placeholder]="getFieldProp(i, 'placeholder')"
-            (click)="handleFieldClick(i)"
-            (clickOutside)="handleFieldClickOutside($event, i)" >
-        </app-textarea>
-        <p *ngIf="formConstructor.controls[field.type + '-' + field.id].invalid
-            && formConstructor.controls[field.type + '-' + field.id].touched">
-          Enter correct value
-        </p>
-        </ng-container>
-
-        <button
+          <button
               *ngSwitchCase="'button'"
               mat-raised-button color="primary"
               class="button"
-              (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside($event, i)"
-              [exclude]="'.styles'"
-              [ngStyle]="getFieldStyles(i)"
+              (click)="handleFieldClick(i)"
+              [ngStyle]="field.styles"
               type="submit"
-
-        >
-          {{getFieldProp(i, 'text')}}
-        </button>
-
-        <ng-container *ngSwitchCase="'checkbox'">
-          <app-checkbox
-            [label]="field.label"
-            [formControlName]="field.type + '-' + field.id"
-            (click)="handleFieldClick(i)" (clickOutside)="handleFieldClickOutside($event, i)"
-            [exclude]="'.styles'"
-            [stylesObj]="getFieldStyles(i)"
           >
-          </app-checkbox>
-        </ng-container>
+            {{ field.styles.text }}
+          </button>
 
-        <app-select
-          *ngSwitchCase="'select'"
-          [formControlName]="field.type + '-' + field.id"
-          (click)="handleSelectOpenedChange($event, i)"
-          [stylesObj]="getFieldStyles(i)"
-          (clickOutside)="handleFieldClickOutside($event, i)"
-          [exclude]="'.styles, .cdk-overlay-backdrop'"
-          [options]='field.options'
-          [label]="getFieldProp(i, 'label')"
-        >
-        </app-select>
-      </div>
-      </div>
-    </form>
-  </div>
+          <ng-container *ngSwitchCase="'checkbox'">
+            <app-checkbox
+                [label]="field.styles.label"
+                [formControlName]="field.type + '-' + field.id"
+                (click)="handleFieldClick(i)"
+                [stylesObj]="field.styles"
+            >
+            </app-checkbox>
+          </ng-container>
+
+          <app-select
+              *ngSwitchCase="'select'"
+              [formControlName]="field.type + '-' + field.id"
+              (click)="handleSelectOpenedChange($event, i)"
+              [stylesObj]="field.styles"
+              [options]='field.styles.options'
+              [label]="field.styles.label"
+          >
+          </app-select>
+        </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

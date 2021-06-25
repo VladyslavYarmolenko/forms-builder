@@ -1,14 +1,13 @@
 <div>
-  <label>{{label}}</label>
+  <label>{{ label }}</label>
   <select
-  [ngStyle]='stylesObj'
-  (change)="change(select.value)" #select
+    [ngStyle]='stylesObj'
+    (change)="change(select.value)" #select
   >
-    <option *ngFor='let option of options' value='{{option}}'>
-      {{option}}
+    <option *ngFor='let option of options' value='{{ option }}'>
+      {{ option }}
     </option>
-
-</select>
+  </select>
 </div>
 
 <ng-content></ng-content>

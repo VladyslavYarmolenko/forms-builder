@@ -2,53 +2,41 @@
   <p class="style-form-title">
     SELECT GENERAL FORM STYLE
   </p>
-  <form class="stylize-form">
+  <form class="stylize-form" [formGroup]="generalStyling" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <mat-label>Width</mat-label>
-      <input matInput name="width"
-             (ngModelChange)="globalStyleChange($event, 'width')"
-             [(ngModel)] = 'styles.width'
-      >
+      <input matInput name="width" formControlName="width">
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Height</mat-label>
-      <input matInput name="height"
-             (ngModelChange)="globalStyleChange($event, 'height')"
-             [(ngModel)] = 'styles.height'
-      >
+      <input matInput name="height" formControlName="height">
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Font Size</mat-label>
-      <input matInput name="fontSize"
-             (ngModelChange)="globalStyleChange($event, 'fontSize')"
-             [(ngModel)] = 'styles.fontSize'
-      >
-    </mat-form-field>
-
-    <mat-form-field class="fontWeightStyle">
-      <mat-label>Font Weight</mat-label>
-      <mat-select [(value)]="styles.fontWeight">
-        <mat-option value='100' (click)="globalStyleChange('100', 'fontWeight')">
-          lighter
-        </mat-option>
-        <mat-option value='400' (click)="globalStyleChange('400', 'fontWeight')">
-          normal
-        </mat-option>
-        <mat-option value='700' (click)="globalStyleChange('700', 'fontWeight')">
-          bold
-        </mat-option>
-      </mat-select>
+      <mat-label>fontSize</mat-label>
+      <input matInput name="fontSize" formControlName="fontSize">
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Color</mat-label>
-      <input matInput name="color"
-             (ngModelChange)="globalStyleChange($event, 'color')"
-             [(ngModel)] = 'styles.color'
-      >
+      <input matInput name="color" formControlName="color">
     </mat-form-field>
 
+    <mat-form-field class="fontWeightStyle">
+      <mat-label>Font Weight</mat-label>
+      <mat-select formControlName = "fontWeight">
+        <mat-option class="option" value='100'>
+          lighter
+        </mat-option>
+        <mat-option class="option" value='400'>
+          normal
+        </mat-option>
+        <mat-option class="option" value='700'>
+          bold
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" class="button" type="submit">Change styles</button>
   </form>
 </div>

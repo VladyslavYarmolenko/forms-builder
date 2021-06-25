@@ -1,12 +1,14 @@
 import { Store } from '@ngrx/store';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { FormControl, FormGroup } from '@angular/forms';
+import { map, takeUntil } from 'rxjs/operators';
 
-import { ConstructorField, FormBuilderState, StyleList } from 'app/interfaces/interfaces';
+import { Field, FormBuilderState, StyleList } from 'app/interfaces/interfaces';
+import { styles } from 'app/constants/constants';
 
 import { setConstructorFields } from 'app/store_form-builder/store-form-builder.actions';
-import { getStylingState, selectConstructorFields } from 'app/store_form-builder/store-form-builder.selectors';
+import { selectConstructorFields } from 'app/store_form-builder/store-form-builder.selectors';
 
 
 @Component({
@@ -15,34 +17,44 @@ import { getStylingState, selectConstructorFields } from 'app/store_form-builder
   styleUrls: ['./general-styling-form.component.scss']
 })
 
-
 export class GeneralStylingFormComponent implements OnInit, OnDestroy {
 
-styles: StyleList;
-public ngUnsubscribe$ = new Subject<void>();
+  public formFields$: Observable<Field[]>;
+  public ngUnsubscribe$ = new Subject<void>();
 
-constructorFieldLocal: ConstructorField[] = [];
+  public generalStyling = new FormGroup({});
 
-constructor(private store: Store<{ state: FormBuilderState }>) {}
+  public localFieldsArr: Field[];
+  public stylesKeysArr: string[];
+  public styles: StyleList = styles;
+
+  constructor(private store: Store<{ state: FormBuilderState }>) {
+    this.formFields$ = this.store.select(selectConstructorFields);
+  }
 
   ngOnInit(): void {
-    this.store.select(selectConstructorFields)
-      .pipe(takeUntil(this.ngUnsubscribe$))
-      .subscribe((res: ConstructorField[]) => {
-        this.constructorFieldLocal = res.map(item => Object.assign({}, item));
+    this.formFields$
+      .pipe(
+        takeUntil(this.ngUnsubscribe$),
+        map(resArr => resArr.map(item => Object.assign({}, item))))
+      .subscribe(resArr => this.localFieldsArr = [...resArr]);
+
+    this.stylesKeysArr = Object.keys(this.styles);
+    this.upDateControls(this.stylesKeysArr);
+  }
+
+  upDateControls(stylesArr): void {
+    if (!stylesArr){
+      return;
+    }
+    stylesArr.forEach(elem => {
+      this.generalStyling.addControl(elem, new FormControl(''));
     });
+  }
 
-    this.store.select(getStylingState)
-      .pipe(takeUntil(this.ngUnsubscribe$))
-      .subscribe((stylesObj) => {
-
-        this.styles = { ...stylesObj };
-    });
-}
-
-  globalStyleChange(value: any, propName: any): void {
-    this.constructorFieldLocal.forEach(element => element.styles = { ...element.styles, [propName]: value });
-    this.store.dispatch(setConstructorFields({newConstructorArr : this.constructorFieldLocal}));
+  onSubmit(): void {
+    this.localFieldsArr.forEach(elem => elem.styles = { ...elem.styles, ...this.generalStyling.value });
+    this.store.dispatch(setConstructorFields({ newConstructorArr: this.localFieldsArr }));
   }
 
   ngOnDestroy(): void {
