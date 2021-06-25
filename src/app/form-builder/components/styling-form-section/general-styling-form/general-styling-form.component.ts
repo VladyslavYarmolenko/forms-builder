@@ -17,7 +17,6 @@ import { selectConstructorFields } from 'app/store_form-builder/store-form-build
   styleUrls: ['./general-styling-form.component.scss']
 })
 
-
 export class GeneralStylingFormComponent implements OnInit, OnDestroy {
 
   public formFields$: Observable<Field[]>;
@@ -29,20 +28,16 @@ export class GeneralStylingFormComponent implements OnInit, OnDestroy {
   public stylesKeysArr: string[];
   public styles: StyleList = styles;
 
-
-
-constructor(private store: Store<{ state: FormBuilderState }>) {
-  this.formFields$ = this.store.select(selectConstructorFields);
-}
+  constructor(private store: Store<{ state: FormBuilderState }>) {
+    this.formFields$ = this.store.select(selectConstructorFields);
+  }
 
   ngOnInit(): void {
-
     this.formFields$
       .pipe(
         takeUntil(this.ngUnsubscribe$),
         map(resArr => resArr.map(item => Object.assign({}, item))))
       .subscribe(resArr => this.localFieldsArr = [...resArr]);
-
 
     this.stylesKeysArr = Object.keys(this.styles);
     this.upDateControls(this.stylesKeysArr);

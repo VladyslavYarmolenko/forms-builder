@@ -19,7 +19,7 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   @Input() label!: string;
   @Input() placeholder!: string;
   @Input() stylesObj!: any;
-  @Input() isRequired : boolean;
+  @Input() isRequired: boolean;
 
   @Input()
   set value(value: any) {

@@ -7,10 +7,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 
-export class FormBuilderGuard implements CanActivate{
+export class FormBuilderGuard implements CanActivate {
   constructor(private router: Router) {}
-    canActivate(route: ActivatedRouteSnapshot): Observable<boolean> | boolean{
-      if (localStorage.getItem('token')){
+    canActivate(route: ActivatedRouteSnapshot): Observable<boolean> | boolean {
+      if (localStorage.getItem('token')) {
         return true;
       }
 

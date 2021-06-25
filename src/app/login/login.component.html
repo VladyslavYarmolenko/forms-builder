@@ -1,15 +1,14 @@
 <div class='login'>
   <form #loginForm="ngForm" class="login-form">
-      <p>Email:</p>
-      <input type="email" name="email" [(ngModel)]="email" >
+    <p>Email:</p>
+    <input type="email" name="email" [(ngModel)]="email" >
 
-      <p>Password:</p>
-      <input type="password" name="password" [(ngModel)]="password">
+    <p>Password:</p>
+    <input type="password" name="password" [(ngModel)]="password">
 
-       <div class='buttons'>
-              <button mat-button type='submit' (click)="onSubmit(loginForm)">Login</button>
-
-              <button mat-button type='submit' (click)="redirectToRegister()">Sign-up</button>
-       </div>
+     <div class='buttons'>
+        <button mat-button type='submit' (click)="onSubmit(loginForm)">Login</button>
+        <button mat-button type='submit' (click)="redirectToRegister()">Sign-up</button>
+     </div>
   </form>
 </div>

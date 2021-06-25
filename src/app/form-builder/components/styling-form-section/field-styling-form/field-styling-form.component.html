@@ -5,7 +5,6 @@
   <form  class="stylize-field" [formGroup]="stylesForm" (ngSubmit)="onSubmit()">
 
     <div *ngFor="let style of stylesKeysArr ; let i = index" >
-
       <mat-form-field *ngIf="style === 'placeholder'" >
         <mat-label>Placeholder</mat-label>
         <input matInput
@@ -101,14 +100,6 @@
       </mat-checkbox>
 
     </div>
-
-    <button
-      mat-raised-button color="primary"
-      class="button"
-      type="submit"
-
-    >Change styles
-    </button>
-
+    <button mat-raised-button color="primary" class="button" type="submit">Change styles</button>
   </form>
 </div>

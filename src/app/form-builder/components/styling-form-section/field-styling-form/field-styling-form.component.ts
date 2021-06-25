@@ -42,23 +42,20 @@ export class FieldStylingFormComponent implements OnInit, OnDestroy {
 
     this.store.select(selectConstructorFields).subscribe(
       fieldsArr => {
-
         if (this.selectedFieldId === null) {
             return;
         }
 
         this.selectedField = fieldsArr.find(field => field.id === this.selectedFieldId);
 
-        const fieldStyles = {...this.selectedField.styles};
+        const fieldStyles = { ...this.selectedField.styles };
 
-        if (!fieldStyles){
+        if (!fieldStyles) {
           return ;
         }
         this.stylesKeysArr = Object.keys(fieldStyles);
-
       }
     );
-
     this.upDateControls(this.stylesKeysArr);
   }
 
@@ -72,7 +69,7 @@ export class FieldStylingFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    this.store.dispatch(changeFieldStyles({newStyles: this.stylesForm.value}));
+    this.store.dispatch(changeFieldStyles({ newStyles: this.stylesForm.value }));
   }
 
   ngOnDestroy(): void {

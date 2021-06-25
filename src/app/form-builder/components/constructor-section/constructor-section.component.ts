@@ -39,7 +39,6 @@ export class ConstructorSectionComponent implements OnInit, OnDestroy {
   constructor(private store: Store<{ state: FormBuilderState }>, private authService: AuthService) {}
 
   ngOnInit(): void {
-
     this.fieldTypes = [...Object.values(typeFields)];
 
     this.formFields$ = this.store.select(selectConstructorFields)
@@ -52,7 +51,6 @@ export class ConstructorSectionComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe((selectedId: selectedFieldId) => {
         this.selectedFieldId = selectedId;
-
       });
   }
 
@@ -95,11 +93,8 @@ export class ConstructorSectionComponent implements OnInit, OnDestroy {
         const fieldType = event.previousContainer.data[event.previousIndex] as FieldTypes;
 
         this.store.dispatch(addConstructorField({ constructorFieldType: fieldType }));
-
     } else {
-
         moveItemInArray(this.fieldTypes, event.previousIndex, event.currentIndex);
-
     }
   }
 

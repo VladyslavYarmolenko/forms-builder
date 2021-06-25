@@ -1,4 +1,4 @@
-@import '../../../../utilities/variables';
+@import '~app/utilities/variables';
 
 .style-form-wrapper {
   height: 100%;
@@ -32,4 +32,4 @@ mat-form-field {
 mat-form-field  mat-label{
     color: $text-color;
     padding: 10px;
-  }
+}

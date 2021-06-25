@@ -5,34 +5,22 @@
   <form class="stylize-form" [formGroup]="generalStyling" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <mat-label>Width</mat-label>
-      <input matInput
-             name="width"
-             formControlName="width"
-      >
+      <input matInput name="width" formControlName="width">
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Height</mat-label>
-      <input matInput
-             name="height"
-             formControlName="height"
-      >
+      <input matInput name="height" formControlName="height">
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>fontSize</mat-label>
-      <input matInput
-             name="fontSize"
-             formControlName="fontSize"
-      >
+      <input matInput name="fontSize" formControlName="fontSize">
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Color</mat-label>
-      <input matInput
-             name="color"
-             formControlName="color"
-      >
+      <input matInput name="color" formControlName="color">
     </mat-form-field>
 
     <mat-form-field class="fontWeightStyle">
@@ -49,14 +37,6 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-
-    <button
-      mat-raised-button color="primary"
-      class="button"
-      type="submit"
-
-    >Change styles
-    </button>
-
+    <button mat-raised-button color="primary" class="button" type="submit">Change styles</button>
   </form>
 </div>
